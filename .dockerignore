@@ -1,0 +1,9 @@
+.bundle
+.git
+vendor/bundle
+vendor/cache
+vendor/ruby
+coverage
+tmp
+log/*
+Dockerfile
