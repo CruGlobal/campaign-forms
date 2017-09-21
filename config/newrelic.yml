@@ -1,0 +1,46 @@
+# Generated October 30, 2015
+#
+# This configuration file is custom generated for Cru
+#
+# For full documentation of agent configuration options, please refer to
+# https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
+
+common: &default_settings
+  license_key: 'b4110a8903b01a1b67a59b3f397d088d265f81bc'
+
+  # Application Name
+  # Set this to be the name of your application as you'd like it show
+  # up in New Relic.  New Relic will then auto-map instances of your application
+  # into a New Relic "application" on your home dashboard page. If you want
+  # to map this instance into multiple apps, like "AJAX Requests" and
+  # "All UI" then specify a semicolon-separated list of up to three
+  # distinct names.  If you comment this out, it defaults to the
+  # capitalized RAILS_ENV (i.e., Production, Staging, etc)
+  app_name: CampaignForms
+
+  # The newrelic agent generates its own log file to keep its logging
+  # information separate from that of your application.  Specify its
+  # log level here.
+  log_level: info
+
+# Environment-specific settings are in this section.
+# RAILS_ENV or RACK_ENV (as appropriate) is used to determine the environment.
+# If your application has other named environments, configure them here.
+development:
+  <<: *default_settings
+  app_name: CampaignForms (Development)
+
+  # NOTE: There is substantial overhead when running in developer mode.
+  # Do not use for production or load testing.
+  developer_mode: true
+
+test:
+  <<: *default_settings
+  monitor_mode: false
+
+staging:
+  <<: *default_settings
+  app_name: CampaignForms (Staging)
+
+production:
+  <<: *default_settings

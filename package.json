@@ -1,0 +1,9 @@
+{
+  "name": "campaign-forms",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.0",
+    "jquery-form": "^4.0",
+    "jquery-validation": "^1.0"
+  }
+}

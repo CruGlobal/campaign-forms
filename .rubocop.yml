@@ -1,0 +1,8 @@
+inherit_gem:
+  rubocop-cru:
+    - config/cru.yml
+
+Naming/FileName:
+  Exclude:
+    - Gemfile
+    - node_modules/**/*

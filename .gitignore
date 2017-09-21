@@ -1,0 +1,17 @@
+# Ignore bundler config.
+/.bundle
+/vendor/bundle
+
+# Ignore all logfiles and tempfiles.
+/log
+/tmp
+
+/node_modules
+/yarn-error.log
+
+.byebug_history
+
+/.idea
+/.env.*
+/public/assets
+/coverage
