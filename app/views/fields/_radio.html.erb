@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label for="<%= "cf_#{field.name}" %>"><%= field.label_value %></label>
+  <div>
+    <% field.field_options.each do |option| %>
+      <label class="radio-inline">
+        <input type="radio" name="<%= field.name %>" value="<%= option.name %>" <%== 'required' if field.required %>>
+        <%= option.label %>
+      </label>
+    <% end %>
+  </div>
+</div>

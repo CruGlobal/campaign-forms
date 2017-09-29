@@ -5,17 +5,16 @@ class AdobeCampaignWorker
 
   sidekiq_options unique: :until_and_while_executing
 
-  attr_accessor :campaign, :person
+  attr_accessor :form, :params
 
-  def self.unique_args(args)
-    # Only use campaign and email_address in uniqueness
-    [args[0], args[1]['email_address']]
-  end
-
-  def perform(campaign, person_attrs)
-    self.campaign = campaign
-    self.person = Person.new(person_attrs)
+  def perform(id, params)
+    self.form = Form.find(id)
+    self.params = params
+    return if form.campaign_code.blank?
     find_or_create_adobe_profile
+  rescue ActiveRecord::RecordNotFound
+    # Form deleted after job enqueued, ignore it
+    nil
   end
 
   def find_or_create_adobe_profile
@@ -24,15 +23,10 @@ class AdobeCampaignWorker
   end
 
   def find_on_adobe_campaign
-    Adobe::Campaign::Profile.by_email(person.email_address)['content'][0]
+    Adobe::Campaign::Profile.by_email(email_address)['content'][0]
   end
 
   def post_to_adobe_campaign
-    profile_hash = {
-      'email': person.email_address
-    }
-    profile_hash['firstName'] = person.first_name if person.first_name.present?
-    profile_hash['lastName'] = person.last_name if person.last_name.present?
     Adobe::Campaign::Profile.post(profile_hash)
   end
 
@@ -44,7 +38,7 @@ class AdobeCampaignWorker
     profile = find_or_create_adobe_profile
     prof_subs_url = profile['subscriptions']['href']
     subscriptions = Adobe::Campaign::Base.get_request(prof_subs_url)['content']
-    subscriptions.find { |sub| sub['serviceName'] == campaign }
+    subscriptions.find { |sub| sub['serviceName'] == form.campaign_code }
   end
 
   def subscribe_to_adobe_campaign
@@ -54,6 +48,35 @@ class AdobeCampaignWorker
   end
 
   def adobe_campaign_service
-    Adobe::Campaign::Service.find(campaign).dig('content', 0)
+    Adobe::Campaign::Service.find(form.campaign_code).dig('content', 0)
+  end
+
+  def email_address_name
+    return @email_address_name if @email_field_set
+    @email_field_set = true
+    @email_address_name = form.fields.find_by(input: 'email', adobe_campaign_attribute: 'email')&.name
+  end
+
+  def email_address
+    @email_address ||= params[email_address_name]
+  end
+
+  def profile_hash
+    profile = {}
+    params.each do |key, value|
+      field = form.fields.find_by(name: key)
+      next if field.adobe_campaign_attribute.blank?
+      profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split('.'), value))
+    end
+    profile
+  end
+
+  # Recursively converts 'foo.bar.baz' = value to { foo: { bar: { baz: value } } }
+  def hasherize(keys = [], value = nil)
+    if keys.empty?
+      value
+    else
+      { keys.shift => hasherize(keys, value) }
+    end
   end
 end

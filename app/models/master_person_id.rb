@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
 class MasterPersonId
-  attr_accessor :person
+  attr_accessor :form, :params
 
-  def initialize(person)
-    self.person = person
+  def initialize(form, params)
+    self.form = form
+    self.params = params
   end
 
   # - match on email
   # -- if one match, use it
   # -- if 0 or many - create record
-  # - In the background, update with other attributes (first/last)
-  # -- Update will automatically trigger fuzzy matching and do a merge if appropriate.
   def find_or_create_id
-    entities = find_entities
+    return unless email_address
+    entities = find_entities_by_email
     entities = Array.wrap(create_entity) unless entities.size == 1
     entities.first&.dig('person', 'master_person:relationship', 'master_person')
   end
 
   private
 
-  def find_entities
+  def find_entities_by_email
     params = { entity_type: :person, fields: 'master_person:relationship',
-               'filters[email_address][email]': person.email_address,
+               'filters[email_address][email]': email_address,
                'filters[owned_by': 'all', per_page: 1 }
     Array.wrap(GlobalRegistry::Entity.get(params)&.dig('entities'))
   rescue RestClient::BadRequest
@@ -37,8 +37,31 @@ class MasterPersonId
   end
 
   def person_entity
-    { email_address: { email: person.email_address, client_integration_id: person.email_address },
-      client_integration_id: person.email_address,
-      first_name: person.first_name, last_name: person.last_name }.compact
+    entity = {}
+    params.each do |key, value|
+      field = form.fields.find_by(name: key)
+      next if field.global_registry_attribute.blank?
+      entity.deep_merge!(hasherize(field.global_registry_attribute.split('.'), value))
+    end
+    entity
+  end
+
+  def email_address_name
+    return @email_address_name if @email_field_set
+    @email_field_set = true
+    @email_address_name = form.fields.find_by(input: 'email', global_registry_attribute: 'email_address.email')&.name
+  end
+
+  def email_address
+    @email_address ||= params[email_address_name]
+  end
+
+  # Recursively converts 'foo.bar.baz' = value to { foo: { bar: { baz: value } } } and adding client_integration_id
+  def hasherize(keys = [], value = nil)
+    if keys.empty?
+      value
+    else
+      { client_integration_id: email_address, keys.shift => hasherize(keys, value) }
+    end
   end
 end

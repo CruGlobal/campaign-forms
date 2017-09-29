@@ -10,7 +10,3 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery-form
-//= require jquery-validation/dist/jquery.validate
-//= require campaign-form

@@ -10,21 +10,27 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'active_admin_flat_skin'
+gem 'activeadmin', '~> 1.0.0'
 gem 'adobe-campaign', '~> 0.2'
-gem 'auto_strip_attributes', '~> 2.1'
+gem 'devise'
+gem 'font-awesome-rails'
 gem 'global_registry', '~> 1.5'
 gem 'jbuilder', '~> 2.5'
 gem 'newrelic_rpm'
+gem 'omniauth-cas'
+gem 'pg', '~>0.18'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.4'
 gem 'redis-namespace'
+gem 'redis-rails', '~> 5.0.2'
 gem 'rollbar'
 gem 'sass-rails', '~> 5.0'
-gem 'sidekiq-unique-jobs', '~> 5.0.0'
 gem 'sidekiq-failures'
+gem 'sidekiq-unique-jobs', '~> 5.0.0'
+gem 'strip_attributes', '~> 1.8.0'
 gem 'syslog-logger'
 gem 'uglifier', '>= 1.3.0'
-gem 'validates_email_format_of'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

@@ -1,0 +1,25 @@
+development: &dev
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  pool: <%= ENV['DB_ENV_POSTGRESQL_POOL'] || 25 %>
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'campaign-forms' %>
+  username: <%= ENV.fetch('DB_ENV_POSTGRESQL_USER') %>
+  password: <%= ENV.fetch('DB_ENV_POSTGRESQL_PASS') %>
+  host: <%= ENV.fetch('DB_PORT_5432_TCP_ADDR') %>
+
+staging:
+  <<: *dev
+
+production:
+  <<: *dev
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  <<: *dev
+  database: <%= (ENV['DB_ENV_POSTGRESQL_DB_TEST'] || 'campaign-forms_test') + (ENV['TEST_ENV_NUMBER'] || '') %>
+  username: <%= ENV['DB_ENV_POSTGRESQL_USER_TEST'] || ENV.fetch('DB_ENV_POSTGRESQL_USER') %>
+  password: <%= ENV['DB_ENV_POSTGRESQL_PASS_TEST'] || ENV.fetch('DB_ENV_POSTGRESQL_PASS') %>
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR_TEST'] || ENV.fetch('DB_PORT_5432_TCP_ADDR') %>

@@ -6,3 +6,7 @@ Naming/FileName:
   Exclude:
     - Gemfile
     - node_modules/**/*
+
+BlockLength:
+  Exclude:
+    - app/admin/**/*

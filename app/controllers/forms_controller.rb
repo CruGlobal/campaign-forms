@@ -1,33 +1,37 @@
 # frozen_string_literal: true
 
 class FormsController < ApplicationController
+  # Create is an external API
+  protect_from_forgery except: :create
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def show
+    load_form
+  end
+
   def create
-    return unless required_params
-    AdobeCampaignWorker.perform_async(params[:campaign], person.person_attrs)
+    load_form
+    render(json: profile.errors, status: :bad_request) and return unless profile.valid?
+    # AdobeCampaignWorker.perform_async(form.id, profile.params)
     render json: { master_person_id: master_person_id }, status: :ok
   end
 
   private
 
-  def required_params
-    render_error errors: { campaign: 'Campaign missing' } and return false if campaign.blank?
-    render_error errors: person.errors and return false unless person.valid?
-    true
+  def load_form
+    @form ||= Form.find(params[:id])
   end
 
-  def render_error(errors:, status: :bad_request)
-    render json: errors, status: status
-  end
-
-  def campaign
-    @campaign ||= params[:campaign]
-  end
-
-  def person
-    @person ||= Person.new(params.permit(Person::PERSON_ATTRIBUTES))
+  def profile
+    @profile ||= Profile.new(@form, params)
   end
 
   def master_person_id
-    @master_person_id ||= MasterPersonId.new(person).find_or_create_id
+    @master_person_id ||= MasterPersonId.new(@form, @profile.params).find_or_create_id
+  end
+
+  def record_not_found(error)
+    render json: { error: error.message }, status: :not_found
   end
 end

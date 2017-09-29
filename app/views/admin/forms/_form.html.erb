@@ -1,0 +1,28 @@
+<% if form.title.present? || form.body.present? %>
+  <div class="panel panel-default">
+    <% if form.title.present? %>
+      <div class="panel-heading">
+        <span class="panel-title"><%= form.title %></span>
+      </div>
+    <% end %>
+    <div class="panel-body">
+    <% if form.body.present? %>
+      <div><%= form.body %></div>
+    <% end %>
+<% end %>
+<div class="campaign-form">
+  <div class="alert alert-danger hidden" role="alert">An issue has occurred. Please try again or contact website administrator.</div>
+  <form class="<%== 'form-inline' if form.style == 'inline' %>" action="<%= forms_url %>" method="post">
+    <input type="hidden" name="id" value="<%= form.id %>"/>
+    <% form.form_fields.each do |field| %>
+        <%= render partial: "fields/#{field.partial}", locals: { field: field, form: form } %>
+    <% end %>
+    <button type="submit" class="btn btn-primary" <%== 'disabled="disabled"' if preview.present? %>><%= form.action %></button>
+  </form>
+  <div class="alert alert-success hidden" role="alert"><%= form.success %></div>
+</div>
+<% if form.title.present? || form.body.present? %>
+    </div>
+  </div>
+<% end %>
+<script type="application/javascript" src="<%= javascript_url 'campaign-form.js' %>"></script>
