@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :forms, only: %i[show create]
 
-  get 'unauthorized', to: 'application#unauthorized', as: :unauthorized
-
   get 'monitors/lb'
   root 'admin/forms#index'
 end

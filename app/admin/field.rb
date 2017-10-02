@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Field, as: 'Form Fields' do
+  menu priority: 20
   permit_params :name, :input, :label, :placeholder, :global_registry_attribute, :adobe_campaign_attribute,
                 field_options_attributes: %i[id option_value_id position _destroy]
 

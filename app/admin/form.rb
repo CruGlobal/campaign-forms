@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Form do
+  menu priority: 10
   permit_params :campaign_code, :name, :style, :title, :body, :action, :success, :created_by_id,
                 form_fields_attributes: %i[id field_id label help required placeholder position _destroy]
 

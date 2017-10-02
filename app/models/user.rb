@@ -7,7 +7,7 @@ class User < ApplicationRecord
     existing = find_by(sso_guid: auth_hash.extra.ssoGuid)
     return existing.apply_auth_hash(auth_hash) if existing
 
-    pending = find_by(username: auth_hash.extra.user)
+    pending = find_by(username: auth_hash.uid)
     return pending.apply_auth_hash(auth_hash) if pending
 
     new.apply_auth_hash(auth_hash)
@@ -18,6 +18,7 @@ class User < ApplicationRecord
     self.username = auth_hash.uid
     self.first_name = auth_hash.extra.firstName
     self.last_name = auth_hash.extra.lastName
+    self.email = auth_hash.info.email
     save!
     self
   end
