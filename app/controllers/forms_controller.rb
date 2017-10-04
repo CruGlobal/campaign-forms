@@ -13,7 +13,7 @@ class FormsController < ApplicationController
   def create
     load_form
     render(json: profile.errors, status: :bad_request) and return unless profile.valid?
-    AdobeCampaignWorker.perform_async(form.id, profile.params)
+    AdobeCampaignWorker.perform_async(@form.id, profile.params)
     render json: { master_person_id: master_person_id }, status: :ok
   end
 
