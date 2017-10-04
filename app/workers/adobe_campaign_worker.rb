@@ -12,6 +12,7 @@ class AdobeCampaignWorker
     self.params = params
     return if form.campaign_code.blank?
     find_or_create_adobe_profile
+    find_or_create_adobe_subscription
   rescue ActiveRecord::RecordNotFound
     # Form deleted after job enqueued, ignore it
     nil
