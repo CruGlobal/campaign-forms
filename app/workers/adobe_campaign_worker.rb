@@ -3,13 +3,16 @@
 class AdobeCampaignWorker
   include Sidekiq::Worker
 
+  MASTER_PERSON_ID = 'cusGlobalID'
+
   sidekiq_options unique: :until_and_while_executing
 
-  attr_accessor :form, :params
+  attr_accessor :form, :params, :master_person_id
 
-  def perform(id, params)
+  def perform(id, params, master_person_id = nil)
     self.form = Form.find(id)
     self.params = params
+    self.master_person_id = master_person_id
     return if form.campaign_code.blank?
     find_or_create_adobe_profile
     find_or_create_adobe_subscription
@@ -69,6 +72,7 @@ class AdobeCampaignWorker
       next if field.adobe_campaign_attribute.blank?
       profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split('.'), value))
     end
+    profile[MASTER_PERSON_ID] = master_person_id if master_person_id.present?
     profile
   end
 
