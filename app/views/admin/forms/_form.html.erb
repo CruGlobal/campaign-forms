@@ -25,9 +25,7 @@
     </div>
   </div>
 <% end %>
-<% if form.redirecturl.present? %>
-  <script>
-    window.SERVER_DATA = "<%= form.redirecturl %>";
-  </script>
+<% if form.redirect_url.present? %>
+  <script>window.campaignRedirectUrl = "<%= form.redirect_url %>";</script>
 <% end %>
 <script type="application/javascript" src="<%= asset_url '/assets/campaign-form.js' %>"></script>
