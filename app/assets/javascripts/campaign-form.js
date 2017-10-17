@@ -27,16 +27,6 @@
                     method: 'POST',
                     dataType: 'json',
                     success: function (data, status, xhr) {
-                        // Show Success message
-                        $('.campaign-form .alert-success')
-                            .removeClass('hidden');
-
-                        // Disable and hide form
-                        $('.campaign-form form')
-                            .addClass('hidden')
-                            .find('input, button')
-                            .prop('disabled', 'disabled');
-
                         // Submit Adobe Analytics event if present
                         if (typeof window._satellite !== 'undefined') {
                             if (typeof data.master_person_id !== 'undefined')
@@ -49,6 +39,21 @@
                         // Call optional success callback if defined
                         if (typeof campaignForm.successCallback === 'function') {
                             campaignForm.successCallback(data.master_person_id)
+                        }
+
+                        // redirect if setup
+                        if(typeof data.redirect_url !== 'undefined') {
+                          window.location.href = data.redirect_url;
+                        } else {
+                          // Show Success message
+                          $('.campaign-form .alert-success')
+                              .removeClass('hidden');
+
+                          // Disable and hide form
+                          $('.campaign-form form')
+                              .addClass('hidden')
+                              .find('input, button')
+                              .prop('disabled', 'disabled');
                         }
                     },
                     error: function (xhr) {

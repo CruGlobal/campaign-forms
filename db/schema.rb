@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004170814) do
+ActiveRecord::Schema.define(version: 20171017170859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20171004170814) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "style", default: "basic", null: false
+    t.string "redirect_url"
     t.index ["created_by_id"], name: "index_forms_on_created_by_id"
   end
 
