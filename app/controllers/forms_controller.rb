@@ -14,7 +14,10 @@ class FormsController < ApplicationController
     load_form
     render(json: profile.errors, status: :bad_request) and return unless profile.valid?
     AdobeCampaignWorker.perform_async(@form.id, profile.params, master_person_id)
-    render json: { master_person_id: master_person_id }, status: :ok
+
+    response = { master_person_id: master_person_id }
+    response[:redirect_url] = @form.redirect_url if @form.redirect_url
+    render json: response, status: :ok
   end
 
   private

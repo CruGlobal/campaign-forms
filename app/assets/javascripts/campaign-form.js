@@ -42,8 +42,8 @@
                         }
 
                         // redirect if setup
-                        if (window.campaignRedirectUrl) {
-                          window.location.href = window.campaignRedirectUrl
+                        if(typeof data.redirect_url !== 'undefined') {
+                          window.location.href = data.redirect_url;
                         } else {
                           // Show Success message
                           $('.campaign-form .alert-success')
