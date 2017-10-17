@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20171004170814) do
     t.string "name", null: false
     t.text "title"
     t.text "body"
+    t.text "redirecturl"
     t.string "action"
     t.text "success"
     t.bigint "created_by_id"

@@ -50,6 +50,11 @@
                         if (typeof campaignForm.successCallback === 'function') {
                             campaignForm.successCallback(data.master_person_id)
                         }
+
+                        // redirect if setup
+                        if (window.SERVER_DATA) {
+                          window.location.href = window.SERVER_DATA
+                        }
                     },
                     error: function (xhr) {
                         var errors = xhr.responseJSON || {};

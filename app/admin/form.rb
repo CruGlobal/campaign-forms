@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Form do
   menu priority: 10
-  permit_params :campaign_code, :name, :style, :title, :body, :action, :success, :created_by_id,
+  permit_params :campaign_code, :name, :style, :title, :body, :redirecturl, :action, :success, :created_by_id,
                 form_fields_attributes: %i[id field_id label help required placeholder position _destroy]
 
   config.filters = false
@@ -55,6 +55,7 @@ ActiveAdmin.register Form do
       f.input :title, input_html: { maxlength: 2048, rows: 2 }, hint: 'Allows HTML. Optional'
       f.input :body, label: 'Body Text', input_html: { maxlength: 4096, rows: 3 }, hint: 'Allows HTML. Optional'
       f.input :action, label: 'Submit Button', input_html: { value: f.object.action || 'Subscribe' }
+      f.input :redirecturl, label: 'Redirect url', input_html: { maxlength: 2048, rows: 1 }, hint: 'Upon successful submit, optionally redirect a user. ie. http://www.cru.org/success.'
       f.input :success, label: 'Success Message',
                         input_html: { maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS },
                         hint: 'Allows HTML. Optional'
