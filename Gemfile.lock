@@ -1,7 +1,6 @@
 GIT
-  remote: git@github.com:CruGlobal/omniauth-cas.git
-  revision: 73446af4a970eaa2c9b73508792d2fad51f75020
-  branch: update_and_fix_namespaces
+  remote: https://github.com/CruGlobal/omniauth-cas.git
+  revision: b4726bf6a60645a09726c4b0f648e06894b09389
   specs:
     omniauth-cas (1.1.1)
       addressable (~> 2.3)
