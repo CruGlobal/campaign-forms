@@ -29,9 +29,15 @@
                     success: function (data, status, xhr) {
                         // Submit Adobe Analytics event if present
                         if (typeof window._satellite !== 'undefined') {
+                            // Extend data layer with master_person_id
                             if (typeof data.master_person_id !== 'undefined')
                                 window.digitalData = $.extend(true, {}, window.digitalData || {}, {
                                     user: [{profile: [{profileInfo: {grMasterPersonId: data.master_person_id}}]}]
+                                });
+                            // Extend data layer with campaign_code
+                            if (typeof data.campaign_code !== 'undefined')
+                                window.digitalData = $.extend(true, {}, window.digitalData || {}, {
+                                    page: {pageInfo: {emailList: 'ACS | ' + data.campaign_code }}
                                 });
                             window._satellite.track('aa-email-signup');
                         }
