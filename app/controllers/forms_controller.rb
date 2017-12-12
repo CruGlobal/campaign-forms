@@ -37,7 +37,7 @@ class FormsController < ApplicationController
 
   def render_create_form
     data = { master_person_id: master_person_id, campaign_code: @form.campaign_code }
-    data[:redirect_url] = @form.redirect_url if @form.redirect_url
+    data[:redirect_url] = @form.redirect_url if @form.redirect_url&.present?
     render json: data, status: :ok
   end
 end
