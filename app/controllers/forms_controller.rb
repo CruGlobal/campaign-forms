@@ -12,7 +12,8 @@ class FormsController < ApplicationController
 
   def create
     load_form
-    render(json: profile.errors, status: :bad_request) and return unless profile.valid?
+    render_bad_request and return unless profile.valid?
+    render_unauthorized and return unless recaptcha.valid?
     AdobeCampaignWorker.perform_async(@form.id, profile.params, master_person_id)
     render_create_form
   end
@@ -31,8 +32,20 @@ class FormsController < ApplicationController
     @master_person_id ||= MasterPersonId.new(@form, @profile.params).find_or_create_id
   end
 
+  def recaptcha
+    @recaptcha ||= Recaptcha.new(@form, params, request.remote_ip)
+  end
+
+  def render_bad_request
+    render json: profile.errors, status: :bad_request
+  end
+
   def record_not_found(error)
     render json: { error: error.message }, status: :not_found
+  end
+
+  def render_unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
   end
 
   def render_create_form

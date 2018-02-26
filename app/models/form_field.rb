@@ -8,13 +8,7 @@ class FormField < ApplicationRecord
   delegate :name, :input, :field_options, to: :field
 
   def label_value
-    if label.present?
-      label
-    elsif field.label.present?
-      field.label
-    else
-      name
-    end
+    label.presence || field.label.presence || name
   end
 
   def placeholder_value
