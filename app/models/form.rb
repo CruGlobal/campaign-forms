@@ -6,7 +6,7 @@ class Form < ApplicationRecord
 
   has_many :form_fields, dependent: :destroy
   has_many :fields, through: :form_fields, dependent: :nullify
-  belongs_to :created_by, class_name: 'User'
+  belongs_to :created_by, class_name: 'User' # rubocop:disable Rails/InverseOf
 
   validates :campaign_code, presence: true
   validates :name, presence: true

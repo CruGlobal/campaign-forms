@@ -3,6 +3,7 @@
 ActiveAdmin.register Form do
   menu priority: 10
   permit_params :campaign_code, :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
+                :use_recaptcha, :recaptcha_key, :recaptcha_secret,
                 form_fields_attributes: %i[id field_id label help required placeholder position _destroy]
 
   config.filters = false
@@ -14,6 +15,7 @@ ActiveAdmin.register Form do
       Service.active_admin_collection.key(f.campaign_code) || f.campaign_code
     end
     column :created_by
+    column 'Uses reCAPTCHA', :use_recaptcha
     actions
   end
 
@@ -59,6 +61,14 @@ ActiveAdmin.register Form do
       f.input :success, label: 'Success Message',
                         input_html: { maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS },
                         hint: 'Allows HTML. Optional'
+      f.input :use_recaptcha, as: :boolean, label: 'Use reCAPTCHA?', input_html: { 'data-toggle': '#recaptcha_keys' },
+                              hint: 'Requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
+                                    ' target="_blank">Invisible ' \
+                                    'reCAPTCHA</a>'.html_safe # rubocop:disable Rails/OutputSafety
+      f.inputs name: 'reCAPTCHA Keys', id: 'recaptcha_keys', style: f.object.use_recaptcha ? '' : 'display: none;' do
+        f.input :recaptcha_key, label: 'reCAPTCHA Site Key'
+        f.input :recaptcha_secret, label: 'reCAPTCHA Secret Key'
+      end
       f.input :created_by_id, as: :hidden, input_html: { value: f.object.created_by_id || current_user.id }
     end
 

@@ -12,8 +12,8 @@ namespace :assets do
 
   # Based on suggestion at https://github.com/rails/sprockets-rails/issues/49#issuecomment-20535134
   task postcompile: :"assets:environment" do
-    manifest_path = Dir.glob(File.join(Rails.root, 'public/assets/.sprockets-manifest-*.json')).first
-    manifest_data = JSON.load(File.new(manifest_path))
+    manifest_path = Dir.glob(Rails.root.join('public', 'assets', '.sprockets-manifest-*.json')).first
+    manifest_data = JSON.load(File.new(manifest_path)) # rubocop:disable Security/JSONLoad
 
     manifest_data['assets'].each do |logical_path, digested_path|
       next unless %w[campaign-form.js].include? logical_path
