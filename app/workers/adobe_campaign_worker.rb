@@ -62,7 +62,7 @@ class AdobeCampaignWorker
   end
 
   def email_address
-    @email_address ||= params[email_address_name]
+    @email_address ||= params[email_address_name]&.downcase
   end
 
   def profile_hash
@@ -70,13 +70,18 @@ class AdobeCampaignWorker
     params.each do |key, value|
       field = form.fields.find_by(name: key)
       next if field.adobe_campaign_attribute.blank?
-      profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split('.'), value))
+      profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split('.'), value_for_key(value, key)))
     end
     profile[MASTER_PERSON_ID] = master_person_id if master_person_id.present?
     profile
   end
 
-  # Recursively converts 'foo.bar.baz' = value to { foo: { bar: { baz: value } } }
+  def value_for_key(value, key)
+    return value.downcase if key == email_address_name
+    value
+  end
+
+  # Recursively converts ['foo', 'bar', 'baz'] = value to { foo: { bar: { baz: value } } }
   def hasherize(keys = [], value = nil)
     if keys.empty?
       value
