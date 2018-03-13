@@ -7,6 +7,9 @@ Naming/FileName:
     - Gemfile
     - node_modules/**/*
 
+AbcSize/AbcSize:
+  Max: 17
+
 BlockLength:
   Exclude:
     - app/admin/**/*
