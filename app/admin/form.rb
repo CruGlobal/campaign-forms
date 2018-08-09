@@ -3,7 +3,7 @@
 ActiveAdmin.register Form do
   menu priority: 10
   permit_params :campaign_code, :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
-                :use_recaptcha, :recaptcha_key, :recaptcha_secret,
+                :use_recaptcha, :recaptcha_key, :recaptcha_secret, :origin,
                 form_fields_attributes: %i[id field_id label help required placeholder position _destroy]
 
   config.filters = false
@@ -58,6 +58,7 @@ ActiveAdmin.register Form do
       f.input :body, label: 'Body Text', input_html: { maxlength: 4096, rows: 3 }, hint: 'Allows HTML. Optional'
       f.input :action, label: 'Submit Button', input_html: { value: f.object.action || 'Subscribe' }
       f.input :redirect_url, label: 'Redirect url', hint: 'Upon successful submit, optionally redirect a user. ie. http://www.cru.org/success.'
+      f.input :origin, hint: 'Subscription origin. You must create another form if you want different origins on the same campaign.'
       f.input :success, label: 'Success Message',
                         input_html: { maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS },
                         hint: 'Allows HTML. Optional'
