@@ -48,7 +48,7 @@ class AdobeCampaignWorker
   def subscribe_to_adobe_campaign
     profile = find_or_create_adobe_profile
     service_subs_url = adobe_campaign_service['subscriptions']['href']
-    Adobe::Campaign::Service.post_subscription(service_subs_url, profile['PKey'])
+    Service.post_subscription(service_subs_url, profile['PKey'], form.origin)
   end
 
   def adobe_campaign_service
