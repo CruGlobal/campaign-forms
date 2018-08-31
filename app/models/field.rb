@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Field < ApplicationRecord
-  INPUT_TYPES = %w[text email number tel url radio select].freeze
+  INPUT_TYPES = %w[text email number tel url radio select campaign].freeze
   has_many :field_options, dependent: :destroy
   has_many :option_values, through: :field_options, dependent: :nullify
 

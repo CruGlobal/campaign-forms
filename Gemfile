@@ -12,6 +12,7 @@ end
 
 gem 'active_admin_flat_skin'
 gem 'activeadmin', '~> 1.0.0'
+gem 'activeadmin_addons'
 gem 'adobe-campaign', '~> 0.2'
 gem 'devise'
 gem 'font-awesome-rails'

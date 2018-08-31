@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180809152804) do
+ActiveRecord::Schema.define(version: 20180831130300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "campaign_options", force: :cascade do |t|
+    t.bigint "form_field_id", null: false
+    t.string "campaign_code"
+    t.string "label"
+    t.integer "position", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_field_id"], name: "index_campaign_options_on_form_field_id"
+  end
 
   create_table "field_options", force: :cascade do |t|
     t.bigint "field_id"
@@ -52,7 +62,7 @@ ActiveRecord::Schema.define(version: 20180809152804) do
   end
 
   create_table "forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "campaign_code"
+    t.string "campaign_codes", default: [], array: true
     t.string "name", null: false
     t.text "title"
     t.text "body"
