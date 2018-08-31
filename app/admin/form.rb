@@ -80,11 +80,9 @@ ActiveAdmin.register Form do
 
     f.has_many :form_fields, allow_destroy: true, sortable: :position do |fields_f|
       fields_f.inputs do
-        fields_f.input :field, include_blank: false, input_html: { class: 'form_form_fields_select' },
-                               collection: Field.all.map do |field|
-                                 [field.name, field.id,
-                                  'data-field-type': field.input]
-                               end
+        fields_f.input :field,
+                       include_blank: false, input_html: { class: 'form_form_fields_select' },
+                       collection: Field.all.map { |field| [field.name, field.id, 'data-field-type': field.input] }
         fields_f.input :label, hint: 'Override field label. Leave blank to use default field label.'
         fields_f.input :placeholder, hint: 'Override field placeholder.'
         fields_f.input :help, hint: 'Optional help message.'

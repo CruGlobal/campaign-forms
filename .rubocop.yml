@@ -7,7 +7,7 @@ Naming/FileName:
     - Gemfile
     - node_modules/**/*
 
-AbcSize/AbcSize:
+Metrics/AbcSize:
   Max: 17
 
 BlockLength:

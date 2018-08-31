@@ -15,7 +15,7 @@ class Service < Adobe::Campaign::Service
   end
 
   def self.active_admin_collection
-    all.map { |service| service.values_at('label', 'name') }.sort {|a, b| a.first <=> b.first}.to_h
+    all.map { |service| service.values_at('label', 'name') }.sort_by(&:first).to_h
   end
 
   def self.post_subscription(service_subs_url, person_pkey, origin = nil)
