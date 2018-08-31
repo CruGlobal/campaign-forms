@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label><%= field.label_value %></label>
+  <% field.campaign_options.each do |campaign_option| %>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="<%= field.name %>[]" value="<%= campaign_option.campaign_code %>" <%== 'required' if field.required %>>
+        <%= campaign_option.label_value %>
+      </label>
+    </div>
+  <% end %>
+</div>

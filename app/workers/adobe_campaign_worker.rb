@@ -7,13 +7,14 @@ class AdobeCampaignWorker
 
   sidekiq_options unique: :until_and_while_executing
 
-  attr_accessor :form, :params, :master_person_id
+  attr_accessor :form, :params, :master_person_id, :campaign_code
 
-  def perform(id, params, master_person_id = nil)
+  def perform(id, params, campaign_code, master_person_id = nil)
     self.form = Form.find(id)
     self.params = params
+    self.campaign_code = campaign_code
     self.master_person_id = master_person_id
-    return if form.campaign_code.blank?
+    return if campaign_code.blank?
     find_or_create_adobe_profile
     find_or_create_adobe_subscription
   rescue ActiveRecord::RecordNotFound
@@ -42,7 +43,7 @@ class AdobeCampaignWorker
     profile = find_or_create_adobe_profile
     prof_subs_url = profile['subscriptions']['href']
     subscriptions = Adobe::Campaign::Base.get_request(prof_subs_url)['content']
-    subscriptions.find { |sub| sub['serviceName'] == form.campaign_code }
+    subscriptions.find { |sub| sub['serviceName'] == campaign_code }
   end
 
   def subscribe_to_adobe_campaign
@@ -52,7 +53,7 @@ class AdobeCampaignWorker
   end
 
   def adobe_campaign_service
-    Adobe::Campaign::Service.find(form.campaign_code).dig('content', 0)
+    Adobe::Campaign::Service.find(campaign_code).dig('content', 0)
   end
 
   def email_address_name
