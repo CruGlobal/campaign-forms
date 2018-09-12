@@ -25,9 +25,9 @@
                             user: [{profile: [{profileInfo: {grMasterPersonId: data.master_person_id}}]}]
                         });
                     // Extend data layer with campaign_code
-                    if (typeof data.campaign_code !== 'undefined')
+                    if (typeof data.campaign_codes !== 'undefined' && data.campaign_codes.length > 0)
                         window.digitalData = $.extend(true, {}, window.digitalData || {}, {
-                            page: {pageInfo: {emailList: 'ACS | ' + data.campaign_code}}
+                            page: {pageInfo: {emailList: 'ACS | ' + data.campaign_codes.join(' | ')}}
                         });
                     window._satellite.track('aa-email-signup');
                 }
