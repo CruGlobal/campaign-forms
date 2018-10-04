@@ -12,7 +12,11 @@
         campaignForm.submitForm(form)
     };
 
+    var formSubmitted = false;
+
     campaignForm.submitForm = function (form) {
+      if (!formSubmitted) {
+        formSubmitted = true;
         $(form).ajaxSubmit({
             method: 'POST',
             dataType: 'json',
@@ -59,8 +63,10 @@
                     $('.campaign-form .alert-danger').removeClass('hidden');
                 // show errors from rails
                 validator.showErrors(errors);
+                formSubmitted = false;
             }
         });
+      }
     };
 
     $(function () {
