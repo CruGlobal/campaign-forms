@@ -20,6 +20,9 @@ class AdobeCampaignWorker
   rescue ActiveRecord::RecordNotFound
     # Form deleted after job enqueued, ignore it
     nil
+  rescue RestClient::ServiceUnavailable
+    # Ignore ServiceUnavailable, sidekiq will retry
+    raise IgnorableError
   end
 
   def find_or_create_adobe_profile
