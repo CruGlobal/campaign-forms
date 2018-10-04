@@ -20,7 +20,7 @@ class AdobeCampaignWorker
   rescue ActiveRecord::RecordNotFound
     # Form deleted after job enqueued, ignore it
     nil
-  rescue RestClient::ServiceUnavailable
+  rescue RestClient::ServiceUnavailable, RestClient::GatewayTimeout, RestClient::BadGateway
     # Ignore ServiceUnavailable, sidekiq will retry
     raise IgnorableError
   end
