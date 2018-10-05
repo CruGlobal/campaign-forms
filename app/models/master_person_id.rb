@@ -15,7 +15,9 @@ class MasterPersonId
     return unless email_address
     entities = find_entities_by_email
     entities = Array.wrap(create_entity) unless entities.size == 1
-    entities.first&.dig('person', 'master_person:relationship', 'master_person')
+    relationships = entities.first&.dig('person', 'master_person:relationship')
+    # wrap relationships, there was a bug where some people have more than 1 master_person, take the first
+    Array.wrap(relationships)&.dig(0, 'master_person') if relationships
   end
 
   private
