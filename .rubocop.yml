@@ -13,3 +13,4 @@ Metrics/AbcSize:
 BlockLength:
   Exclude:
     - app/admin/**/*
+    - spec/**/*.rb

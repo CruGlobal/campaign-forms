@@ -34,7 +34,7 @@ class Form < ApplicationRecord
 
   def initialize(attributes = nil)
     super
-    return unless attributes.empty?
+    return if attributes.present?
     email_field_id = Field.find_by(input: 'email', name: 'email_address')&.id
     form_fields.build(field_id: email_field_id, required: true) if email_field_id
   end
