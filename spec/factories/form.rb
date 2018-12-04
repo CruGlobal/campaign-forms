@@ -5,10 +5,10 @@ require 'faker'
 
 FactoryBot.define do
   factory :form, class: 'Form' do
-    name { Faker::Name.name }
+    name { Faker::Lorem.word }
     association :created_by, factory: :user
-    title { 'The form title' }
-    body  { 'The form body' }
+    title { SecureRandom.alphanumeric(10) }
+    body  { SecureRandom.alphanumeric(20) }
 
     factory :empty_form do
       initialize_with { new({}) }
