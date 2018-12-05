@@ -5,7 +5,7 @@ rvm: 2.5.0
 services:
   - postgresql
 addons:
-  postgresql: "10"
+  postgresql: "9.6"
 before_install:
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
