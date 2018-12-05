@@ -13,5 +13,15 @@ FactoryBot.define do
     factory :empty_form do
       initialize_with { new({}) }
     end
+
+    factory :full_form do
+      style { 'basic' }
+      title { Faker::Lorem.words(4).join(' ') }
+      body  { Faker::Lorem.paragraph }
+      action { 'Subscribe' }
+      redirect_url { Faker::Internet.url }
+      origin { SecureRandom.alphanumeric(6) }
+      success { Faker::Lorem.sentence }
+    end
   end
 end
