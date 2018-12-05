@@ -42,7 +42,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
-  gem 'rubocop-cru'
+  gem 'rubocop-cru', '>= 1.1.0'
   gem 'simplecov'
   gem 'webmock'
 end
