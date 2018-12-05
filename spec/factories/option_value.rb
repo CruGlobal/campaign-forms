@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :option_value do
-    name  { Faker::Lorem.word }
-    label { Faker::Lorem.word }
+    name  { SecureRandom.alphanumeric(30) }
+    label { SecureRandom.alphanumeric(30) }
   end
 end
