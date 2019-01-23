@@ -35,8 +35,16 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capybara'
+  gem 'coveralls', require: false
+  gem 'database_cleaner'
   gem 'dotenv-rails'
-  gem 'rubocop-cru'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+  gem 'rubocop-cru', '>= 1.1.0'
+  gem 'simplecov'
+  gem 'webmock'
 end
 
 group :development do
