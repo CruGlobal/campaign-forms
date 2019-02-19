@@ -29,7 +29,8 @@ class AdobeCampaignWorker
   end
 
   def find_or_create_adobe_profile
-    @adobe_profile ||= find_on_adobe_campaign
+    # First try to find the profile, unless we should always create one
+    @adobe_profile ||= find_on_adobe_campaign unless form.create_profile?
     @adobe_profile ||= post_to_adobe_campaign
   end
 
