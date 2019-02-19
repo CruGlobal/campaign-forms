@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180831130300) do
+ActiveRecord::Schema.define(version: 20190219191753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20180831130300) do
     t.string "recaptcha_key"
     t.string "recaptcha_secret"
     t.string "origin"
+    t.boolean "create_profile"
     t.index ["created_by_id"], name: "index_forms_on_created_by_id"
   end
 

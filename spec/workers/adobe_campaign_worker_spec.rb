@@ -77,6 +77,26 @@ RSpec.describe AdobeCampaignWorker do
     end
   end
 
+  describe 'find_or_create_adobe_profile' do
+    it 'should skip \'find_on_adobe_campaign\' when \'form.create_profile?\' is set' do
+      form = create(:form, create_profile: true)
+      campaign_worker = AdobeCampaignWorker.new
+      campaign_worker.form = form
+      expect(campaign_worker).not_to receive(:find_on_adobe_campaign)
+      expect(campaign_worker).to receive(:post_to_adobe_campaign)
+      campaign_worker.find_or_create_adobe_profile
+    end
+
+    it 'should call \'find_on_adobe_campaign\' when \'form.create_profile?\' is not set' do
+      form = create(:form)
+      campaign_worker = AdobeCampaignWorker.new
+      campaign_worker.form = form
+      expect(campaign_worker).to receive(:find_on_adobe_campaign)
+      expect(campaign_worker).to receive(:post_to_adobe_campaign)
+      campaign_worker.find_or_create_adobe_profile
+    end
+  end
+
   describe 'post_to_adobe_campaign' do
     it 'should call Adobe::Campaign::Profile.post' do
       # Prepare
