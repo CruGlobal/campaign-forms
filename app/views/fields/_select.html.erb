@@ -1,6 +1,6 @@
 <div class="form-group">
-  <label for="<%= "cf_#{field.name}" %>"><%= field.label_value %></label>
-  <select id="<%= "cf_#{field.name}" %>" class="form-control" name="<%= field.name %>" <%== 'required' if field.required %>>
+  <label for="<%= "cf_#{field.name}_#{field.id}" %>"><%= field.label_value %></label>
+  <select id="<%= "cf_#{field.name}_#{field.id}" %>" class="form-control" name="<%= field.name %>" <%== 'required' if field.required %>>
     <% field.field_options.each do |option| %>
         <option value="<%= option.name %>"><%= option.label %></option>
     <% end %>

@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label for="<%= "cf_#{field.name}" %>"><%= field.label_value %></label>
+  <label for="<%= "cf_#{field.name}_#{field.id}" %>"><%= field.label_value %></label>
   <div>
     <% field.field_options.each do |option| %>
       <label class="radio-inline">
