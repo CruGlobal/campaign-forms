@@ -18,7 +18,7 @@
         <%= render partial: "fields/#{field.partial}", locals: { field: field, form: form } %>
     <% end %>
     <% if form.use_recaptcha %>
-      <div id="recaptcha" class="g-recaptcha" data-sitekey="<%== form.recaptcha_key %>" data-callback="recaptchaCallback" data-size="invisible"></div>
+      <div class="g-recaptcha" data-sitekey="<%== form.recaptcha_key %>" data-callback="recaptchaCallback" data-size="invisible"></div>
     <% end %>
     <button type="submit" class="btn btn-primary" <%== 'disabled="disabled"' if preview.present? %>><%= form.action %></button>
   </form>

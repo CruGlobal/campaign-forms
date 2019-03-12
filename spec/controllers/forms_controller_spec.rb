@@ -19,7 +19,7 @@ RSpec.describe FormsController, type: :controller do
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
       expect(response.body).to match(%r{<div>#{body}<\/div>}im)
-      expect(response.body).not_to match(/<div id="recaptcha"/im)
+      expect(response.body).not_to match(/class="g-recaptcha"/im)
     end
 
     it 'renders "record Not Found"' do
@@ -47,7 +47,7 @@ RSpec.describe FormsController, type: :controller do
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
       expect(response.body).to match(%r{<div>#{body}<\/div>}im)
-      expect(response.body).to match(/<div id="recaptcha"/im)
+      expect(response.body).to match(/class="g-recaptcha"/im)
     end
 
     it 'renders form - with fields, recaptcha' do
@@ -65,8 +65,8 @@ RSpec.describe FormsController, type: :controller do
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
       expect(response.body).to match(%r{<div>#{body}<\/div>}im)
-      expect(response.body).to match(/<div id="recaptcha"/im)
-      expect(response.body).to match(/<input id="cf_name_1" class="form-control" type="text" name="name_1"/im)
+      expect(response.body).to match(/class="g-recaptcha"/im)
+      expect(response.body).to match(/<input id="cf_name_1_(\d+)" class="form-control" type="text" name="name_1"/im)
     end
   end
 
