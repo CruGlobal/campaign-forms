@@ -8,6 +8,7 @@ if (typeof window.campaignForms === 'undefined') {
   // Campaign Forms
   (function ($) {
     var campaignForms = window.campaignForms = window.campaignForms || {}
+    var campaignForm = window.campaignForm = window.campaignForm || {}
     var idCounter = 0
 
     campaignForms.jQuery = $.noConflict(true)
