@@ -94,14 +94,16 @@ if (typeof window.campaignForms === 'undefined') {
             var recaptchaId
             Object.keys(___grecaptcha_cfg.clients).forEach(function (key) {
               var item = ___grecaptcha_cfg.clients[key]
-              if (item.aU === recaptchaDiv) {
-                recaptchaId = item.id
-              }
+              Object.keys(item).forEach(function (prop) {
+                if (recaptchaDiv === item[prop])
+                  recaptchaId = item.id
+              })
             })
-            if(typeof recaptchaId !== 'undefined')
+            if (typeof recaptchaId !== 'undefined') {
               grecaptcha.execute(recaptchaId)
-            else
+            } else {
               grecaptcha.execute()
+            }
           } else {
             submitForm($form)
           }
@@ -127,6 +129,7 @@ if (typeof window.campaignForms === 'undefined') {
 
           var recaptchaDiv = $('div[data-sitekey]', form)[0]
           if (recaptchaDiv) {
+            $(recaptchaDiv).removeAttr('id')
             var recaptchaCallback = formId + 'Callback'
             $(recaptchaDiv).attr('data-callback', recaptchaCallback)
             window[recaptchaCallback] = window.campaignForms[formId].recaptchaCallback
