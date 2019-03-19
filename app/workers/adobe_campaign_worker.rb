@@ -7,16 +7,16 @@ class AdobeCampaignWorker
 
   sidekiq_options unique: :until_and_while_executing
 
-  attr_accessor :form, :params, :master_person_id, :campaign_code
+  attr_accessor :form, :params, :master_person_id, :campaign_codes
 
-  def perform(id, params, campaign_code, master_person_id = nil)
+  def perform(id, params, campaign_codes, master_person_id = nil)
     self.form = Form.find(id)
     self.params = params
-    self.campaign_code = campaign_code
+    self.campaign_codes = Array.wrap(campaign_codes)
     self.master_person_id = master_person_id
-    return if campaign_code.blank?
+    return if self.campaign_codes.empty?
     find_or_create_adobe_profile
-    find_or_create_adobe_subscription
+    self.campaign_codes.each { |campaign_code| find_or_create_adobe_subscription(campaign_code) }
   rescue ActiveRecord::RecordNotFound
     # Form deleted after job enqueued, ignore it
     nil
@@ -42,24 +42,24 @@ class AdobeCampaignWorker
     Adobe::Campaign::Profile.post(profile_hash)
   end
 
-  def find_or_create_adobe_subscription
-    find_adobe_subscription || subscribe_to_adobe_campaign
+  def find_or_create_adobe_subscription(campaign_code)
+    find_adobe_subscription(campaign_code) || subscribe_to_adobe_campaign(campaign_code)
   end
 
-  def find_adobe_subscription
+  def find_adobe_subscription(campaign_code)
     profile = find_or_create_adobe_profile
     prof_subs_url = profile['subscriptions']['href']
     subscriptions = Adobe::Campaign::Base.get_request(prof_subs_url)['content']
     subscriptions.find { |sub| sub['serviceName'] == campaign_code }
   end
 
-  def subscribe_to_adobe_campaign
+  def subscribe_to_adobe_campaign(campaign_code)
     profile = find_or_create_adobe_profile
-    service_subs_url = adobe_campaign_service['subscriptions']['href']
+    service_subs_url = adobe_campaign_service(campaign_code)['subscriptions']['href']
     Service.post_subscription(service_subs_url, profile['PKey'], form.origin)
   end
 
-  def adobe_campaign_service
+  def adobe_campaign_service(campaign_code)
     Adobe::Campaign::Service.find(campaign_code).dig('content', 0)
   end
 

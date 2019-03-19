@@ -14,7 +14,7 @@ class FormsController < ApplicationController
     load_form
     render_bad_request and return unless profile.valid?
     render_unauthorized and return unless recaptcha.valid?
-    campaign_codes.each { |code| AdobeCampaignWorker.perform_async(@form.id, profile.params, code, master_person_id) }
+    AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
     render_create_form
   end
 
