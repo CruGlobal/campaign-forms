@@ -115,7 +115,7 @@ RSpec.describe FormsController, type: :controller do
       expect(response.body).to eq({ master_person_id: master_person_id, campaign_codes: [] }.to_json)
     end
 
-    it 'returns OK - with campaign codes' do
+    it 'returns OK - with one campaign code' do
       # Prepare
       email = Faker::Internet.email
       master_person_id = SecureRandom.rand(1_000_000)
@@ -132,6 +132,25 @@ RSpec.describe FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to eq({ master_person_id: master_person_id, campaign_codes: [c_name] }.to_json)
+    end
+
+    it 'returns OK - with multiple campaign codes' do
+      # Prepare
+      email = Faker::Internet.email
+      master_person_id = SecureRandom.uuid
+      expect_any_instance_of(MasterPersonId).to receive(:find_or_create_id).and_return(master_person_id)
+      # Campaign field
+      campaign_field = create(:field, input: 'campaign', name: 'c_name')
+      create(:form_field, form: @form, field: campaign_field)
+      expect(AdobeCampaignWorker).to receive(:perform_async).once
+      c_name = %w(a b)
+
+      # Test
+      post :create, params: { id: @form.id, email_address: email, c_name: c_name }
+
+      # Verify
+      expect(response.status).to eq(200)
+      expect(response.body).to eq({ master_person_id: master_person_id, campaign_codes: [*c_name] }.to_json)
     end
   end
 end

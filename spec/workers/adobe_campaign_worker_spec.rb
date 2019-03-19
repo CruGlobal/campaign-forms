@@ -39,7 +39,41 @@ RSpec.describe AdobeCampaignWorker do
       # Verify
       expect(campaign_worker.form).to eq(form)
       expect(campaign_worker.params).to eq(params)
-      expect(campaign_worker.campaign_code).to eq(campaign_code)
+      expect(campaign_worker.campaign_codes).to eq([campaign_code])
+      expect(campaign_worker.master_person_id).to eq(master_person_id)
+      expect(campaign_worker.instance_variable_get('@adobe_profile')).to eq(adobe_profile)
+    end
+
+    it 'supports multiple campaign_codes' do
+      # Prepare
+      form = create(:form)
+      params = {}
+      campaign_codes = [SecureRandom.alphanumeric(10), SecureRandom.alphanumeric(10)]
+      subscription_url = Faker::Internet.url
+      stub_request(:get, subscription_url)
+        .to_return(status: 200, body: { content: [{ serviceName: campaign_codes[0] },
+                                                  { serviceName: campaign_codes[1]}] }.to_json)
+
+      # noinspection RubyStringKeysInHashInspection
+      adobe_profile = {
+        'subscriptions' => { 'href' => subscription_url }
+      }
+      # noinspection RubyStringKeysInHashInspection
+      by_email_payload = {
+        'content' => [adobe_profile]
+      }
+      expect(Adobe::Campaign::Profile).to receive(:by_email).and_return(by_email_payload)
+
+      master_person_id = SecureRandom.rand(1_000_000)
+      campaign_worker = AdobeCampaignWorker.new
+
+      # Test
+      campaign_worker.perform(form.id, params, campaign_codes, master_person_id)
+
+      # Verify
+      expect(campaign_worker.form).to eq(form)
+      expect(campaign_worker.params).to eq(params)
+      expect(campaign_worker.campaign_codes).to eq(campaign_codes)
       expect(campaign_worker.master_person_id).to eq(master_person_id)
       expect(campaign_worker.instance_variable_get('@adobe_profile')).to eq(adobe_profile)
     end
