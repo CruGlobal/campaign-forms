@@ -4,6 +4,7 @@ cache: bundler
 rvm: 2.5.3
 services:
   - postgresql
+  - redis-server
 addons:
   postgresql: "9.6"
 before_install:
