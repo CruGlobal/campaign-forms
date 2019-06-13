@@ -10,7 +10,7 @@ logs:
 
   - type: file
     service: campaign-forms
-    path: /var/log/nginx/datadog.log
+    path: /var/log/nginx/access.log
     source: nginx
     sourcecategory: nginx_access
 
