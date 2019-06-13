@@ -11,9 +11,9 @@ require 'action_controller/railtie'
 # require "action_mailer/railtie"
 # require 'action_view/railtie'
 # require "action_cable/engine"
-# require 'sprockets/railtie'
+require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
-
+require_relative '../lib/log/logger'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -26,5 +26,7 @@ module CampaignForms
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    # Enable ougai
+    config.logger = Log::Logger.new(Rails.root.join('log', 'datadog.log'))
   end
 end

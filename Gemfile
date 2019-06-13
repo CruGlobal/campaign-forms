@@ -35,6 +35,9 @@ gem 'sidekiq-unique-jobs', '~> 5.0.0'
 gem 'strip_attributes', '~> 1.8.0'
 gem 'syslog-logger'
 gem 'uglifier', '>= 1.3.0'
+gem 'awesome_print'
+gem 'lograge'
+gem 'ougai', '~> 1.7'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -51,7 +54,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'awesome_print'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'pry'
   gem 'pry-byebug'
