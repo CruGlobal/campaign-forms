@@ -10,7 +10,7 @@ logs:
 
   - type: file
     path: /home/app/webapp/log/datadog.log
-    service: ararat
+    service: campaign-forms
     source: ruby
     # sourcecategory: sourcecode
     #For multiline logs, if they start with a timestamp with format yyyy-mm-dd uncomment the below processing rule
@@ -21,5 +21,5 @@ logs:
 
   - type: file
     path: /var/log/puma/*.log
-    service: ararat
+    service: campaign-forms
     source: puma 

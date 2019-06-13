@@ -9,13 +9,13 @@ logs:
     #   tags: (optional) add tags to each logs collected
 
   - type: file
-    service: ararat
+    service: campaign-forms
     path: /var/log/nginx/datadog.log
     source: nginx
     sourcecategory: nginx_access
 
   - type: file
-    service: ararat
+    service: campaign-forms
     path: /var/log/error*.log
     source: nginx
     sourcecategory: nginx_error
