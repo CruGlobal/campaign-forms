@@ -52,10 +52,10 @@ Rails.application.configure do
   config.log_tags = [:request_id]
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-  config.logger = ActiveSupport::TaggedLogging.new(Logger::Syslog.new("campaign-forms-#{ENV['ENVIRONMENT']}",
-                                                                      Syslog::LOG_LOCAL7))
-  config.log_tags = [->(request) { "ReqID:#{request.uuid}" }]
+  #config.log_formatter = ::Logger::Formatter.new
+  #config.logger = ActiveSupport::TaggedLogging.new(Logger::Syslog.new("campaign-forms-#{ENV['ENVIRONMENT']}",
+  #                                                                    Syslog::LOG_LOCAL7))
+  #config.log_tags = [->(request) { "ReqID:#{request.uuid}" }]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
