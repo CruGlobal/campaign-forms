@@ -27,6 +27,10 @@ module CampaignForms
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     # Enable ougai
-    config.logger = Log::Logger.new(Rails.root.join('log', 'datadog.log'))
+    if Rails.env.development? || Rails.const_defined?('Console')
+      config.logger = Log::Logger.new(STDOUT)
+    elsif !Rails.env.test? # use default logger in test env
+      config.logger = Log::Logger.new(Rails.root.join('log', 'datadog.log'))
+    end
   end
 end
