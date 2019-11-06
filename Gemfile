@@ -5,16 +5,16 @@ source 'https://gems.contribsys.com/' do
   gem 'sidekiq-pro'
 end
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.5.7'
 
 gem 'active_admin_flat_skin'
-gem 'activeadmin', '~> 1.0.0'
+gem 'activeadmin', '~> 1.3.0'
 gem 'activeadmin_addons'
 gem 'adobe-campaign', '~> 0.2'
 gem 'awesome_print'
+gem 'bootsnap', '>= 1.1.0', require: false
 gem 'ddtrace', '~> 0.24'
 gem 'devise'
 gem 'dogstatsd-ruby'
@@ -28,9 +28,9 @@ gem 'nokogiri', '>= 1.8.5'
 gem 'omniauth-cas', github: 'CruGlobal/omniauth-cas'
 gem 'ougai', '~> 1.7'
 gem 'pg', '~>0.18'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.11'
 gem 'rack', '>= 2.0.6'
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 5.2.3'
 gem 'redis-namespace', '~> 1.5.3'
 gem 'redis-rails', '~> 5.0.2'
 gem 'rollbar'
