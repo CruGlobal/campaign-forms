@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
   before do
@@ -15,8 +15,7 @@ RSpec.describe SessionsController, type: :controller do
     @auth_hash.info = OpenStruct.new
     @auth_hash.info.email = Faker::Internet.email
     OmniAuth.config.test_mode = true
-    request.env['omniauth.auth'] = @auth_hash
-
+    request.env["omniauth.auth"] = @auth_hash
   end
 
   describe "#create" do

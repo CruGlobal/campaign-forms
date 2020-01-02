@@ -4,10 +4,10 @@ Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
 
-  config.access_token = ENV.fetch('ROLLBAR_ACCESS_TOKEN')
+  config.access_token = ENV.fetch("ROLLBAR_ACCESS_TOKEN")
 
   # Here we'll disable in test and development:
-  config.enabled = false if Rails.env.test? || Rails.env.development? || ENV['DISABLE_ROLLBAR']
+  config.enabled = false if Rails.env.test? || Rails.env.development? || ENV["DISABLE_ROLLBAR"]
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
@@ -29,8 +29,8 @@ Rollbar.configure do |config|
   #
   # You can also specify a callable, which will be called with the exception instance.
   config.exception_level_filters.merge!(
-    'ActionController::RoutingError' => 'ignore',
-    'IgnorableError' => 'ignore'
+    "ActionController::RoutingError" => "ignore",
+    "IgnorableError" => "ignore"
   )
 
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
@@ -47,6 +47,6 @@ Rollbar.configure do |config|
   # Enable delayed reporting (using Sidekiq)
   # config.use_sidekiq
   # You can supply custom Sidekiq options:
-  config.use_sidekiq 'queue' => 'default'
+  config.use_sidekiq "queue" => "default"
   config.sidekiq_threshold = 4
 end

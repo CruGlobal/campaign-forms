@@ -1,7 +1,6 @@
-
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::OptionsController, type: :controller do
   render_views
@@ -10,8 +9,8 @@ RSpec.describe Admin::OptionsController, type: :controller do
     sign_in @user
   end
 
-  describe 'GET index' do
-    it 'returns something' do
+  describe "GET index" do
+    it "returns something" do
       # Prepare
       option_value = create(:option_value)
 

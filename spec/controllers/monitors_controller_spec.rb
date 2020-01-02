@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe MonitorsController, type: :controller do
-  describe 'lb' do
-    it 'returns lb.txt' do
+  describe "lb" do
+    it "returns lb.txt" do
       # Test
       get :lb
 

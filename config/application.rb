@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails'
+require "rails"
 # Pick the frameworks you want:
-require 'active_model/railtie'
+require "active_model/railtie"
 # require 'active_job/railtie'
-require 'active_record/railtie'
-require 'action_controller/railtie'
+require "active_record/railtie"
+require "action_controller/railtie"
 # require "action_mailer/railtie"
 # require 'action_view/railtie'
 # require "action_cable/engine"
-require 'sprockets/railtie'
-require 'rails/test_unit/railtie'
-require_relative '../lib/log/logger'
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
+require_relative "../lib/log/logger"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -29,10 +29,10 @@ module CampaignForms
     # the framework and any gems in your application.
 
     # Enable ougai
-    if Rails.env.development? || Rails.const_defined?('Console')
+    if Rails.env.development? || Rails.const_defined?("Console")
       config.logger = Log::Logger.new(STDOUT)
     elsif !Rails.env.test? # use default logger in test env
-      config.logger = Log::Logger.new(Rails.root.join('log', 'datadog.log'))
+      config.logger = Log::Logger.new(Rails.root.join("log", "datadog.log"))
     end
   end
 end

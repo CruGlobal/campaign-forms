@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'pathname'
+require "pathname"
 
 # Every time assets:precompile is called, trigger assets:postcompile afterwards.
-Rake::Task['assets:precompile'].enhance do
-  Rake::Task['assets:postcompile'].invoke
+Rake::Task["assets:precompile"].enhance do
+  Rake::Task["assets:postcompile"].invoke
 end
 
 namespace :assets do
@@ -12,14 +12,14 @@ namespace :assets do
 
   # Based on suggestion at https://github.com/rails/sprockets-rails/issues/49#issuecomment-20535134
   task postcompile: :"assets:environment" do
-    manifest_path = Dir.glob(Rails.root.join('public', 'assets', '.sprockets-manifest-*.json')).first
+    manifest_path = Dir.glob(Rails.root.join("public", "assets", ".sprockets-manifest-*.json")).first
     manifest_data = JSON.load(File.new(manifest_path)) # rubocop:disable Security/JSONLoad
 
-    manifest_data['assets'].each do |logical_path, digested_path|
+    manifest_data["assets"].each do |logical_path, digested_path|
       next unless %w[campaign-form.js].include? logical_path
 
-      full_digested_path    = Rails.root.join('public', 'assets', digested_path)
-      full_nondigested_path = Rails.root.join('public', 'assets', logical_path)
+      full_digested_path = Rails.root.join("public", "assets", digested_path)
+      full_nondigested_path = Rails.root.join("public", "assets", logical_path)
 
       logger.info "Copying to #{full_nondigested_path}"
 

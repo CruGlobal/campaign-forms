@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AdobeCampaignWorker do
   before(:each) do
     @access_token = SecureRandom.alphanumeric(30)
-    @stub = stub_request(:post, 'https://ims-na1.adobelogin.com/ims/exchange/jwt')
-            .with(body: { client_id: 'asdf', client_secret: 'asdf', jwt_token: 'asdf' })
-            .to_return(status: 200, body: { access_token: @access_token }.to_json)
+    @stub = stub_request(:post, "https://ims-na1.adobelogin.com/ims/exchange/jwt")
+      .with(body: {client_id: "asdf", client_secret: "asdf", jwt_token: "asdf"})
+      .to_return(status: 200, body: {access_token: @access_token}.to_json)
   end
 
-  describe 'perform' do
-    it 'performs job' do
+  describe "perform" do
+    it "performs job" do
       # Prepare
       form = create(:form)
       params = {}
       campaign_code = SecureRandom.alphanumeric(10)
       subscription_url = Faker::Internet.url
       stub_request(:get, subscription_url)
-        .to_return(status: 200, body: { content: [{ serviceName: campaign_code }] }.to_json)
+        .to_return(status: 200, body: {content: [{serviceName: campaign_code}]}.to_json)
 
       # noinspection RubyStringKeysInHashInspection
       adobe_profile = {
-        'subscriptions' => { 'href' => subscription_url }
+        "subscriptions" => {"href" => subscription_url},
       }
       # noinspection RubyStringKeysInHashInspection
       by_email_payload = {
-        'content' => [adobe_profile]
+        "content" => [adobe_profile],
       }
       expect(Adobe::Campaign::Profile).to receive(:by_email).and_return(by_email_payload)
 
@@ -41,26 +41,26 @@ RSpec.describe AdobeCampaignWorker do
       expect(campaign_worker.params).to eq(params)
       expect(campaign_worker.campaign_codes).to eq([campaign_code])
       expect(campaign_worker.master_person_id).to eq(master_person_id)
-      expect(campaign_worker.instance_variable_get('@adobe_profile')).to eq(adobe_profile)
+      expect(campaign_worker.instance_variable_get("@adobe_profile")).to eq(adobe_profile)
     end
 
-    it 'supports multiple campaign_codes' do
+    it "supports multiple campaign_codes" do
       # Prepare
       form = create(:form)
       params = {}
       campaign_codes = [SecureRandom.alphanumeric(10), SecureRandom.alphanumeric(10)]
       subscription_url = Faker::Internet.url
       stub_request(:get, subscription_url)
-        .to_return(status: 200, body: { content: [{ serviceName: campaign_codes[0] },
-                                                  { serviceName: campaign_codes[1]}] }.to_json)
+        .to_return(status: 200, body: {content: [{serviceName: campaign_codes[0]},
+                                                 {serviceName: campaign_codes[1]},]}.to_json)
 
       # noinspection RubyStringKeysInHashInspection
       adobe_profile = {
-        'subscriptions' => { 'href' => subscription_url }
+        "subscriptions" => {"href" => subscription_url},
       }
       # noinspection RubyStringKeysInHashInspection
       by_email_payload = {
-        'content' => [adobe_profile]
+        "content" => [adobe_profile],
       }
       expect(Adobe::Campaign::Profile).to receive(:by_email).and_return(by_email_payload)
 
@@ -75,10 +75,10 @@ RSpec.describe AdobeCampaignWorker do
       expect(campaign_worker.params).to eq(params)
       expect(campaign_worker.campaign_codes).to eq(campaign_codes)
       expect(campaign_worker.master_person_id).to eq(master_person_id)
-      expect(campaign_worker.instance_variable_get('@adobe_profile')).to eq(adobe_profile)
+      expect(campaign_worker.instance_variable_get("@adobe_profile")).to eq(adobe_profile)
     end
 
-    it 'should do nothing if the form does not exist' do
+    it "should do nothing if the form does not exist" do
       # Prepare
       params = {}
       campaign_code = SecureRandom.alphanumeric(10)
@@ -93,7 +93,7 @@ RSpec.describe AdobeCampaignWorker do
       expect(campaign_worker.params).to eq(nil)
     end
 
-    it 'should raise error when Rest API returns error' do
+    it "should raise error when Rest API returns error" do
       # Prepare
       form = create(:form)
       expect(Adobe::Campaign::Profile).to receive(:by_email).and_raise(RestClient::GatewayTimeout.new)
@@ -105,14 +105,14 @@ RSpec.describe AdobeCampaignWorker do
       campaign_worker = AdobeCampaignWorker.new
 
       # Test and verify
-      expect do
+      expect {
         campaign_worker.perform(form.id, params, campaign_code, master_person_id)
-      end.to raise_exception(IgnorableError)
+      }.to raise_exception(IgnorableError)
     end
   end
 
-  describe 'find_or_create_adobe_profile' do
-    it 'should skip \'find_on_adobe_campaign\' when \'form.create_profile?\' is set' do
+  describe "find_or_create_adobe_profile" do
+    it "should skip 'find_on_adobe_campaign' when 'form.create_profile?' is set" do
       form = create(:form, create_profile: true)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.form = form
@@ -121,7 +121,7 @@ RSpec.describe AdobeCampaignWorker do
       campaign_worker.find_or_create_adobe_profile
     end
 
-    it 'should call \'find_on_adobe_campaign\' when \'form.create_profile?\' is not set' do
+    it "should call 'find_on_adobe_campaign' when 'form.create_profile?' is not set" do
       form = create(:form)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.form = form
@@ -131,15 +131,15 @@ RSpec.describe AdobeCampaignWorker do
     end
   end
 
-  describe 'post_to_adobe_campaign' do
-    it 'should call Adobe::Campaign::Profile.post' do
+  describe "post_to_adobe_campaign" do
+    it "should call Adobe::Campaign::Profile.post" do
       # Prepare
       form = create(:form)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.perform(form.id, {}, nil, nil)
-      profile_hash = { email_address: { email: 'some_email' } }
+      profile_hash = {email_address: {email: "some_email"}}
       expect(campaign_worker).to receive(:profile_hash).and_return(profile_hash)
-      stub_request(:post, 'https://mc.adobe.io/cru/campaign/profileAndServicesExt/profile')
+      stub_request(:post, "https://mc.adobe.io/cru/campaign/profileAndServicesExt/profile")
         .with(body: profile_hash.to_json)
         .to_return(status: 200, body: '{"result": "something"}')
 
@@ -148,12 +148,12 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq('result' => 'something')
+      expect(result).to eq("result" => "something")
     end
   end
 
-  describe 'profile_hash' do
-    it 'skips for non adobe_campaign_attribute' do
+  describe "profile_hash" do
+    it "skips for non adobe_campaign_attribute" do
       # Prepare
       form = create(:form)
       field = create(:email_field)
@@ -168,15 +168,15 @@ RSpec.describe AdobeCampaignWorker do
       expect(result).to eq({})
     end
 
-    it 'sets fields' do
+    it "sets fields" do
       # Prepare
       form = create(:form)
-      field = create(:email_field, adobe_campaign_attribute: 'email_address.email')
+      field = create(:email_field, adobe_campaign_attribute: "email_address.email")
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       new_value = SecureRandom.alphanumeric(30)
       params = {
-        field.name => new_value
+        field.name => new_value,
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -185,10 +185,10 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq('email_address' => { 'email' => new_value })
+      expect(result).to eq("email_address" => {"email" => new_value})
     end
 
-    it 'skips sets master_person_id' do
+    it "skips sets master_person_id" do
       # Prepare
       master_person_id = SecureRandom.rand(1_000_000)
       form = create(:form)
@@ -200,15 +200,15 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq('cusGlobalID' => master_person_id)
+      expect(result).to eq("cusGlobalID" => master_person_id)
     end
   end
 
-  describe 'value_for_key' do
-    it 'returns downcase if this is an email' do
+  describe "value_for_key" do
+    it "returns downcase if this is an email" do
       # Prepare
       form = create(:form)
-      field = create(:email_field, adobe_campaign_attribute: 'email')
+      field = create(:email_field, adobe_campaign_attribute: "email")
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.perform(form.id, {}, nil, nil)
@@ -221,7 +221,7 @@ RSpec.describe AdobeCampaignWorker do
       expect(result).to eq(value.downcase)
     end
 
-    it 'returns just value if this is not email' do
+    it "returns just value if this is not email" do
       # Prepare
       form = create(:form)
       campaign_worker = AdobeCampaignWorker.new
@@ -229,15 +229,15 @@ RSpec.describe AdobeCampaignWorker do
       value = SecureRandom.alphanumeric(30)
 
       # Test
-      result = campaign_worker.value_for_key(value, 'anything')
+      result = campaign_worker.value_for_key(value, "anything")
 
       # Verify
       expect(result).to eq(value)
     end
   end
 
-  describe 'hasherize' do
-    it 'converts recursively' do
+  describe "hasherize" do
+    it "converts recursively" do
       # Prepare
       campaign_worker = AdobeCampaignWorker.new
       keys = %w[foo bar baz]
@@ -248,7 +248,7 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq('foo' => { 'bar' => { 'baz' => value } })
+      expect(result).to eq("foo" => {"bar" => {"baz" => value}})
     end
   end
 end

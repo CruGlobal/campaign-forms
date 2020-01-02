@@ -30,7 +30,7 @@ class Profile
   def validate_required
     # Test for required params
     form.required_params.each do |param|
-      errors[param] = 'This field is required.' unless permitted.key? param
+      errors[param] = "This field is required." unless permitted.key? param
     end
   end
 
@@ -38,13 +38,13 @@ class Profile
     if email_address # rubocop:disable Style/GuardClause
       # Use same RegExp as Global Registry to catch invalid emails before sending there.
       unless email_address.match?(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
-        errors[email_address_name] = 'Please enter a valid email address.'
+        errors[email_address_name] = "Please enter a valid email address."
       end
     end
   end
 
   def email_address_name
-    @email_address_name ||= form.fields.find_by(input: 'email', global_registry_attribute: 'email_address.email')&.name
+    @email_address_name ||= form.fields.find_by(input: "email", global_registry_attribute: "email_address.email")&.name
   end
 
   def email_address

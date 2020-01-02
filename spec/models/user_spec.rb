@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
-  describe 'find_or_create_from_auth_hash' do
+  describe "find_or_create_from_auth_hash" do
     before(:each) do
       @sso_guid = SecureRandom.uuid
       @uid = "#{Faker::Name.first_name}_#{Faker::Name.last_name}"
@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
       @auth_hash.info.email = Faker::Internet.email
     end
 
-    it 'finds the existing user and updates its data' do
+    it "finds the existing user and updates its data" do
       # Prepare
       existing_user = create(:user, sso_guid: @sso_guid)
       create(:user, username: @uid.downcase)
@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
       expect(result.email).to eq(@auth_hash.info.email)
     end
 
-    it 'updates data for pending user' do
+    it "updates data for pending user" do
       # Prepare
       pending_user = create(:user, username: @uid.downcase)
 
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
       expect(result.email).to eq(@auth_hash.info.email)
     end
 
-    it 'creates a new user when there is neither existing nor pending' do
+    it "creates a new user when there is neither existing nor pending" do
       # Test
       result = User.find_or_create_from_auth_hash(@auth_hash)
       expect(result.sso_guid).to eq(@sso_guid)
@@ -57,8 +57,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'name' do
-    it 'returns a name as compound of first and last names' do
+  describe "name" do
+    it "returns a name as compound of first and last names" do
       first_name = Faker::Name.first_name
       last_name = Faker::Name.last_name
       user = create(:user, first_name: first_name, last_name: last_name)

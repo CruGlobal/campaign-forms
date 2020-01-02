@@ -3,8 +3,8 @@
 class Recaptcha
   attr_accessor :form, :recaptcha_response, :remote_ip
 
-  RECAPTCHA_PARAM = 'g-recaptcha-response'.to_sym
-  RECAPTCHA_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
+  RECAPTCHA_PARAM = "g-recaptcha-response".to_sym
+  RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 
   def initialize(form, params, remote_ip)
     self.form = form
@@ -31,12 +31,12 @@ class Recaptcha
   def verify_response
     # https://developers.google.com/recaptcha/docs/verify
     response = RestClient.post(RECAPTCHA_VERIFY_URL,
-                               secret: form.recaptcha_secret,
-                               response: recaptcha_response,
-                               remoteip: remote_ip)
+      secret: form.recaptcha_secret,
+      response: recaptcha_response,
+      remoteip: remote_ip)
     json = JSON.parse(response.body)
-    return json['success'] if json.key? 'success'
-    Rollbar.error('reCAPTCHA error', json.merge(form: form.id)) if json.key? 'error-codes'
+    return json["success"] if json.key? "success"
+    Rollbar.error("reCAPTCHA error", json.merge(form: form.id)) if json.key? "error-codes"
     false
   end
 end

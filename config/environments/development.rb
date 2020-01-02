@@ -17,11 +17,11 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  config.cache_store = if Rails.root.join('tmp', 'caching-dev.txt').exist?
-                         :memory_store
-                       else
-                         :null_store
-                       end
+  config.cache_store = if Rails.root.join("tmp", "caching-dev.txt").exist?
+    :memory_store
+  else
+    :null_store
+  end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   # config.active_storage.service = :local

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'capybara/rails'
+require "rails_helper"
+require "capybara/rails"
 
 RSpec.describe Admin::FormFieldsController, type: :controller do
   render_views
@@ -11,11 +11,11 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
     sign_in @user
   end
 
-  describe 'GET index' do
-    it 'returns users' do
+  describe "GET index" do
+    it "returns users" do
       # Prepare
       field = create(:field_full)
-      field2 = create(:field, input: 'radio', placeholder: SecureRandom.alphanumeric(10))
+      field2 = create(:field, input: "radio", placeholder: SecureRandom.alphanumeric(10))
       op_value1 = create(:option_value)
       op_value2 = create(:option_value)
       create(:field_option, field: field2, option_value: op_value1)
@@ -42,38 +42,38 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
     end
   end
 
-  describe 'GET new' do
-    it 'renders form for new field' do
+  describe "GET new" do
+    it "renders form for new field" do
       # Test
       get :new
 
       # Verify
       expect(response.status).to eq(200)
-      expect(response.body).to have_field('Name')
-      expect(response.body).to have_field('Input Type')
-      expect(response.body).to have_field('Label')
-      expect(response.body).to have_field('Placeholder')
-      expect(response.body).to have_field('Global registry attribute')
-      expect(response.body).to have_field('Adobe campaign attribute')
+      expect(response.body).to have_field("Name")
+      expect(response.body).to have_field("Input Type")
+      expect(response.body).to have_field("Label")
+      expect(response.body).to have_field("Placeholder")
+      expect(response.body).to have_field("Global registry attribute")
+      expect(response.body).to have_field("Adobe campaign attribute")
     end
   end
 
-  describe 'POST create' do
-    it 'creates field' do
+  describe "POST create" do
+    it "creates field" do
       # Prepare
       field_attributes = {
         name: Faker::Lorem.word,
-        input: 'number',
+        input: "number",
         label: Faker::Lorem.word,
         placeholder: Faker::Lorem.word,
         global_registry_attribute: Faker::Lorem.word,
-        adobe_campaign_attribute: Faker::Lorem.word
+        adobe_campaign_attribute: Faker::Lorem.word,
       }
 
       # Test and verify
-      expect do
-        post :create, params: { field: field_attributes }
-      end.to change(Field, :count).by(1)
+      expect {
+        post :create, params: {field: field_attributes}
+      }.to change(Field, :count).by(1)
 
       new_field = Field.last
       expect(new_field).to be
@@ -87,40 +87,40 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
     end
   end
 
-  describe 'GET edit' do
-    it 'should get field for edit' do
+  describe "GET edit" do
+    it "should get field for edit" do
       # Prepare
       field = create(:field_full)
 
       # Test
-      get :edit, params: { id: field.id }
+      get :edit, params: {id: field.id}
 
       # Verify
       expect(response.status).to eq(200)
-      expect(response.body).to have_field('Name', with: field.name)
-      expect(response.body).to have_field('Input Type', with: field.input)
-      expect(response.body).to have_field('Label', with: field.label)
-      expect(response.body).to have_field('Placeholder', with: field.placeholder)
-      expect(response.body).to have_field('Global registry attribute', with: field.global_registry_attribute)
-      expect(response.body).to have_field('Adobe campaign attribute', with: field.adobe_campaign_attribute)
+      expect(response.body).to have_field("Name", with: field.name)
+      expect(response.body).to have_field("Input Type", with: field.input)
+      expect(response.body).to have_field("Label", with: field.label)
+      expect(response.body).to have_field("Placeholder", with: field.placeholder)
+      expect(response.body).to have_field("Global registry attribute", with: field.global_registry_attribute)
+      expect(response.body).to have_field("Adobe campaign attribute", with: field.adobe_campaign_attribute)
     end
   end
 
-  describe 'PUT update' do
-    it 'updates the field' do
+  describe "PUT update" do
+    it "updates the field" do
       # Prepare
       field = create(:field_full)
       field_attributes = {
         name: Faker::Lorem.word,
-        input: 'number',
+        input: "number",
         label: Faker::Lorem.word,
         placeholder: Faker::Lorem.word,
         global_registry_attribute: Faker::Lorem.word,
-        adobe_campaign_attribute: Faker::Lorem.word
+        adobe_campaign_attribute: Faker::Lorem.word,
       }
 
       # Test
-      put :update, params: { id: field.id, field: field_attributes }
+      put :update, params: {id: field.id, field: field_attributes}
 
       # Verify
       expect(response).to redirect_to(admin_form_field_path(field))
@@ -134,13 +134,13 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
     end
   end
 
-  describe 'GET show' do
-    it 'shows the field' do
+  describe "GET show" do
+    it "shows the field" do
       # Prepare
       field = create(:field_full)
 
       # Test
-      get :show, params: { id: field.id }
+      get :show, params: {id: field.id}
 
       # Verify
       expect(response.status).to eq(200)
@@ -151,19 +151,19 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
     end
   end
 
-  describe 'DELETE destroy' do
-    it 'deletes field' do
+  describe "DELETE destroy" do
+    it "deletes field" do
       # Prepare
       field = create(:field_full)
 
       # Test
-      delete :destroy, params: { id: field.id }
+      delete :destroy, params: {id: field.id}
 
       # Verify
       expect(response).to redirect_to(admin_form_fields_path)
-      expect do
+      expect {
         Field.find(field.id)
-      end.to raise_exception(ActiveRecord::RecordNotFound)
+      }.to raise_exception(ActiveRecord::RecordNotFound)
     end
   end
 end

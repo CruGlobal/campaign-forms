@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Form, type: :model do
-  describe 'campaign_codes' do
-    it 'should remove empty arrays' do
+  describe "campaign_codes" do
+    it "should remove empty arrays" do
       # Prepare
-      value = [[], ['a'], ['b']]
+      value = [[], ["a"], ["b"]]
       tested = build(:form)
       tested.campaign_codes = value
 
@@ -14,15 +14,15 @@ RSpec.describe Form, type: :model do
       result = tested.campaign_codes
 
       # Validate
-      expect(result).to eq([['a'], ['b']])
+      expect(result).to eq([["a"], ["b"]])
     end
   end
 
-  describe 'required_params' do
-    it 'returns only required field' do
+  describe "required_params" do
+    it "returns only required field" do
       # Prepare
-      field1 = create(:field, name: 'name_1')
-      field2 = create(:field, name: 'name_2')
+      field1 = create(:field, name: "name_1")
+      field2 = create(:field, name: "name_2")
       tested = create(:form)
       create(:form_field, form: tested, field: field1, required: true)
       create(:form_field, form: tested, field: field2)
@@ -31,15 +31,15 @@ RSpec.describe Form, type: :model do
       required_params = tested.required_params
 
       # Validate
-      expect(required_params).to eq(['name_1'])
+      expect(required_params).to eq(["name_1"])
     end
   end
 
-  describe 'permitted_params' do
-    it 'returns permitted params' do
+  describe "permitted_params" do
+    it "returns permitted params" do
       # Prepare
-      field_cam = create(:field, name: 'the_campaign', input: 'campaign')
-      field_age = create(:field, name: 'age', input: 'number')
+      field_cam = create(:field, name: "the_campaign", input: "campaign")
+      field_age = create(:field, name: "age", input: "number")
 
       tested = create(:form)
       create(:form_field, form: tested, field: field_cam)
@@ -51,13 +51,13 @@ RSpec.describe Form, type: :model do
       # Validate
       expect(tested_pp.size).to eq(2)
       # noinspection RubyStringKeysInHashInspection
-      expect(tested_pp).to include('the_campaign' => [])
-      expect(tested_pp).to include('age')
+      expect(tested_pp).to include("the_campaign" => [])
+      expect(tested_pp).to include("age")
     end
   end
 
-  describe 'initialize' do
-    it 'builds email field when attributes are empty' do
+  describe "initialize" do
+    it "builds email field when attributes are empty" do
       # Prepare
       email_field = create(:email_field)
 
@@ -70,7 +70,7 @@ RSpec.describe Form, type: :model do
       expect(tested.form_fields[0].required).to eq(true)
     end
 
-    it 'does not build email field when attributes are not empty' do
+    it "does not build email field when attributes are not empty" do
       # Test
       tested = build(:form)
 

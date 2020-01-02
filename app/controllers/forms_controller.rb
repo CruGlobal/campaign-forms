@@ -12,8 +12,8 @@ class FormsController < ApplicationController
 
   def create
     load_form
-    render_bad_request and return unless profile.valid?
-    render_unauthorized and return unless recaptcha.valid?
+    render_bad_request && return unless profile.valid?
+    render_unauthorized && return unless recaptcha.valid?
     AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
     render_create_form
   end
@@ -41,15 +41,15 @@ class FormsController < ApplicationController
   end
 
   def record_not_found(error)
-    render json: { error: error.message }, status: :not_found
+    render json: {error: error.message}, status: :not_found
   end
 
   def render_unauthorized
-    render json: { error: 'Unauthorized' }, status: :unauthorized
+    render json: {error: "Unauthorized"}, status: :unauthorized
   end
 
   def render_create_form
-    data = { master_person_id: master_person_id, campaign_codes: campaign_codes }
+    data = {master_person_id: master_person_id, campaign_codes: campaign_codes}
     data[:redirect_url] = @form.redirect_url if @form.redirect_url&.present?
     render json: data, status: :ok
   end
@@ -58,7 +58,7 @@ class FormsController < ApplicationController
     @campaign_codes ||=
       begin
         codes = @form.campaign_codes || []
-        names = @form.form_fields.joins(:field).where(fields: { input: 'campaign' })&.map { |field| field.name }
+        names = @form.form_fields.joins(:field).where(fields: {input: "campaign"})&.map { |field| field.name }
         names.each do |name|
           codes += (@profile.params[name] || [])
         end
