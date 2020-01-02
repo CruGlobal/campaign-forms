@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   def authenticate_active_admin_user!
-    redirect_to user_cas_omniauth_authorize_path and return unless current_user
+    redirect_to('/login/new') and return unless current_user
     unauthorized unless current_user.has_access
   end
 

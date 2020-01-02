@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   resources :forms, only: %i[show create]
 
   get 'monitors/lb'
+  get '/login/new', to: 'login#new'
   root 'admin/forms#index'
 end
