@@ -15,6 +15,7 @@ gem 'activeadmin_addons'
 gem 'adobe-campaign', '~> 0.2'
 gem 'awesome_print'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bundle-audit'
 gem 'ddtrace', '~> 0.24'
 gem 'devise'
 gem 'dogstatsd-ruby'
