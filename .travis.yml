@@ -5,12 +5,14 @@ services:
   - postgresql
   - redis-server
 addons:
-  postgresql: "9.6"
+  postgresql: "10"
 before_install:
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
   - bundle exec rake assets:precompile
   - bundle exec rake db:setup
 script:
-  - bundle exec rspec
-  - bundle exec rubocop -R
+  - bundle exec rspec --color
+  - bundle exec bundle audit check --update --ignore CVE-2015-9284
+  - bundle exec brakeman -A -q --ensure-latest --no-pager
+  - bundle exec standardrb

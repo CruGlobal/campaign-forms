@@ -20,10 +20,10 @@ class FormField < ApplicationRecord
 
   def partial
     case input
-    when 'select', 'radio', 'campaign'
+    when "select", "radio", "campaign"
       input
     else
-      'input'
+      "input"
     end
   end
 end

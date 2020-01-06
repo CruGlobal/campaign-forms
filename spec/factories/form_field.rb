@@ -1,7 +1,6 @@
-
 # frozen_string_literal: true
 
-require 'securerandom'
+require "securerandom"
 
 FactoryBot.define do
   factory :form_field do

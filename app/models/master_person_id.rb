@@ -15,27 +15,27 @@ class MasterPersonId
     return unless email_address
     entities = find_entities_by_email
     entities = Array.wrap(create_entity) unless entities.size == 1
-    relationships = entities.first&.dig('person', 'master_person:relationship')
+    relationships = entities.first&.dig("person", "master_person:relationship")
     # wrap relationships, there was a bug where some people have more than 1 master_person, take the first
-    Array.wrap(relationships)&.dig(0, 'master_person') if relationships
+    Array.wrap(relationships)&.dig(0, "master_person") if relationships
   end
 
   private
 
   def find_entities_by_email
-    params = { entity_type: :person, fields: 'master_person:relationship',
-               'filters[email_address][email]': email_address,
-               'filters[owned_by]': 'all', per_page: 1 }
-    Array.wrap(GlobalRegistry::Entity.get(params)&.dig('entities'))
+    params = {entity_type: :person, fields: "master_person:relationship",
+              'filters[email_address][email]': email_address,
+              'filters[owned_by]': "all", per_page: 1,}
+    Array.wrap(GlobalRegistry::Entity.get(params)&.dig("entities"))
   rescue RestClient::BadRequest
     []
   end
 
   def create_entity
-    GlobalRegistry::Entity.post({ entity: { person: person_entity } },
-                                params: { full_response: 'true',
-                                          fields: 'master_person:relationship',
-                                          require_mdm: 'true' })&.dig('entity')
+    GlobalRegistry::Entity.post({entity: {person: person_entity}},
+      params: {full_response: "true",
+               fields: "master_person:relationship",
+               require_mdm: "true",})&.dig("entity")
   end
 
   def person_entity
@@ -43,7 +43,7 @@ class MasterPersonId
     params.each do |key, value|
       field = form.fields.find_by(name: key)
       next if field.global_registry_attribute.blank?
-      entity.deep_merge!(hasherize(field.global_registry_attribute.split('.'), value))
+      entity.deep_merge!(hasherize(field.global_registry_attribute.split("."), value))
     end
     entity
   end
@@ -51,7 +51,7 @@ class MasterPersonId
   def email_address_name
     return @email_address_name if @email_field_set
     @email_field_set = true
-    @email_address_name = form.fields.find_by(input: 'email', global_registry_attribute: 'email_address.email')&.name
+    @email_address_name = form.fields.find_by(input: "email", global_registry_attribute: "email_address.email")&.name
   end
 
   def email_address
@@ -63,7 +63,7 @@ class MasterPersonId
     if keys.empty?
       value
     else
-      { client_integration_id: email_address, keys.shift => hasherize(keys, value) }
+      {:client_integration_id => email_address, keys.shift => hasherize(keys, value)}
     end
   end
 end
