@@ -32,7 +32,7 @@ gem "omniauth-rails_csrf_protection"
 gem "ougai", "~> 1.7"
 gem "pg", "~>0.18"
 gem "puma", "~> 4.1"
-gem "rack", ">= 2.0.6"
+gem "rack", "2.0.8" # sidekiq web has issue with 2.1.1
 gem "rails", "~> 5.2.3"
 gem "redis-namespace", "~> 1.5.3"
 gem "redis-rails", "~> 5.0.2"
