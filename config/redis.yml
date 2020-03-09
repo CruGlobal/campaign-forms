@@ -1,20 +1,20 @@
 default: &DEFAULT
-  db: 1
-  namespace: <%= ENV['PROJECT_NAME'] %>
+  :db: 1
+  :namespace: <%= ENV['PROJECT_NAME'] %>
 
 sidekiq:
   <<: *DEFAULT
-  host: <%= ENV.fetch('REDIS_PORT_6379_TCP_ADDR') %>
-  port: <%= ENV.fetch('REDIS_PORT_6379_TCP_PORT', 6379) %>
-  namespace: <%= [ ENV['PROJECT_NAME'], 'sidekiq' ].join(':') %>
+  :host: <%= ENV.fetch('REDIS_PORT_6379_TCP_ADDR') %>
+  :port: <%= ENV.fetch('REDIS_PORT_6379_TCP_PORT', 6379) %>
+  :namespace: <%= [ ENV['PROJECT_NAME'], 'sidekiq' ].join(':') %>
 
 session: &SESSION
   <<: *DEFAULT
-  host: <%= ENV.fetch('REDIS_PORT_6379_TCP_ADDR_SESSION') %>
-  port: <%= ENV.fetch('REDIS_PORT_6379_TCP_PORT_SESSION', 6379) %>
-  namespace: <%= [ ENV['PROJECT_NAME'], 'session' ].join(':') %>
-  expires_in: <%= 2.hours %>
+  :host: <%= ENV.fetch('REDIS_PORT_6379_TCP_ADDR_SESSION') %>
+  :port: <%= ENV.fetch('REDIS_PORT_6379_TCP_PORT_SESSION', 6379) %>
+  :namespace: <%= [ ENV['PROJECT_NAME'], 'session' ].join(':') %>
+  :expires_in: <%= 2.hours %>
 
 cache:
   <<: *SESSION
-  namespace: <%= [ ENV['PROJECT_NAME'], 'cache' ].join(':') %>
+  :namespace: <%= [ ENV['PROJECT_NAME'], 'cache' ].join(':') %>

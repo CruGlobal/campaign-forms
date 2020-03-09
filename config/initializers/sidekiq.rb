@@ -2,7 +2,7 @@
 
 require "redis"
 
-redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [], [], true)["sidekiq"]
+redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [Symbol], [], true)["sidekiq"]
 
 Redis.current = Redis.new(redis_conf)
 
