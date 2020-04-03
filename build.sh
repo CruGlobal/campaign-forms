@@ -1,16 +1,26 @@
 #!/bin/bash
 
+PG_PASSWORD="$(date +%s | sha256sum | base64 | head -c 16)"
+docker network create $PROJECT_NAME
+docker run --rm --network=$PROJECT_NAME --name=$PROJECT_NAME-redis -d redis
+docker run --rm --network=$PROJECT_NAME --name=$PROJECT_NAME-pg -e POSTGRES_PASSWORD=$PG_PASSWORD -d postgres:11
+sleep 10
+
 docker build \
-    --build-arg SIDEKIQ_CREDS=$SIDEKIQ_CREDS \
+    --network $PROJECT_NAME \
     --build-arg PROJECT_NAME=$PROJECT_NAME \
-    --build-arg REDIS_PORT_6379_TCP_ADDR=$REDIS_PORT_6379_TCP_ADDR \
-    --build-arg REDIS_PORT_6379_TCP_ADDR_SESSION=$REDIS_PORT_6379_TCP_ADDR_SESSION \
-    --build-arg DB_ENV_POSTGRESQL_USER=$DB_ENV_POSTGRESQL_USER \
-    --build-arg DB_ENV_POSTGRESQL_PASS=$DB_ENV_POSTGRESQL_PASS \
-    --build-arg DB_PORT_5432_TCP_ADDR=$DB_PORT_5432_TCP_ADDR \
+    --build-arg SIDEKIQ_CREDS=$SIDEKIQ_CREDS \
     --build-arg DD_API_KEY=$DD_API_KEY \
+    --build-arg REDIS_PORT_6379_TCP_ADDR=$PROJECT_NAME-redis \
+    --build-arg REDIS_PORT_6379_TCP_ADDR_SESSION=$PROJECT_NAME-redis \
+    --build-arg DB_ENV_POSTGRESQL_USER=postgres \
+    --build-arg DB_ENV_POSTGRESQL_PASS=$PG_PASSWORD \
+    --build-arg DB_PORT_5432_TCP_ADDR=$PROJECT_NAME-pg \
     -t 056154071827.dkr.ecr.us-east-1.amazonaws.com/$PROJECT_NAME:$ENVIRONMENT-$BUILD_NUMBER .
 rc=$?
+
+docker stop $PROJECT_NAME-redis $PROJECT_NAME-pg
+docker network rm $PROJECT_NAME
 
 if [ $rc -ne 0 ]; then
   echo -e "Docker build failed"
