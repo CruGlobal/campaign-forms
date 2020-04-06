@@ -1,19 +1,6 @@
 FROM 056154071827.dkr.ecr.us-east-1.amazonaws.com/base-image-ruby-version-arg:2.6
 MAINTAINER cru.org <wmd@cru.org>
 
-# Upgrade nodejs and npm
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 8.1.0
-
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
-  && \. "$NVM_DIR/nvm.sh" \
-  && nvm install $NODE_VERSION \
-  && nvm alias default $NODE_VERSION \
-  && nvm use default
-
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
 # Install yarn
 #RUN curl -o- -L https://yarnpkg.com/install.sh | bash \
 #  && ln -nsf /rails/.yarn/bin/yarn /usr/local/bin/yarn
