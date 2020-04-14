@@ -7,7 +7,7 @@ end
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "2.6.6"
 
 gem "active_admin_flat_skin"
 gem "activeadmin", "~> 1.3.0"
