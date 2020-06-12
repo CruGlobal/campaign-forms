@@ -28,5 +28,5 @@
     </div>
   </div>
 <% end %>
-<script type="application/javascript" src="<%= asset_url '/assets/campaign-form.js' %>"></script>
+<%= javascript_pack_tag 'campaign' %>
 <% if form.use_recaptcha %><script type="application/javascript" src='https://www.google.com/recaptcha/api.js'></script><% end %>
