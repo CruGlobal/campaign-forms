@@ -2,15 +2,15 @@
 <html>
 <head>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <script>
-    $(function() {
-      $("#auth_form").submit();
-    });
-  </script>
 </head>
 
 <body>
 <%= form_tag "/users/auth/cas", id: "auth_form" do %>
 <% end %>
+
+<script>
+  document.getElementById("auth_form").submit();
+</script>
+
 </body>
 </html>
