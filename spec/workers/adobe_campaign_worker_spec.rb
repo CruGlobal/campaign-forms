@@ -219,7 +219,7 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq("cusGlobalID" => master_person_id)
+      expect(result).to eq(AdobeCampaignWorker::MASTER_PERSON_ID => master_person_id)
     end
   end
 
