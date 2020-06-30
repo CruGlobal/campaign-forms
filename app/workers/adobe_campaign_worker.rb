@@ -77,7 +77,15 @@ class AdobeCampaignWorker
     profile = {}
     params.each do |key, value|
       field = form.fields.find_by(name: key)
-      next if field.adobe_campaign_attribute.blank?
+
+      date = concat_date(key, value) if key.include?('Month') || key.include?('Year')
+      if date.present?
+        field.adobe_campaign_attribute = 'birthDate'
+        key = 'Birth Date'
+        value = date
+      end
+
+      next if field.adobe_campaign_attribute.blank? || value.blank?
       profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split("."), value_for_key(value, key)))
     end
     profile[MASTER_PERSON_ID] = master_person_id if master_person_id.present?
@@ -87,6 +95,22 @@ class AdobeCampaignWorker
   def value_for_key(value, key)
     return value.downcase if key == email_address_name
     value
+  end
+
+  def concat_date(key, value)
+    if key.include?('Year')
+      @year = value.to_s
+    elsif key.include?('Day')
+      @day = value.to_s.rjust(2, '0')
+    elsif key.include?('Month')
+      @month = value.to_s.rjust(2, '0')
+    end
+
+    if @year.present? && @day.present? && @month.present?
+      @year + "/" + @month + "/" + @day
+    else
+      nil
+    end
   end
 
   # Recursively converts ['foo', 'bar', 'baz'] = value to { foo: { bar: { baz: value } } }

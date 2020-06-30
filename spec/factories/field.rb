@@ -17,5 +17,23 @@ FactoryBot.define do
       name { "email_address" }
       label { "Email address" }
     end
+
+    factory :birthday_day_field do
+      input { "number" }
+      name { "Birthday Day of Month" }
+      label { "Birthday Day of Month"}
+    end
+
+    factory :birthday_month_field do
+      input { "number" }
+      name { "Birthday Month" }
+      label { "Birthday Month"}
+    end
+
+    factory :birthday_year_field do
+      input { "number" }
+      name { "Birthday Year" }
+      label { "Birthday Year"}
+    end
   end
 end
