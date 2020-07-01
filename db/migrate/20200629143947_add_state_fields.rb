@@ -9,8 +9,8 @@ class AddStateFields < ActiveRecord::Migration[5.2]
 
     state.option_values.clear
     state.field_options.clear
-
-    states = ISO3166::Country.find_country_by_alpha3('USA').states
+    
+    states = ISO3166::Country.find_country_by_alpha3('USA').states.sort_by{ |state| state[1].name}
     states.each_with_index  do |item, index|
       next if item[0] == ("AA" || "AE" || "AP" || "AS" || "UM" || "VI")
       option_value = OptionValue.find_or_create_by(name: item[0], label: item[1].name)
