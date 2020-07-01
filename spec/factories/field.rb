@@ -20,19 +20,19 @@ FactoryBot.define do
 
     factory :birthday_day_field do
       input { "number" }
-      name { "Birthday Day of Month" }
+      name { "birthdate_day" }
       label { "Birthday Day of Month"}
     end
 
     factory :birthday_month_field do
       input { "number" }
-      name { "Birthday Month" }
+      name { "birthdate_month" }
       label { "Birthday Month"}
     end
 
     factory :birthday_year_field do
       input { "number" }
-      name { "Birthday Year" }
+      name { "birthdate_year" }
       label { "Birthday Year"}
     end
   end

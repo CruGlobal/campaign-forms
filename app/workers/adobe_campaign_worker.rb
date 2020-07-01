@@ -78,11 +78,11 @@ class AdobeCampaignWorker
     params.each do |key, value|
       field = form.fields.find_by(name: key)
 
-      date = concat_date(key, value) if key.include?('Month') || key.include?('Year')
-      if date.present?
+      birth_date = concat_birthdate(key, value) if key.end_with?('_month', '_day', '_year')
+      if birth_date.present?
         field.adobe_campaign_attribute = 'birthDate'
         key = 'Birth Date'
-        value = date
+        value = birth_date
       end
 
       next if field.adobe_campaign_attribute.blank? || value.blank?
@@ -97,17 +97,17 @@ class AdobeCampaignWorker
     value
   end
 
-  def concat_date(key, value)
-    if key.include?('Year')
-      @year = value.to_s
-    elsif key.include?('Day')
-      @day = value.to_s.rjust(2, '0')
-    elsif key.include?('Month')
-      @month = value.to_s.rjust(2, '0')
+  def concat_birthdate(key, value)
+    if key.end_with?('_year')
+      @birth_year = value.to_s
+    elsif key.end_with?('_day')
+      @birth_day = value.to_s.rjust(2, '0')
+    elsif key.end_with?('_month')
+      @birth_month = value.to_s.rjust(2, '0')
     end
 
-    if @year.present? && @day.present? && @month.present?
-      @year + "/" + @month + "/" + @day
+    if @birth_year.present? && @birth_day.present? && @birth_month.present?
+      @birth_year + "/" + @birth_month + "/" + @birth_day
     else
       nil
     end
