@@ -17,6 +17,7 @@ gem "awesome_print"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "brakeman"
 gem "bundle-audit"
+gem "countries"
 gem "ddtrace", "~> 0.24"
 gem "devise"
 gem "dogstatsd-ruby"
