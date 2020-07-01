@@ -9,10 +9,12 @@ class AddStateFields < ActiveRecord::Migration[5.2]
 
     state.option_values.clear
     state.field_options.clear
-    
-    states = ISO3166::Country.find_country_by_alpha3('USA').states.sort_by{ |state| state[1].name}
+
+    items_to_skip = %w(AA AE AP AS UM VI)
+
+    states = ISO3166::Country.find_country_by_alpha3('USA').states.sort_by{ |state| state[1].name }
     states.each_with_index  do |item, index|
-      next if item[0] == ("AA" || "AE" || "AP" || "AS" || "UM" || "VI")
+      next if items_to_skip.incude?(item[0])
       option_value = OptionValue.find_or_create_by(name: item[0], label: item[1].name)
       FieldOption.find_or_create_by(field: state, option_value: option_value, position: index)
     end
@@ -21,9 +23,11 @@ class AddStateFields < ActiveRecord::Migration[5.2]
   def down
     Field.find_by(name: 'State').delete_all
 
+    items_to_skip = %w(AA AE AP AS UM VI)
+
     states = ISO3166::Country.find_country_by_alpha3('USA').states
     states.each do |item|
-      next if item[0] == ("AA" || "AE" || "AP" || "AS" || "UM" || "VI")
+      next if items_to_skip.incude?(item[0])
       OptionValue.find_by(name: item[0], label: item[1].name).delete_all
     end
   end
