@@ -175,7 +175,7 @@ RSpec.describe AdobeCampaignWorker do
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       params = {
-          field.name => '',
+        field.name => "",
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -232,9 +232,9 @@ RSpec.describe AdobeCampaignWorker do
       create(:form_field, form: form, field: year)
       campaign_worker = AdobeCampaignWorker.new
       params = {
-          month.name => 12,
-          day.name => 1,
-          year.name => 1994
+        month.name => 12,
+        day.name => 1,
+        year.name => 1994,
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -243,7 +243,7 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq("birthDate" =>  "1994/12/01")
+      expect(result).to eq("birthDate" => "1994/12/01")
     end
 
     it "ignores the date if one section is missing" do
@@ -256,8 +256,8 @@ RSpec.describe AdobeCampaignWorker do
       create(:form_field, form: form, field: year)
       campaign_worker = AdobeCampaignWorker.new
       params = {
-          month.name => 12,
-          year.name => 1994
+        month.name => 12,
+        year.name => 1994,
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -268,7 +268,6 @@ RSpec.describe AdobeCampaignWorker do
       # noinspection RubyStringKeysInHashInspection
       expect(result).to eq({})
     end
-
   end
 
   describe "value_for_key" do
