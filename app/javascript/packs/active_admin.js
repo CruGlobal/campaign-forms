@@ -3,4 +3,4 @@
 import "../stylesheets/active_admin";
 
 import "@activeadmin/activeadmin";
-require("active_admin")
+require("active_admin_custom")
