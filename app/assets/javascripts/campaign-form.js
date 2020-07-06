@@ -145,14 +145,3 @@ window.campaignForms.jQuery(function () {
   window.campaignForms.registerForms()
 })
 
-$(document).ready(function() {
-    $("[id^='cf_Country']").change(function () {
-        if ($(this).val() != 'US') {
-            $("[for^='cf_state']").hide()
-            $("[id^='cf_state']").hide()
-        } else {
-            $("[for^='cf_state']").show()
-            $("[id^='cf_state']").show()
-        }
-    })
-})
