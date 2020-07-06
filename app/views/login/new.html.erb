@@ -1,3 +1,16 @@
-This login page is necessary due to a security issue with rails.
-<br/>
-<%= button_to "Login Here", "/users/auth/cas" %>
+<!-- because of https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284, we need to do a post to /auth/oktaoauth, so this page will do it seamlessly without being visible to the user -->
+<html>
+<head>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<%= form_tag "/users/auth/cas", id: "auth_form" do %>
+<% end %>
+
+<script>
+  document.getElementById("auth_form").submit();
+</script>
+
+</body>
+</html>
