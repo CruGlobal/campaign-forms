@@ -74,8 +74,7 @@ class AdobeCampaignWorker
   end
 
   def prefer_not_to_say(key, value)
-    return true if key == "Country" || key == "State" && value == "AA"
-    false
+    %w[Country State].include?(key) && value == "AA"
   end
 
   def profile_hash
