@@ -144,4 +144,3 @@ if (typeof window.campaignForms === 'undefined') {
 window.campaignForms.jQuery(function () {
   window.campaignForms.registerForms()
 })
-
