@@ -20,7 +20,7 @@ FactoryBot.define do
 
     factory :state_field do
       input { "text" }
-      name { "state" }
+      name { "State" }
       label { "State" }
     end
   end

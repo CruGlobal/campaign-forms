@@ -171,7 +171,7 @@ RSpec.describe AdobeCampaignWorker do
     it "skips values that are blank" do
       # Prepare
       form = create(:form)
-      field = create(:state_field, adobe_campaign_attribute: "state")
+      field = create(:state_field, adobe_campaign_attribute: "State")
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       params = {

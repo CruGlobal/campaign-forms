@@ -1,6 +1,6 @@
 class AddStateFields < ActiveRecord::Migration[5.2]
   def up
-    state = Field.find_or_create_by(name: "state",
+    state = Field.find_or_create_by(name: "State",
                                     input: "select",
                                     label: "State",
                                     global_registry_attribute: "address.state",
@@ -24,7 +24,7 @@ class AddStateFields < ActiveRecord::Migration[5.2]
   end
 
   def down
-    Field.find_by(name: "state").delete_all
+    Field.find_by(name: "State").delete_all
 
     items_to_skip = %w[AA AE AP AS UM VI]
 

@@ -74,7 +74,7 @@ class AdobeCampaignWorker
   end
 
   def prefer_not_to_say(key, value)
-    return true if key == "Country" || key == "state" && value == "AA"
+    return true if key == "Country" || key == "State" && value == "AA"
     false
   end
 
