@@ -28,6 +28,7 @@ ARG SECRET_KEY_BASE=asdf
 ARG DB_ENV_POSTGRESQL_USER
 ARG DB_ENV_POSTGRESQL_PASS
 ARG DB_PORT_5432_TCP_ADDR
+ARG SITE_URL
 
 RUN bundle exec rake assets:clobber assets:precompile RAILS_ENV=production
 
