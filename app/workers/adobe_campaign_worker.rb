@@ -73,12 +73,17 @@ class AdobeCampaignWorker
     @email_address ||= params[email_address_name]&.downcase
   end
 
+  def prefer_not_to_say(key, value)
+    return true if key == "Country" || key == "state" && value == "AA"
+    false
+  end
+
   def profile_hash
     profile = {}
     params.each do |key, value|
       field = form.fields.find_by(name: key)
 
-      next if field.adobe_campaign_attribute.blank? || value.blank?
+      next if field.adobe_campaign_attribute.blank? || prefer_not_to_say(key, value)
       profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split("."), value_for_key(value, key)))
     end
     profile[MASTER_PERSON_ID] = master_person_id if master_person_id.present?

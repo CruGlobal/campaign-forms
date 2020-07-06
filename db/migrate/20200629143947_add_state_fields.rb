@@ -21,7 +21,7 @@ class AddStateFields < ActiveRecord::Migration[5.2]
   end
 
   def down
-    Field.find_by(name: "State").delete_all
+    Field.find_by(name: "state").delete_all
 
     items_to_skip = %w[AA AE AP AS UM VI]
 

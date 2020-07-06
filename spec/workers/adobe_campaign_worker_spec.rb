@@ -171,11 +171,11 @@ RSpec.describe AdobeCampaignWorker do
     it "skips values that are blank" do
       # Prepare
       form = create(:form)
-      field = create(:email_field, adobe_campaign_attribute: "email_address.email")
+      field = create(:state_field, adobe_campaign_attribute: "state")
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       params = {
-        field.name => "",
+        field.name => "AA",
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -220,53 +220,6 @@ RSpec.describe AdobeCampaignWorker do
       # Verify
       # noinspection RubyStringKeysInHashInspection
       expect(result).to eq("cusGlobalID" => master_person_id)
-    end
-
-    it "sets the correct date" do
-      form = create(:form)
-      month = create(:birthday_month_field)
-      day = create(:birthday_day_field)
-      year = create(:birthday_year_field)
-      create(:form_field, form: form, field: month)
-      create(:form_field, form: form, field: day)
-      create(:form_field, form: form, field: year)
-      campaign_worker = AdobeCampaignWorker.new
-      params = {
-        month.name => 12,
-        day.name => 1,
-        year.name => 1994,
-      }
-      campaign_worker.perform(form.id, params, nil, nil)
-
-      # Test
-      result = campaign_worker.profile_hash
-
-      # Verify
-      # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq("birthDate" => "1994/12/01")
-    end
-
-    it "ignores the date if one section is missing" do
-      form = create(:form)
-      month = create(:birthday_month_field)
-      day = create(:birthday_day_field)
-      year = create(:birthday_year_field)
-      create(:form_field, form: form, field: month)
-      create(:form_field, form: form, field: day)
-      create(:form_field, form: form, field: year)
-      campaign_worker = AdobeCampaignWorker.new
-      params = {
-        month.name => 12,
-        year.name => 1994,
-      }
-      campaign_worker.perform(form.id, params, nil, nil)
-
-      # Test
-      result = campaign_worker.profile_hash
-
-      # Verify
-      # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq({})
     end
   end
 
