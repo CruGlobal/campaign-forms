@@ -1,5 +1,5 @@
 class AddStateFields < ActiveRecord::Migration[5.2]
-  ITEMS_TO_SKIP = %w[AA AE AP AS DC GU MP PR UM VI]
+  ITEMS_TO_SKIP = %w[AA AE AP AS GU MP PR UM VI]
 
   def up
     state = Field.find_or_create_by(name: "State",
