@@ -9,9 +9,9 @@ class CleanUpStateFields < ActiveRecord::Migration[6.0]
                           adobe_campaign_attribute: "location.stateCode",
                           placeholder: nil)
 
-    FieldOption.where(option_value_id: nil).delete_all
+    FieldOption.where(field: state, option_value_id: nil).delete_all
 
-    option = OptionValue.find_or_create_by(name: "AA", label: "Select a state")
+    option = OptionValue.find_or_create_by(name: "AA", label: "Select a State")
     FieldOption.find_or_create_by(field: state, option_value: option, position: 0)
 
     states = ISO3166::Country.find_country_by_alpha3("USA").states.sort_by { |state| state[1].name }
@@ -29,7 +29,7 @@ class CleanUpStateFields < ActiveRecord::Migration[6.0]
       OptionValue.find_by(name: item[0], label: item[1].name)&.destroy
     end
 
-    OptionValue.find_by(name: "AA", label: "Select a state")&.destroy
+    OptionValue.find_by(name: "AA", label: "Select a State")&.destroy
 
     Field.find_by(name: "State")&.destroy
   end
