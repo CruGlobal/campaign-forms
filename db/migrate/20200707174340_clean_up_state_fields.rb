@@ -3,11 +3,11 @@ class CleanUpStateFields < ActiveRecord::Migration[6.0]
 
   def up
     state = Field.find_by(name: "State",
-                                    input: "select",
-                                    label: "State",
-                                    global_registry_attribute: "address.state",
-                                    adobe_campaign_attribute: "location.stateCode",
-                                    placeholder: nil)
+                          input: "select",
+                          label: "State",
+                          global_registry_attribute: "address.state",
+                          adobe_campaign_attribute: "location.stateCode",
+                          placeholder: nil)
 
     FieldOption.where(option_value_id: nil).delete_all
 
