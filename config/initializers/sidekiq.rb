@@ -6,7 +6,7 @@ redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.y
 
 Redis.current = Redis.new(redis_conf)
 
-redis_settings = {url: Redis.current.client.id,
+redis_settings = {url: Redis.current.id,
                   namespace: redis_conf[:namespace],}
 
 Sidekiq.configure_client do |config|

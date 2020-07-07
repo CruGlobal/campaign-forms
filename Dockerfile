@@ -1,12 +1,6 @@
 FROM 056154071827.dkr.ecr.us-east-1.amazonaws.com/base-image-ruby-version-arg:2.6
 MAINTAINER cru.org <wmd@cru.org>
 
-# Install yarn
-#RUN curl -o- -L https://yarnpkg.com/install.sh | bash \
-#  && ln -nsf /rails/.yarn/bin/yarn /usr/local/bin/yarn
-RUN npm install yarn -g \
-  && export PATH="$PATH:`yarn global bin`"
-
 ARG SIDEKIQ_CREDS
 ARG RAILS_ENV=production
 
@@ -34,6 +28,7 @@ ARG SECRET_KEY_BASE=asdf
 ARG DB_ENV_POSTGRESQL_USER
 ARG DB_ENV_POSTGRESQL_PASS
 ARG DB_PORT_5432_TCP_ADDR
+ARG SITE_URL
 
 RUN bundle exec rake assets:clobber assets:precompile RAILS_ENV=production
 
