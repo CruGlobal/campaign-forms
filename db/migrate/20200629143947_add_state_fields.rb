@@ -28,7 +28,7 @@ class AddStateFields < ActiveRecord::Migration[5.2]
 
     items_to_skip = %w[AA AE AP AS UM VI]
 
-    OptionValue.find_by(name: "Choose a state", label: "AA").delete_all
+    OptionValue.find_by(name: "AA", label: "Choose a state").delete_all
 
     states = ISO3166::Country.find_country_by_alpha3("USA").states
     states.each do |item|
