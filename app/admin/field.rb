@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+def option_value_collection
+  @option_value_collection ||= OptionValue.all.map { |ov| ["#{ov.label} | #{ov.name}", ov.id] }
+end
+
 ActiveAdmin.register Field, as: "Form Fields" do
   menu priority: 20
   permit_params :name, :input, :label, :placeholder, :global_registry_attribute, :adobe_campaign_attribute,
@@ -36,7 +40,7 @@ ActiveAdmin.register Field, as: "Form Fields" do
     f.has_many :field_options, heading: "Options (select, radio)", allow_destroy: true,
                                sortable: :position do |options_f|
       options_f.inputs do
-        options_f.input :option_value
+        options_f.input :option_value, as: :select, label: "Option Value Label | Name", collection: option_value_collection
       end
     end
 
