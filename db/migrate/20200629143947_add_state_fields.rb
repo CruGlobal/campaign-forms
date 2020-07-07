@@ -24,8 +24,6 @@ class AddStateFields < ActiveRecord::Migration[5.2]
   end
 
   def down
-    items_to_skip = %w[AA AE AP AS UM VI]
-
     states = ISO3166::Country.find_country_by_alpha3("USA").states
     states.each do |item|
       next if ITEMS_TO_SKIP.include?(item[0])
