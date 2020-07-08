@@ -5,7 +5,7 @@
     "@activeadmin/activeadmin": "^2.7.0",
     "@rails/ujs": "^6.0.3-1",
     "@rails/webpacker": "4.2.2",
-    "jquery": "^3.4",
+    "jquery": "^3.5",
     "jquery-form": "^4.0",
     "jquery-validation": "^1.0",
     "websocket-extensions": "^0.1.4"
