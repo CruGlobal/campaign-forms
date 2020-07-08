@@ -144,3 +144,15 @@ if (typeof window.campaignForms === 'undefined') {
 window.campaignForms.jQuery(function () {
   window.campaignForms.registerForms()
 })
+
+$(document).ready(function(){
+    $("[id^='cf_Country_']").change(function(){
+        if($(this).val()!='US'){
+            $("[for^='cf_state_']").hide()
+            $("[id^='cf_state_']").hide()
+        } else {
+            $("[for^='cf_state_']").show()
+            $("[id^='cf_state_']").show()
+        }
+    })
+})
