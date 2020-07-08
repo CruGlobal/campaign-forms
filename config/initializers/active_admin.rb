@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.setup do |config|
-  config.use_webpacker = true
+  # config.use_webpacker = true
 
   # == Site Title
   #
