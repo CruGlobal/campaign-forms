@@ -2,7 +2,7 @@
   <label for="<%= "cf_#{field.name}_#{field.id}" %>"><%= field.label_value %></label>
   <select id="<%= "cf_#{field.name}_#{field.id}" %>" class="form-control" name="<%= field.name %>" <%== 'required' if field.required %>>
     <% field.field_options.each do |option| %>
-        <option value="<%= option.name %>"><%= option.label %></option>
+        <option value="<%= option.name %>"<%= 'selected' if field.placeholder_value == option.label %>><%= option.label %></option>
     <% end %>
   </select>
 </div>
