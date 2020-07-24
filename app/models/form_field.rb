@@ -19,11 +19,8 @@ class FormField < ApplicationRecord
   end
 
   def partial
-    case input
-    when "select", "radio", "campaign"
-      input
-    else
-      "input"
-    end
+    return "date" if name.starts_with?('birthdate_')
+    return input if %(select radio campaign).include?(input)
+    "input"
   end
 end
