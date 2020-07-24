@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: [:cas]
+  devise :omniauthable, omniauth_providers: [:oktaoauth]
 
   strip_attributes only: %i[username first_name last_name email]
 

@@ -167,7 +167,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         result = controller.after_sign_out_path_for("anything")
 
         # Verify
-        expect(result).to match(ENV["CAS_BASE_URL"])
+        expect(result).to match("something")
         expect(result).to match(%r{/logout})
       end
     end
