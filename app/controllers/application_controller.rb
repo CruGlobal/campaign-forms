@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
     render plain: "Permission Denied. Contact help@cru.org to request access.", status: :unauthorized
   end
 
-  def after_sign_out_path_for(_resource_or_scope) # MK: this is a Devise thing
+  def after_sign_out_path_for(_resource_or_scope)
+    # MK: this is a Devise thing
     "something/logout"
   end
 end
