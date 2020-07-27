@@ -4,7 +4,7 @@ ActiveAdmin.register Form do
   menu priority: 10
   permit_params :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
     :use_recaptcha, :recaptcha_key, :recaptcha_secret, :origin,
-    form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :_destroy,
+    form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :persist, :_destroy,
                              campaign_options_attributes: %i[id campaign_code label position _destroy],],
     campaign_codes: []
 
@@ -87,6 +87,7 @@ ActiveAdmin.register Form do
         fields_f.input :placeholder, hint: "Override field placeholder."
         fields_f.input :help, hint: "Optional help message."
         fields_f.input :required, as: :boolean, label: "Is field required?"
+        fields_f.input :persist, as: :boolean, label: "Store/retrieve value from other forms?"
         fields_f.has_many :campaign_options, allow_destroy: true, sortable: :position,
                                              heading: "Campaigns" do |campaigns_f|
           campaigns_f.inputs do

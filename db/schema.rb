@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_08_170559) do
+ActiveRecord::Schema.define(version: 2020_07_27_214421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_07_08_170559) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "placeholder"
+    t.boolean "persist", default: false
     t.index ["field_id"], name: "index_form_fields_on_field_id"
     t.index ["form_id"], name: "index_form_fields_on_form_id"
   end
