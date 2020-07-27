@@ -57,6 +57,8 @@ if (typeof window.campaignForms === 'undefined') {
               // Disable and hide form
               form.addClass('hidden').find('input, button').prop('disabled', 'disabled')
             }
+
+            // MK: Stow any fields of class "cfpersisted" in well-named sessionStorage key
           },
           error: function (xhr) {
             var errors = xhr.responseJSON || {}
@@ -134,6 +136,10 @@ if (typeof window.campaignForms === 'undefined') {
             $(recaptchaDiv).attr('data-callback', recaptchaCallback)
             window[recaptchaCallback] = window.campaignForms[formId].recaptchaCallback
           }
+
+          // MK: For each field of class "cfpersisted", attempt to retrieve well-named sessionStorage key
+          //     When successful, replace default value and set readonly HTML attribute
+          //     https://stackoverflow.com/questions/7357256/disabled-form-inputs-do-not-appear-in-the-request
         }
       })
     }
