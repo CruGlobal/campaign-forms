@@ -17,5 +17,6 @@ Rails.application.routes.draw do
 
   get "monitors/lb"
   get "/login/new", to: "login#new"
+  get "/assets/campaign-form.js", to: redirect("/packs/campaign.js")
   root "admin/forms#index"
 end
