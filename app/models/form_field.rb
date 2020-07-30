@@ -15,7 +15,7 @@ class FormField < ApplicationRecord
   end
 
   def placeholder_value
-    placeholder || field.placeholder || label_value
+    placeholder.presence || field.placeholder.presence || label_value
   end
 
   def partial

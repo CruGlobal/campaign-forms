@@ -17,5 +17,11 @@ FactoryBot.define do
       name { "email_address" }
       label { "Email address" }
     end
+
+    factory :state_field do
+      input { "text" }
+      name { "State" }
+      label { "State" }
+    end
   end
 end

@@ -1,15 +1,19 @@
 sudo: false
 language: ruby
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
 services:
   - postgresql
   - redis-server
 addons:
   postgresql: "10"
 before_install:
+  - yarn --ignore-engines
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
-  - bundle exec rake assets:precompile
   - bundle exec rake db:setup
 script:
   - bundle exec rspec --color

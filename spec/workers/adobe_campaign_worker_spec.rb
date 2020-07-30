@@ -168,6 +168,25 @@ RSpec.describe AdobeCampaignWorker do
       expect(result).to eq({})
     end
 
+    it "skips values that are blank" do
+      # Prepare
+      form = create(:form)
+      field = create(:state_field, adobe_campaign_attribute: "State")
+      create(:form_field, form: form, field: field)
+      campaign_worker = AdobeCampaignWorker.new
+      params = {
+        field.name => "AA",
+      }
+      campaign_worker.perform(form.id, params, nil, nil)
+
+      # Test
+      result = campaign_worker.profile_hash
+
+      # Verify
+      # noinspection RubyStringKeysInHashInspection
+      expect(result).to eq({})
+    end
+
     it "sets fields" do
       # Prepare
       form = create(:form)
@@ -200,7 +219,7 @@ RSpec.describe AdobeCampaignWorker do
 
       # Verify
       # noinspection RubyStringKeysInHashInspection
-      expect(result).to eq("cusGlobalID" => master_person_id)
+      expect(result).to eq(AdobeCampaignWorker::MASTER_PERSON_ID => master_person_id)
     end
   end
 

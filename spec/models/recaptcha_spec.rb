@@ -8,7 +8,7 @@ RSpec.describe Recaptcha, type: :model do
       # Prepare
       form = build(:form)
       recaptcha_response = SecureRandom.alphanumeric(10)
-      params = ActionController::Parameters.new("g-recaptcha-response".to_sym => recaptcha_response)
+      params = ActionController::Parameters.new(Recaptcha::RECAPTCHA_PARAM => recaptcha_response)
       remote_ip = Faker::Internet.ip_v4_address
       r = Recaptcha.new(form, params, remote_ip)
 
@@ -50,10 +50,9 @@ RSpec.describe Recaptcha, type: :model do
         @form = create(:form, use_recaptcha: true, recaptcha_secret: @recaptcha_secret)
         @body = {remoteip: @remote_ip, response: @recaptcha_response, secret: @recaptcha_secret}
 
-        @stub_request = stub_request(:post, "https://www.google.com/recaptcha/api/siteverify")
-          .with(body: @body)
+        @stub_request = stub_request(:post, Recaptcha::RECAPTCHA_VERIFY_URL).with(body: @body)
 
-        @params = ActionController::Parameters.new("g-recaptcha-response".to_sym => @recaptcha_response)
+        @params = ActionController::Parameters.new(Recaptcha::RECAPTCHA_PARAM => @recaptcha_response)
       end
 
       it "validates if request to reCAPTCHA returns success" do

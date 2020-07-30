@@ -1,7 +1,3 @@
-//= require jquery
-//= require jquery-form
-//= require jquery-validation/dist/jquery.validate
-
 // Only initialize campaign-forms JS if it hasn't loaded previously.
 if (typeof window.campaignForms === 'undefined') {
 
@@ -143,4 +139,16 @@ if (typeof window.campaignForms === 'undefined') {
 // Bootstrap campaign-forms
 window.campaignForms.jQuery(function () {
   window.campaignForms.registerForms()
+})
+
+$(document).ready(function() {
+    $("[id^='cf_Country_']").change(function(){
+        if ($(this).val()!='US'){
+            $("[for^='cf_US_State_']").hide()
+            $("[id^='cf_US_State_']").hide()
+        } else {
+            $("[for^='cf_US_State_']").show()
+            $("[id^='cf_US_State_']").show()
+        }
+    })
 })

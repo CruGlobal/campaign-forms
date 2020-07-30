@@ -1,8 +1,7 @@
-# frozen_string_literal: true
-
 require "sidekiq/pro/web"
 
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   devise_for :users, class_name: "User", controllers: {omniauth_callbacks: "sessions"}
   ActiveAdmin.routes(self)
   devise_scope :user do
@@ -18,5 +17,6 @@ Rails.application.routes.draw do
 
   get "monitors/lb"
   get "/login/new", to: "login#new"
+  get "/assets/campaign-form.js", to: redirect("/packs/campaign.js")
   root "admin/forms#index"
 end
