@@ -13,7 +13,7 @@ class FormsController < ApplicationController
   def create
     load_form
     render_bad_request && return unless profile.valid?
-    if !recaptcha.valid?
+    unless recaptcha.valid?
       logger.info "reCAPTCHA error related to form #{@form.id} (#{@form.name}) from #{request.url}"
       render_unauthorized && return
     end
