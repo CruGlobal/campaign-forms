@@ -95,10 +95,9 @@ group :development, :test do
   gem "rspec-rails"
   gem "simplecov"
   gem "webmock"
+  gem "pry-byebug"
 end
 
 group :development do
-  gem "pry"
-  gem "pry-byebug"
   gem "rack-cors"
 end
