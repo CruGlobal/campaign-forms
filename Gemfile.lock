@@ -496,7 +496,6 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   ougai (~> 1.7)
   pg (~> 0.18)
-  pry
   pry-byebug
   puma (~> 4.1)
   rack-cors

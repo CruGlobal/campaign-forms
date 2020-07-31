@@ -13,7 +13,10 @@ class FormsController < ApplicationController
   def create
     load_form
     render_bad_request && return unless profile.valid?
-    render_unauthorized && return unless recaptcha.valid?
+    unless recaptcha.valid?
+      logger.info "reCAPTCHA error related to form #{@form.id} (#{@form.name}) from #{request.url}"
+      render_unauthorized && return
+    end
     AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
     render_create_form
   end
