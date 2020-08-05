@@ -10,9 +10,12 @@ RSpec.describe User, type: :model do
       @auth_hash = OpenStruct.new
       @auth_hash.uid = @uid
       @auth_hash.extra = OpenStruct.new
-      @auth_hash.extra.ssoGuid = @sso_guid
-      @auth_hash.extra.firstName = Faker::Name.first_name
-      @auth_hash.extra.lastName = Faker::Name.last_name
+      @auth_hash.extra.raw_info = OpenStruct.new
+      @auth_hash.extra.raw_info.ssoguid = @sso_guid
+      @auth_hash.info = OpenStruct.new
+      @auth_hash.info.first_name = Faker::Name.first_name
+      @auth_hash.info.last_name = Faker::Name.last_name
+      @auth_hash.info.email = Faker::Internet.email
       @auth_hash.info = OpenStruct.new
       @auth_hash.info.email = Faker::Internet.email
     end

@@ -2,7 +2,6 @@
 
 class SessionsController < Devise::OmniauthCallbacksController
   def oktaoauth
-    byebug
     @user = User.find_or_create_from_auth_hash(auth_hash)
     sign_in @user
     redirect_to admin_forms_path
