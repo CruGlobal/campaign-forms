@@ -163,11 +163,13 @@ RSpec.describe Admin::UsersController, type: :controller do
 
     describe "after_sign_out_path_for" do
       it "returns logout url" do
+        session["id_token"] = "id_token"
+
         # Test
         result = controller.after_sign_out_path_for("anything")
 
         # Verify
-        expect(result).to eq("/")
+        expect(result).to eq("issuer/v1/logout?id_token_hint=id_token&post_logout_redirect_uri=http://test.host")
       end
     end
   end
