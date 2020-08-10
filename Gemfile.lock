@@ -1,11 +1,10 @@
 GIT
-  remote: https://github.com/CruGlobal/omniauth-cas.git
-  revision: b4726bf6a60645a09726c4b0f648e06894b09389
+  remote: https://github.com/CruGlobal/omniauth-oktaoauth.git
+  revision: e78ffb420cb9ab89fd8951d9fe8a20f175c41618
   specs:
-    omniauth-cas (1.1.1)
-      addressable (~> 2.3)
-      nokogiri (~> 1.5)
-      omniauth (~> 1.2)
+    omniauth-oktaoauth (0.1.6)
+      omniauth (~> 1.5)
+      omniauth-oauth2 (>= 1.4.0, < 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -101,7 +100,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
-    brakeman (4.8.2)
+    brakeman (4.9.0)
     builder (3.2.4)
     bundle-audit (0.1.0)
       bundler-audit
@@ -160,6 +159,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.9.1)
       i18n (>= 0.7)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
@@ -237,15 +238,26 @@ GEM
     minitest (5.14.1)
     msgpack (1.3.3)
     multi_json (1.14.1)
+    multi_xml (0.6.0)
+    multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    oauth2 (1.4.4)
+      faraday (>= 0.8, < 2.0)
+      jwt (>= 1.0, < 3.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
     oj (3.7.12)
     oj_mimic_json (1.0.1)
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
+    omniauth-oauth2 (1.6.0)
+      oauth2 (~> 1.1)
+      omniauth (~> 1.9)
     omniauth-rails_csrf_protection (0.1.2)
       actionpack (>= 4.2)
       omniauth (>= 1.3.1)
@@ -492,7 +504,7 @@ DEPENDENCIES
   lograge
   loofah (>= 2.2.3)
   nokogiri (>= 1.8.5)
-  omniauth-cas!
+  omniauth-oktaoauth!
   omniauth-rails_csrf_protection
   ougai (~> 1.7)
   pg (~> 0.18)

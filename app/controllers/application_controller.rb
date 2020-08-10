@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(_resource_or_scope)
-    "#{ENV["CAS_BASE_URL"]}/logout"
+    "#{ENV.fetch("OKTA_ISSUER")}/v1/logout?id_token_hint=#{session[:id_token]}&post_logout_redirect_uri=#{request.base_url}"
   end
 end

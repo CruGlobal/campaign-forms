@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class SessionsController < Devise::OmniauthCallbacksController
-  def cas
+  def oktaoauth
     @user = User.find_or_create_from_auth_hash(auth_hash)
     sign_in @user
+    session[:id_token] = request.env.dig("omniauth.auth", "extra", "id_token")
     redirect_to admin_forms_path
-  end
-
-  def omniauth_sign_in
-    redirect_to user_cas_omniauth_authorize_path
   end
 
   protected
