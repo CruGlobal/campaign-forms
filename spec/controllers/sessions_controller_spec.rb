@@ -11,6 +11,7 @@ RSpec.describe SessionsController, type: :controller do
     @auth_hash.extra = OpenStruct.new
     @auth_hash.extra.raw_info = OpenStruct.new
     @auth_hash.extra.raw_info.ssoguid = @sso_guid
+    @auth_hash.extra.raw_info.preferred_username = Faker::Internet.email
     @auth_hash.extra.id_token = "id_token"
     @auth_hash.info = OpenStruct.new
     @auth_hash.info.first_name = Faker::Name.first_name
