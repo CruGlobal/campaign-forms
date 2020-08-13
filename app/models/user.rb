@@ -9,7 +9,7 @@ class User < ApplicationRecord
     existing = find_by(sso_guid: auth_hash.extra.raw_info.ssoguid)
     return existing.apply_auth_hash(auth_hash) if existing
 
-    pending = find_by("lower(username) = ?", auth_hash.uid&.downcase)
+    pending = find_by("lower(username) = ?", auth_hash.extra.raw_info.preferred_username.downcase)
     return pending.apply_auth_hash(auth_hash) if pending
 
     new.apply_auth_hash(auth_hash)
@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   def apply_auth_hash(auth_hash)
     self.sso_guid = auth_hash.extra.raw_info.ssoguid
-    self.username = auth_hash.uid
+    self.username = auth_hash.extra.raw_info.preferred_username
     self.first_name = auth_hash.info.first_name
     self.last_name = auth_hash.info.last_name
     self.email = auth_hash.info.email
