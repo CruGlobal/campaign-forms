@@ -9,10 +9,13 @@ RSpec.describe SessionsController, type: :controller do
     @auth_hash = OpenStruct.new
     @auth_hash.uid = @uid
     @auth_hash.extra = OpenStruct.new
-    @auth_hash.extra.ssoGuid = @sso_guid
-    @auth_hash.extra.firstName = Faker::Name.first_name
-    @auth_hash.extra.lastName = Faker::Name.last_name
+    @auth_hash.extra.raw_info = OpenStruct.new
+    @auth_hash.extra.raw_info.ssoguid = @sso_guid
+    @auth_hash.extra.raw_info.preferred_username = Faker::Internet.email
+    @auth_hash.extra.id_token = "id_token"
     @auth_hash.info = OpenStruct.new
+    @auth_hash.info.first_name = Faker::Name.first_name
+    @auth_hash.info.last_name = Faker::Name.last_name
     @auth_hash.info.email = Faker::Internet.email
     OmniAuth.config.test_mode = true
     request.env["omniauth.auth"] = @auth_hash
@@ -25,7 +28,7 @@ RSpec.describe SessionsController, type: :controller do
       request.env["devise.mapping"] = Devise.mappings[:user]
 
       # Test
-      post :cas
+      post :oktaoauth
 
       # Verify
       expect(controller.current_user.id).to eq(user.id)
@@ -36,7 +39,7 @@ RSpec.describe SessionsController, type: :controller do
       request.env["devise.mapping"] = Devise.mappings[:user]
 
       # Test
-      post :cas
+      post :oktaoauth
 
       # Verify
       # expect(controller.current_user.id).to eq(user.id)
