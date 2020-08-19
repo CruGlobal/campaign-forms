@@ -14,7 +14,7 @@ if (typeof window.campaignForms === 'undefined') {
       return 'campaignForm' + id
     }
 
-    function submitForm (form) {
+    function submitForm(form, recaptchaToken) {
       var formId = form.attr('id')
 
       if (!campaignForms[formId].formSubmitted) {
@@ -22,6 +22,7 @@ if (typeof window.campaignForms === 'undefined') {
         form.ajaxSubmit({
           method: 'POST',
           dataType: 'json',
+          data: { "g-recaptcha-response": recaptchaToken },
           success: function (data, status, xhr) {
             // Submit Adobe Analytics event if present
             if (typeof window._satellite !== 'undefined') {
@@ -83,23 +84,22 @@ if (typeof window.campaignForms === 'undefined') {
         },
         submitHandler: function (form) {
           // Hide general error if present
-          var $form = $(form)
-          $form.parents('.campaign-form').find('.alert-danger').addClass('hidden')
-          if ($form.find('.g-recaptcha').length && typeof grecaptcha !== 'undefined') {
-            var recaptchaDiv = $form.find('.g-recaptcha')[0]
-            var recaptchaId
-            Object.keys(___grecaptcha_cfg.clients).forEach(function (key) {
-              var item = ___grecaptcha_cfg.clients[key]
-              Object.keys(item).forEach(function (prop) {
-                if (recaptchaDiv === item[prop])
-                  recaptchaId = item.id
-              })
-            })
-            if (typeof recaptchaId !== 'undefined') {
-              grecaptcha.execute(recaptchaId)
-            } else {
-              grecaptcha.execute()
-            }
+          var $form = $(form);
+          $form
+            .parents(".campaign-form")
+            .find(".alert-danger")
+            .addClass("hidden");
+
+          const recaptchaSiteKey = $form.attr("data-recaptcha-sitekey");
+
+          if (recaptchaSiteKey && typeof grecaptcha !== "undefined") {
+            grecaptcha.ready(async function () {
+              const recaptchaToken = await grecaptcha.execute(
+                recaptchaSiteKey,
+                { action: "submit" }
+              );
+              submitForm($form, recaptchaToken);
+            });
           } else {
             submitForm($form)
           }
@@ -118,17 +118,6 @@ if (typeof window.campaignForms === 'undefined') {
           campaignForms[formId] = {
             validator: validate(form),
             formSubmitted: false,
-            recaptchaCallback: function (_token) {
-              submitForm(form)
-            }
-          }
-
-          var recaptchaDiv = $('div[data-sitekey]', form)[0]
-          if (recaptchaDiv) {
-            $(recaptchaDiv).removeAttr('id')
-            var recaptchaCallback = formId + 'Callback'
-            $(recaptchaDiv).attr('data-callback', recaptchaCallback)
-            window[recaptchaCallback] = window.campaignForms[formId].recaptchaCallback
           }
         }
       })

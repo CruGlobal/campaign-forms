@@ -12,13 +12,10 @@
 <% end %>
 <div class="campaign-form">
   <div class="alert alert-danger hidden" role="alert">An issue has occurred. Please try again or contact website administrator.</div>
-  <form class="<%== 'form-inline' if form.style == 'inline' %>" action="<%= forms_url %>" method="post">
+  <form class="<%== 'form-inline' if form.style == 'inline' %>" action="<%= forms_url %>" method="post"<%= "data-recaptcha-sitekey='#{form.recaptcha_key}'" if form.use_recaptcha %>>
     <input type="hidden" name="id" value="<%= form.id %>"/>
     <% form.form_fields.each do |field| %>
         <%= render partial: "fields/#{field.partial}", locals: { field: field, form: form } %>
-    <% end %>
-    <% if form.use_recaptcha %>
-      <div class="g-recaptcha" data-sitekey="<%== form.recaptcha_key %>" data-callback="recaptchaCallback" data-size="invisible"></div>
     <% end %>
     <button type="submit" class="btn btn-primary" <%== 'disabled="disabled"' if preview.present? %>><%= form.action %></button>
   </form>
@@ -29,4 +26,4 @@
   </div>
 <% end %>
 <%= javascript_pack_tag 'campaign' %>
-<% if form.use_recaptcha %><script type="application/javascript" src='https://www.google.com/recaptcha/api.js'></script><% end %>
+<% if form.use_recaptcha %><script type="application/javascript" src='https://www.google.com/recaptcha/api.js?render=<%= form.recaptcha_key %>'></script><% end %>
