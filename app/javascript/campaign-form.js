@@ -93,13 +93,11 @@ if (typeof window.campaignForms === 'undefined') {
           const recaptchaSiteKey = $form.attr("data-recaptcha-sitekey");
 
           if (recaptchaSiteKey && typeof grecaptcha !== "undefined") {
-            grecaptcha.ready(async function () {
-              const recaptchaToken = await grecaptcha.execute(
-                recaptchaSiteKey,
-                { action: "submit" }
-              );
-              submitForm($form, recaptchaToken);
-            });
+            grecaptcha.ready(() =>
+              gecaptcha
+                .execute(recaptchaSiteKey, { action: "submit" })
+                .then((recaptchaToken) => submitForm($form, recaptchaToken))
+            );
           } else {
             submitForm($form)
           }
