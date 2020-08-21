@@ -95,6 +95,9 @@ if (typeof window.campaignForms === 'undefined') {
                   recaptchaId = item.id
               })
             })
+
+            window.recaptchaCallback = function() { submitForm($form) }
+
             if (typeof recaptchaId !== 'undefined') {
               grecaptcha.execute(recaptchaId)
             } else {
@@ -117,18 +120,12 @@ if (typeof window.campaignForms === 'undefined') {
           form.attr('id', formId)
           campaignForms[formId] = {
             validator: validate(form),
-            formSubmitted: false,
-            recaptchaCallback: function (_token) {
-              submitForm(form)
-            }
+            formSubmitted: false
           }
 
           var recaptchaDiv = $('div[data-sitekey]', form)[0]
           if (recaptchaDiv) {
             $(recaptchaDiv).removeAttr('id')
-            var recaptchaCallback = formId + 'Callback'
-            $(recaptchaDiv).attr('data-callback', recaptchaCallback)
-            window[recaptchaCallback] = window.campaignForms[formId].recaptchaCallback
           }
         }
       })
