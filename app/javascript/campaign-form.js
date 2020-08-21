@@ -96,11 +96,6 @@ if (typeof window.campaignForms === 'undefined') {
               })
             })
 
-            // There's a race condition causing the recaptcha to not register the right callback
-            // method, depending on whether campaign-form.js or google's recaptcha script is
-            // loaded first.  If recaptcha loads first, it will use window.recaptchaCallback
-            // as the callback, because that's what's set in the html for data-callback.
-            // So we can set the proper callback here to be sure.
             window.recaptchaCallback = function() { submitForm($form) }
 
             if (typeof recaptchaId !== 'undefined') {
@@ -125,18 +120,12 @@ if (typeof window.campaignForms === 'undefined') {
           form.attr('id', formId)
           campaignForms[formId] = {
             validator: validate(form),
-            formSubmitted: false,
-            recaptchaCallback: function (_token) {
-              submitForm(form)
-            }
+            formSubmitted: false
           }
 
           var recaptchaDiv = $('div[data-sitekey]', form)[0]
           if (recaptchaDiv) {
             $(recaptchaDiv).removeAttr('id')
-            var recaptchaCallback = formId + 'Callback'
-            $(recaptchaDiv).attr('data-callback', recaptchaCallback)
-            window[recaptchaCallback] = window.campaignForms[formId].recaptchaCallback
           }
         }
       })
