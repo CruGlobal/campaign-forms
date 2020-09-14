@@ -11,8 +11,8 @@ docker build \
     --build-arg PROJECT_NAME=$PROJECT_NAME \
     --build-arg SIDEKIQ_CREDS=$SIDEKIQ_CREDS \
     --build-arg DD_API_KEY=$DD_API_KEY \
-    --build-arg REDIS_PORT_6379_TCP_ADDR=$PROJECT_NAME-redis \
-    --build-arg REDIS_PORT_6379_TCP_ADDR_SESSION=$PROJECT_NAME-redis \
+    --build-arg SESSION_REDIS_HOST=$PROJECT_NAME-redis \
+    --build-arg STORAGE_REDIS_HOST=$PROJECT_NAME-redis \
     --build-arg DB_ENV_POSTGRESQL_USER=postgres \
     --build-arg DB_ENV_POSTGRESQL_PASS=$PG_PASSWORD \
     --build-arg DB_PORT_5432_TCP_ADDR=$PROJECT_NAME-pg \
