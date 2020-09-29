@@ -38,6 +38,17 @@ if (typeof window.campaignForms === 'undefined') {
               window._satellite.track('aa-email-signup')
             }
 
+            const cfPersisted = Array.from(
+              document.querySelectorAll("input[cfpersisted]")
+            ).map(({ id, value }) => ({
+              key: id.match(/(.*)_\d+/)[1],
+              value
+            }));
+            sessionStorage.setItem(
+              "campaignFormsPersistedInputs",
+              JSON.stringify(cfPersisted)
+            );
+
             // Call optional success callback if defined
             if (typeof campaignForm.successCallback === 'function') {
               window.campaignForm.successCallback(data.master_person_id)
@@ -129,6 +140,16 @@ if (typeof window.campaignForms === 'undefined') {
           }
         }
       })
+      const cfPersisted = JSON.parse(
+        sessionStorage.getItem("campaignFormsPersistedInputs")
+      );
+      cfPersisted.forEach(({ key, value }) => {
+        const element = document.querySelector(`input[cfpersisted][id^='${key}']`);
+        if (element) {
+          element.value = value;
+          element.readOnly = true;
+        }
+      });
     }
   })(jQuery)
 }

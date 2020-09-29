@@ -1,4 +1,4 @@
 <div class="form-group">
   <label for="<%= "cf_#{field.name}_#{field.id}" %>"><%= field.label_value %></label>
-  <input id="<%= "cf_#{field.name}_#{field.id}" %>" class="form-control" type="<%= field.input %>" name="<%= field.name %>" placeholder="<%= field.placeholder_value %>" <%== 'required' if field.required %>>
+  <input id="<%= "cf_#{field.name}_#{field.id}" %>" class="form-control"<%= ' cfpersisted' if field.persist %> type="<%= field.input %>" name="<%= field.name %>" placeholder="<%= field.placeholder_value %>" <%== 'required' if field.required %>>
 </div>
