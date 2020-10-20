@@ -41,7 +41,7 @@ class Form < ApplicationRecord
   end
 
   def recaptcha_required_for_v3
-    if recaptcha_v3 && use_recaptcha
+    if recaptcha_v3 && !use_recaptcha
       errors.add(:recaptcha_v3, "requires recaptcha")
     end
   end
