@@ -78,4 +78,16 @@ RSpec.describe Form, type: :model do
       expect(tested.form_fields.size).to eq(0)
     end
   end
+
+  describe "recaptcha v3 validation" do
+    it "requires recaptcha enabled" do
+      form = create(:form)
+      form.recaptcha_v3 = true
+      form.validate
+      expect(form.errors.count).to eq(1)
+      expect(form.errors.first).to eq([:recaptcha_v3, "requires recaptcha"])
+    end
+    it "does not require recaptcha if v3 is not set" do
+    end
+  end
 end
