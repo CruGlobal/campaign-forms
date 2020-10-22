@@ -36,6 +36,11 @@ if (typeof window.campaignForms === 'undefined') {
                   page: {pageInfo: {emailList: 'ACS | ' + data.campaign_codes.join(' | ')}}
                 })
               window._satellite.track('aa-email-signup')
+
+              window.dataLayer = window.dataLayer || []
+              window.dataLayer.push({
+                'event': 'ga-email-signup'
+              })
             }
 
             // Call optional success callback if defined
