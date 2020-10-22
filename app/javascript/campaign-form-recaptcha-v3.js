@@ -94,7 +94,7 @@ if (typeof window.campaignForms === 'undefined') {
 
           if (recaptchaSiteKey && typeof grecaptcha !== "undefined") {
             grecaptcha.ready(() =>
-              gecaptcha
+              grecaptcha
                 .execute(recaptchaSiteKey, { action: "submit" })
                 .then((recaptchaToken) => submitForm($form, recaptchaToken))
             );
