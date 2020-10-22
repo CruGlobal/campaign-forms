@@ -28,5 +28,5 @@
     </div>
   </div>
 <% end %>
-<%= javascript_pack_tag form.recaptcha_v3 ? 'campaign-v3' : 'campaign' %>
+<%= javascript_pack_tag form.recaptcha_v3 ? 'campaign-recaptcha-v3' : 'campaign' %>
 <% if form.use_recaptcha %><script type="application/javascript" src='https://www.google.com/recaptcha/api.js<%= "?render=#{form.recaptcha_key}" if form.recaptcha_v3 %></script><% end %>
