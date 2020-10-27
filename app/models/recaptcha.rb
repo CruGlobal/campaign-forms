@@ -31,7 +31,7 @@ class Recaptcha
   def verify_response
     # https://developers.google.com/recaptcha/docs/verify
     response = RestClient.post(RECAPTCHA_VERIFY_URL,
-      secret: "6Leq09oZAAAAABZVnHBIBq-4H1BIFG-CuBL8mqJx" || form.recaptcha_secret,
+      secret: form.recaptcha_secret,
       response: recaptcha_response,
       remoteip: remote_ip)
     json = JSON.parse(response.body)
