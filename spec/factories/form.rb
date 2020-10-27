@@ -8,6 +8,8 @@ FactoryBot.define do
     association :created_by, factory: :user
     title { SecureRandom.alphanumeric(10) }
     body { SecureRandom.alphanumeric(20) }
+    recaptcha_v3 { false }
+    recaptcha_v3_threshold { nil }
     create_profile { false }
 
     factory :empty_form do
