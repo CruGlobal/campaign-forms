@@ -31,11 +31,13 @@ class Recaptcha
   def verify_response
     # https://developers.google.com/recaptcha/docs/verify
     response = RestClient.post(RECAPTCHA_VERIFY_URL,
-      secret: form.recaptcha_secret,
+      secret: "6Leq09oZAAAAABZVnHBIBq-4H1BIFG-CuBL8mqJx" || form.recaptcha_secret,
       response: recaptcha_response,
       remoteip: remote_ip)
     json = JSON.parse(response.body)
-    return json["success"] if json.key? "success"
+    if json["success"]
+      return form.recaptcha_v3 ? json["score"] > form.recaptcha_v3_threshold : true
+    end
     Rollbar.error("reCAPTCHA error", json.merge(form: form.id)) if json.key? "error-codes"
     false
   end

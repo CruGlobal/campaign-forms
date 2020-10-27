@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_152159) do
+ActiveRecord::Schema.define(version: 2020_10_27_144753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_152159) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "placeholder"
+    t.boolean "persist", default: false
     t.index ["field_id"], name: "index_form_fields_on_field_id"
     t.index ["form_id"], name: "index_form_fields_on_form_id"
   end
@@ -80,7 +81,8 @@ ActiveRecord::Schema.define(version: 2020_10_20_152159) do
     t.string "recaptcha_secret"
     t.string "origin"
     t.boolean "create_profile"
-    t.boolean "recaptcha_v3", default: false
+    t.boolean "recaptcha_v3", default: true
+    t.float "recaptcha_v3_threshold", default: 0.5
     t.index ["created_by_id"], name: "index_forms_on_created_by_id"
   end
 

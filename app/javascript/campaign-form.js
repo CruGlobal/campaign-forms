@@ -1,11 +1,8 @@
 // Only initialize campaign-forms JS if it hasn't loaded previously.
 if (typeof window.campaignForms === 'undefined') {
-  console.log('here1');
-  debugger;
 
   // Campaign Forms
   (function ($) {
-    debugger;
     var campaignForms = window.campaignForms = window.campaignForms || {}
     var campaignForm = window.campaignForm = window.campaignForm || {}
     var idCounter = 0
@@ -19,7 +16,6 @@ if (typeof window.campaignForms === 'undefined') {
 
     /* test */
     function submitForm (form, recaptchaToken) {
-      debugger;
       var formId = form.attr('id')
 
       if (!campaignForms[formId].formSubmitted) {
@@ -94,8 +90,6 @@ if (typeof window.campaignForms === 'undefined') {
           $(element).closest('.form-group').removeClass('has-error')
         },
         submitHandler: function (form) {
-          debugger;
-
           // Hide general error if present
           var $form = $(form);
           $form
@@ -140,13 +134,11 @@ if (typeof window.campaignForms === 'undefined') {
 
     // Register all existing forms (not previously registered)
     window.campaignForms.registerForms = function () {
-      debugger;
       $('.campaign-form form:not([id])').each(function () {
         var form = $(this)
 
         // Check id again, just to be safe
         if (typeof form.attr('id') === 'undefined') {
-          debugger;
           var formId = uniqueFormId()
           form.attr('id', formId)
           campaignForms[formId] = {

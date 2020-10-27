@@ -10,7 +10,9 @@ class Form < ApplicationRecord
 
   # validates :campaign_codes, presence: true, unless: :campaigns_field_exists?
   validates :name, presence: true
-  validate :recaptcha_required_for_v3
+  validate :recaptcha_required_for_v3, :recaptcha_v3_required_for_v3_threshold
+  validates_inclusion_of :recaptcha_v3_threshold, in: 0..1, if: proc { |form| form.recaptcha_v3 }
+  validates :recaptcha_v3_threshold, presence: true, if: proc { |form| form.recaptcha_v3 }
 
   accepts_nested_attributes_for :form_fields, allow_destroy: true
 
@@ -43,6 +45,12 @@ class Form < ApplicationRecord
   def recaptcha_required_for_v3
     if recaptcha_v3 && !use_recaptcha
       errors.add(:recaptcha_v3, "requires recaptcha")
+    end
+  end
+
+  def recaptcha_v3_required_for_v3_threshold
+    if recaptcha_v3_threshold && !recaptcha_v3
+      errors.add(:recaptcha_v3_threshold, "requires recaptcha v3")
     end
   end
 end
