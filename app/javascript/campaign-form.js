@@ -20,11 +20,9 @@ if (typeof window.campaignForms === 'undefined') {
       if (!campaignForms[formId].formSubmitted) {
         campaignForms[formId].formSubmitted = true
 
-        if (campaignForms[formId].v3) {
-          data = { "g-recaptcha-response": recaptchaToken }
-        } else {
-          data = { }
-        }
+        const data = campaignForms[formId].v3
+          ? { "g-recaptcha-response": recaptchaToken }
+          : {};
 
         form.ajaxSubmit({
           method: 'POST',
@@ -95,13 +93,13 @@ if (typeof window.campaignForms === 'undefined') {
         },
         submitHandler: function (form) {
           // Hide general error if present
-          var $form = $(form);
+          const $form = $(form);
           $form
             .parents(".campaign-form")
             .find(".alert-danger")
             .addClass("hidden");
 
-          var formId = $form.attr('id')
+          const formId = $form.attr('id')
 
           const recaptchaSiteKey = $form.attr("data-recaptcha-sitekey");
 
@@ -153,7 +151,7 @@ if (typeof window.campaignForms === 'undefined') {
           campaignForms[formId].v3 = form[0].hasAttribute("data-recaptcha-sitekey");
 
           if (!campaignForms[formId].v3) {
-            var recaptchaDiv = $('div[data-sitekey]', form)[0]
+            const recaptchaDiv = $('div[data-sitekey]', form)[0];
             if (recaptchaDiv) {
               $(recaptchaDiv).removeAttr('id')
             }
