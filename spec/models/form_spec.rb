@@ -84,8 +84,10 @@ RSpec.describe Form, type: :model do
       form = create(:form)
       form.recaptcha_v3 = true
       form.validate
-      expect(form.errors.count).to eq(1)
+      expect(form.errors.count).to eq(3)
       expect(form.errors.first).to eq([:recaptcha_v3, "requires recaptcha"])
+      expect(form.errors.to_a.second).to eq("Recaptcha v3 threshold is not included in the list")
+      expect(form.errors.to_a.third).to eq("Recaptcha v3 threshold can't be blank")
     end
     it "does not require recaptcha if v3 is not set" do
     end
