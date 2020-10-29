@@ -36,7 +36,7 @@ class Recaptcha
       remoteip: remote_ip)
     json = JSON.parse(response.body)
     if json["success"]
-      return form.recaptcha_v3 ? json["score"] > form.recaptcha_v3_threshold : true
+      return form.recaptcha_v3 ? json["score"] >= form.recaptcha_v3_threshold : true
     end
     Rollbar.error("reCAPTCHA error", json.merge(form: form.id)) if json.key? "error-codes"
     false
