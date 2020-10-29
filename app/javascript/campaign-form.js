@@ -14,7 +14,6 @@ if (typeof window.campaignForms === 'undefined') {
       return 'campaignForm' + id
     }
 
-    /* test */
     function submitForm (form, recaptchaToken) {
       var formId = form.attr('id')
 
