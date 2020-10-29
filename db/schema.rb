@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_144753) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "placeholder"
-    t.boolean "persist", default: false
     t.index ["field_id"], name: "index_form_fields_on_field_id"
     t.index ["form_id"], name: "index_form_fields_on_form_id"
   end
