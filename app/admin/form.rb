@@ -72,7 +72,7 @@ ActiveAdmin.register Form do
                                     ' target="_blank">Invisible ' \
                                     "reCAPTCHA</a>".html_safe # rubocop:disable Rails/OutputSafety
       f.input :recaptcha_v3, label: "Use new v3 reCAPTCHA"
-      f.input :recaptcha_v3_threshold, hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Only submissions higher than this value will be accepted."
+      f.input :recaptcha_v3_threshold, hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Submissions less than this value will be rejected."
       f.inputs name: "reCAPTCHA Keys", id: "recaptcha_keys", style: f.object.use_recaptcha ? "" : "display: none;" do
         f.input :recaptcha_key, label: "reCAPTCHA Site Key"
         f.input :recaptcha_secret, label: "reCAPTCHA Secret Key"
