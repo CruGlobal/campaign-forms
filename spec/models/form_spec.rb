@@ -94,6 +94,6 @@ RSpec.describe Form, type: :model do
       form.recaptcha_v3 = false
       form.validate
       expect(form.errors.count).to eq(0)
-     end
+    end
   end
 end
