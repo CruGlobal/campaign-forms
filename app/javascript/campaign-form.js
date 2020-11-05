@@ -14,14 +14,20 @@ if (typeof window.campaignForms === 'undefined') {
       return 'campaignForm' + id
     }
 
-    function submitForm (form) {
+    function submitForm (form, recaptchaToken) {
       var formId = form.attr('id')
 
       if (!campaignForms[formId].formSubmitted) {
         campaignForms[formId].formSubmitted = true
+
+        const data = campaignForms[formId].v3
+          ? { "g-recaptcha-response": recaptchaToken }
+          : {};
+
         form.ajaxSubmit({
           method: 'POST',
           dataType: 'json',
+          data: data,
           success: function (data, status, xhr) {
             // Submit Adobe Analytics event if present
             if (typeof window._satellite !== 'undefined') {
@@ -73,7 +79,6 @@ if (typeof window.campaignForms === 'undefined') {
     }
 
     function validate (form) {
-      var formId = form.attr('id')
       return form.validate({
         errorElement: 'span',
         errorClass: 'help-block',
@@ -88,9 +93,23 @@ if (typeof window.campaignForms === 'undefined') {
         },
         submitHandler: function (form) {
           // Hide general error if present
-          var $form = $(form)
-          $form.parents('.campaign-form').find('.alert-danger').addClass('hidden')
-          if ($form.find('.g-recaptcha').length && typeof grecaptcha !== 'undefined') {
+          const $form = $(form);
+          $form
+            .parents(".campaign-form")
+            .find(".alert-danger")
+            .addClass("hidden");
+
+          const formId = $form.attr('id')
+
+          const recaptchaSiteKey = $form.attr("data-recaptcha-sitekey");
+
+          if (campaignForms[formId].v3 && recaptchaSiteKey && typeof grecaptcha !== "undefined") {
+            grecaptcha.ready(() =>
+              grecaptcha
+                .execute(recaptchaSiteKey, { action: "submit" })
+                .then((recaptchaToken) => submitForm($form, recaptchaToken))
+            );
+          } else if (!campaignForms[formId].v3 && $form.find('.g-recaptcha').length && typeof grecaptcha !== 'undefined') {
             var recaptchaDiv = $form.find('.g-recaptcha')[0]
             var recaptchaId
             Object.keys(___grecaptcha_cfg.clients).forEach(function (key) {
@@ -119,6 +138,7 @@ if (typeof window.campaignForms === 'undefined') {
     window.campaignForms.registerForms = function () {
       $('.campaign-form form:not([id])').each(function () {
         var form = $(this)
+
         // Check id again, just to be safe
         if (typeof form.attr('id') === 'undefined') {
           var formId = uniqueFormId()
@@ -128,9 +148,13 @@ if (typeof window.campaignForms === 'undefined') {
             formSubmitted: false
           }
 
-          var recaptchaDiv = $('div[data-sitekey]', form)[0]
-          if (recaptchaDiv) {
-            $(recaptchaDiv).removeAttr('id')
+          campaignForms[formId].v3 = form[0].hasAttribute("data-recaptcha-sitekey");
+
+          if (!campaignForms[formId].v3) {
+            const recaptchaDiv = $('div[data-sitekey]', form)[0];
+            if (recaptchaDiv) {
+              $(recaptchaDiv).removeAttr('id')
+            }
           }
         }
       })

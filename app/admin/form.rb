@@ -3,7 +3,7 @@
 ActiveAdmin.register Form do
   menu priority: 10
   permit_params :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
-    :use_recaptcha, :recaptcha_key, :recaptcha_secret, :origin,
+    :use_recaptcha, :recaptcha_key, :recaptcha_secret, :recaptcha_v3, :recaptcha_v3_threshold, :origin,
     form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :_destroy,
                              campaign_options_attributes: %i[id campaign_code label position _destroy],],
     campaign_codes: []
@@ -68,9 +68,11 @@ ActiveAdmin.register Form do
                         input_html: {maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS},
                         hint: "Allows HTML. Optional"
       f.input :use_recaptcha, as: :boolean, label: "Use reCAPTCHA?", input_html: {'data-toggle': "#recaptcha_keys"},
-                              hint: 'Requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
+                              hint: 'If using recaptcha v2, requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
                                     ' target="_blank">Invisible ' \
                                     "reCAPTCHA</a>".html_safe # rubocop:disable Rails/OutputSafety
+      f.input :recaptcha_v3, label: "Use new v3 reCAPTCHA"
+      f.input :recaptcha_v3_threshold, hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Submissions less than this value will be rejected."
       f.inputs name: "reCAPTCHA Keys", id: "recaptcha_keys", style: f.object.use_recaptcha ? "" : "display: none;" do
         f.input :recaptcha_key, label: "reCAPTCHA Site Key"
         f.input :recaptcha_secret, label: "reCAPTCHA Secret Key"

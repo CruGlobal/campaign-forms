@@ -10,11 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_08_170559) do
+ActiveRecord::Schema.define(version: 2020_10_27_144753) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "campaign_options", force: :cascade do |t|
     t.bigint "form_field_id", null: false
@@ -69,8 +71,8 @@ ActiveRecord::Schema.define(version: 2020_07_08_170559) do
     t.string "action"
     t.text "success"
     t.bigint "created_by_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "style", default: "basic", null: false
     t.string "redirect_url"
     t.boolean "use_recaptcha", default: false
@@ -78,14 +80,16 @@ ActiveRecord::Schema.define(version: 2020_07_08_170559) do
     t.string "recaptcha_secret"
     t.string "origin"
     t.boolean "create_profile"
+    t.boolean "recaptcha_v3", default: true
+    t.float "recaptcha_v3_threshold", default: 0.5
     t.index ["created_by_id"], name: "index_forms_on_created_by_id"
   end
 
   create_table "option_values", force: :cascade do |t|
     t.string "name"
     t.string "label"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
   create_table "users", force: :cascade do |t|

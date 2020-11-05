@@ -10,6 +10,9 @@ class Form < ApplicationRecord
 
   # validates :campaign_codes, presence: true, unless: :campaigns_field_exists?
   validates :name, presence: true
+  validate :recaptcha_required_for_v3
+  validates_inclusion_of :recaptcha_v3_threshold, in: 0..1, if: proc { |form| form.recaptcha_v3 }
+  validates :recaptcha_v3_threshold, presence: true, if: proc { |form| form.recaptcha_v3 }
 
   accepts_nested_attributes_for :form_fields, allow_destroy: true
 
@@ -37,5 +40,11 @@ class Form < ApplicationRecord
     return if attributes.present?
     email_field_id = Field.find_by(input: "email", name: "email_address")&.id
     form_fields.build(field_id: email_field_id, required: true) if email_field_id
+  end
+
+  def recaptcha_required_for_v3
+    if recaptcha_v3 && !use_recaptcha
+      errors.add(:recaptcha_v3, "requires recaptcha")
+    end
   end
 end
