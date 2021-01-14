@@ -134,7 +134,7 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
     database_cleaner (1.7.0)
-    ddtrace (0.36.0)
+    ddtrace (0.44.0)
       msgpack
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -347,7 +347,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retryable-rb (1.1.0)
-    rollbar (2.25.1)
+    rollbar (3.1.1)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.2)
