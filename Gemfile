@@ -81,7 +81,7 @@ gem "ougai", "~> 1.7"
 gem "redis-actionpack"
 gem "rollbar"
 gem "sidekiq-failures"
-gem "sidekiq-unique-jobs", "~> 5.0.0"
+gem "sidekiq-unique-jobs"
 gem "standardrb"
 gem "strip_attributes", "~> 1.11.0"
 
