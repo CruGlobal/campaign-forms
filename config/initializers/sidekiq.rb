@@ -26,5 +26,5 @@ end
 Sidekiq.default_worker_options = {
   backtrace: true,
   unique_expiration: 2.days,
-  unique: :until_executed,
+  lock: :until_executed,
 }
