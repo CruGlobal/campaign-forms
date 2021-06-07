@@ -3,7 +3,7 @@
 class Recaptcha
   attr_accessor :form, :recaptcha_response, :remote_ip
 
-  RECAPTCHA_PARAM = "g-recaptcha-response".to_sym
+  RECAPTCHA_PARAM = :"g-recaptcha-response"
   RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 
   def initialize(form, params, remote_ip)

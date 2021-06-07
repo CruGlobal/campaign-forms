@@ -22,11 +22,11 @@ RSpec.describe AdobeCampaignWorker do
 
       # noinspection RubyStringKeysInHashInspection
       adobe_profile = {
-        "subscriptions" => {"href" => subscription_url},
+        "subscriptions" => {"href" => subscription_url}
       }
       # noinspection RubyStringKeysInHashInspection
       by_email_payload = {
-        "content" => [adobe_profile],
+        "content" => [adobe_profile]
       }
       expect(Adobe::Campaign::Profile).to receive(:by_email).and_return(by_email_payload)
 
@@ -52,15 +52,15 @@ RSpec.describe AdobeCampaignWorker do
       subscription_url = Faker::Internet.url
       stub_request(:get, subscription_url)
         .to_return(status: 200, body: {content: [{serviceName: campaign_codes[0]},
-                                                 {serviceName: campaign_codes[1]},]}.to_json)
+          {serviceName: campaign_codes[1]}]}.to_json)
 
       # noinspection RubyStringKeysInHashInspection
       adobe_profile = {
-        "subscriptions" => {"href" => subscription_url},
+        "subscriptions" => {"href" => subscription_url}
       }
       # noinspection RubyStringKeysInHashInspection
       by_email_payload = {
-        "content" => [adobe_profile],
+        "content" => [adobe_profile]
       }
       expect(Adobe::Campaign::Profile).to receive(:by_email).and_return(by_email_payload)
 
@@ -175,7 +175,7 @@ RSpec.describe AdobeCampaignWorker do
       create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       params = {
-        field.name => "AA",
+        field.name => "AA"
       }
       campaign_worker.perform(form.id, params, nil, nil)
 
@@ -195,7 +195,7 @@ RSpec.describe AdobeCampaignWorker do
       campaign_worker = AdobeCampaignWorker.new
       new_value = SecureRandom.alphanumeric(30)
       params = {
-        field.name => new_value,
+        field.name => new_value
       }
       campaign_worker.perform(form.id, params, nil, nil)
 

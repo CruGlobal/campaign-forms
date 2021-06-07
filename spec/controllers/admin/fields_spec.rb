@@ -67,7 +67,7 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
         label: Faker::Lorem.word,
         placeholder: Faker::Lorem.word,
         global_registry_attribute: Faker::Lorem.word,
-        adobe_campaign_attribute: Faker::Lorem.word,
+        adobe_campaign_attribute: Faker::Lorem.word
       }
 
       # Test and verify
@@ -116,7 +116,7 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
         label: Faker::Lorem.word,
         placeholder: Faker::Lorem.word,
         global_registry_attribute: Faker::Lorem.word,
-        adobe_campaign_attribute: Faker::Lorem.word,
+        adobe_campaign_attribute: Faker::Lorem.word
       }
 
       # Test

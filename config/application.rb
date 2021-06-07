@@ -38,7 +38,7 @@ module CampaignForms
 
     # Enable ougai
     if Rails.env.development? || Rails.const_defined?("Console")
-      config.logger = Log::Logger.new(STDOUT)
+      config.logger = Log::Logger.new($stdout)
     elsif !Rails.env.test? # use default logger in test env
       config.logger = Log::Logger.new(Rails.root.join("log", "datadog.log"))
     end
