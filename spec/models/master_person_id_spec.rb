@@ -37,10 +37,10 @@ RSpec.describe MasterPersonId, type: :model do
         entities: {
           person: {
             'master_person:relationship': [
-              {master_person: {id: id}},
-            ],
-          },
-        },
+              {master_person: {id: id}}
+            ]
+          }
+        }
       }
       stub_request(:get, "https://backend.global-registry.org/entities")
         .with(query: {
@@ -48,7 +48,7 @@ RSpec.describe MasterPersonId, type: :model do
           fields: "master_person:relationship",
           'filters[email_address][email]': email_address,
           'filters[owned_by]': "all",
-          per_page: 1,
+          per_page: 1
         })
         .to_return(body: body.to_json)
 
@@ -76,7 +76,7 @@ RSpec.describe MasterPersonId, type: :model do
           fields: "master_person:relationship",
           'filters[email_address][email]': @email_address,
           'filters[owned_by]': "all",
-          per_page: 1,
+          per_page: 1
         })
       form = build(:form)
       params = ActionController::Parameters.new(email_address: @email_address)
@@ -88,8 +88,8 @@ RSpec.describe MasterPersonId, type: :model do
       # Prepare
       person = {person: {
         'master_person:relationship': [
-          {master_person: {id: @id}},
-        ],
+          {master_person: {id: @id}}
+        ]
       }}
       body = {entities: person}
       @stub_request.to_return(body: body.to_json)
@@ -126,7 +126,7 @@ RSpec.describe MasterPersonId, type: :model do
           query: {
             fields: "master_person:relationship",
             full_response: true,
-            require_mdm: true,
+            require_mdm: true
           },
           body: {entity: {person: person_entity}}.to_json
         )
@@ -162,8 +162,8 @@ RSpec.describe MasterPersonId, type: :model do
         :client_integration_id => email,
         "email_address" => {
           :client_integration_id => email,
-          "email" => email,
-        },
+          "email" => email
+        }
       }
       expect(result).to eq(expected_value)
     end

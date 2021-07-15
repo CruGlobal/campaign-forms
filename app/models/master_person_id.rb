@@ -25,7 +25,7 @@ class MasterPersonId
   def find_entities_by_email
     params = {entity_type: :person, fields: "master_person:relationship",
               'filters[email_address][email]': email_address,
-              'filters[owned_by]': "all", per_page: 1,}
+              'filters[owned_by]': "all", per_page: 1}
     Array.wrap(GlobalRegistry::Entity.get(params)&.dig("entities"))
   rescue RestClient::BadRequest
     []
@@ -35,7 +35,7 @@ class MasterPersonId
     GlobalRegistry::Entity.post({entity: {person: person_entity}},
       params: {full_response: "true",
                fields: "master_person:relationship",
-               require_mdm: "true",})&.dig("entity")
+               require_mdm: "true"})&.dig("entity")
   end
 
   def person_entity

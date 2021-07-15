@@ -21,7 +21,7 @@ RSpec.describe Admin::FormsController, type: :controller do
     all_services = [
       {"label" => "label1", "name" => "name1"},
       {"label" => "label2", "name" => "name2"},
-      {"label" => "label3", "name" => "name3"},
+      {"label" => "label3", "name" => "name3"}
     ]
     allow(Service).to receive(:all).and_return(all_services)
   end
@@ -82,7 +82,7 @@ RSpec.describe Admin::FormsController, type: :controller do
         use_recaptcha: true,
         recaptcha_key: SecureRandom.alphanumeric(10),
         recaptcha_secret: SecureRandom.alphanumeric(10),
-        created_by_id: @user.id,
+        created_by_id: @user.id
       }
 
       # Test and verify
@@ -149,7 +149,7 @@ RSpec.describe Admin::FormsController, type: :controller do
         use_recaptcha: true,
         recaptcha_key: SecureRandom.alphanumeric(10),
         recaptcha_secret: SecureRandom.alphanumeric(10),
-        created_by_id: @user.id,
+        created_by_id: @user.id
       }
 
       # Test

@@ -18,7 +18,7 @@ RSpec.describe FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
-      expect(response.body).to match(%r{<div>#{body}<\/div>}im)
+      expect(response.body).to match(%r{<div>#{body}</div>}im)
       expect(response.body).not_to match(/class="g-recaptcha"/im)
     end
 
@@ -46,7 +46,7 @@ RSpec.describe FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
-      expect(response.body).to match(%r{<div>#{body}<\/div>}im)
+      expect(response.body).to match(%r{<div>#{body}</div>}im)
       expect(response.body).to match(/class="g-recaptcha"/im)
     end
 
@@ -64,7 +64,7 @@ RSpec.describe FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to match(/<div class="container">/im)
-      expect(response.body).to match(%r{<div>#{body}<\/div>}im)
+      expect(response.body).to match(%r{<div>#{body}</div>}im)
       expect(response.body).to match(/class="g-recaptcha"/im)
       expect(response.body).to match(/<input id="cf_name_1_(\d+)" class="form-control" type="text" name="name_1"/im)
     end

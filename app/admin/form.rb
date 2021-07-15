@@ -5,7 +5,7 @@ ActiveAdmin.register Form do
   permit_params :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
     :use_recaptcha, :recaptcha_key, :recaptcha_secret, :recaptcha_v3, :recaptcha_v3_threshold, :origin,
     form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :persist, :_destroy,
-                             campaign_options_attributes: %i[id campaign_code label position _destroy],],
+      campaign_options_attributes: %i[id campaign_code label position _destroy]],
     campaign_codes: []
 
   config.filters = false
