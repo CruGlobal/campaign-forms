@@ -20,4 +20,4 @@ script:
   - bundle exec bundle audit check --update --ignore CVE-2015-9284
   - bundle exec brakeman -A -q --ensure-latest --no-pager
   - bundle exec standardrb
-  - yarn audit --groups "dependencies"
+  - yarn run improved-yarn-audit --ignore-dev-deps
