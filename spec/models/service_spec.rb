@@ -16,10 +16,10 @@ RSpec.describe Service, type: :model do
       services1 = [1, 2, 3]
       services2 = [4, 5, 6]
       stub_request(:get, "https://mc.adobe.io/cru/campaign/profileAndServices/service")
-        .with(headers: {'Authorization': "Bearer #{@access_token}"})
+        .with(headers: {Authorization: "Bearer #{@access_token}"})
         .to_return(status: 200, body: {content: services1, next: {href: "profileAndServices/service2"}}.to_json)
       stub_request(:get, "https://mc.adobe.io/cru/campaign/profileAndServices/service2")
-        .with(headers: {'Authorization': "Bearer #{@access_token}"})
+        .with(headers: {Authorization: "Bearer #{@access_token}"})
         .to_return(status: 200, body: {content: services2}.to_json)
 
       # Test
@@ -37,7 +37,7 @@ RSpec.describe Service, type: :model do
       all_services = [
         {"label" => "label1", "name" => "name1"},
         {"label" => "label2", "name" => "name2"},
-        {"label" => "label3", "name" => "name3"},
+        {"label" => "label3", "name" => "name3"}
       ]
       expect(Service).to receive(:all).and_return(all_services)
 
@@ -48,7 +48,7 @@ RSpec.describe Service, type: :model do
       expected_result = {
         "label1" => "name1",
         "label2" => "name2",
-        "label3" => "name3",
+        "label3" => "name3"
       }
       expect(result).to eq(expected_result)
     end

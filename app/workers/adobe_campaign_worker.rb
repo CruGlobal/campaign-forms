@@ -21,9 +21,9 @@ class AdobeCampaignWorker
     # Form deleted after job enqueued, ignore it
     nil
   rescue RestClient::ServiceUnavailable,
-         RestClient::GatewayTimeout,
-         RestClient::BadGateway,
-         RestClient::InternalServerError
+    RestClient::GatewayTimeout,
+    RestClient::BadGateway,
+    RestClient::InternalServerError
     # Ignore ServiceUnavailable, sidekiq will retry
     raise IgnorableError
   end

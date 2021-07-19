@@ -52,7 +52,7 @@ RSpec.describe Admin::UsersController, type: :controller do
           username: Faker::Lorem.word,
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
-          has_access: false,
+          has_access: false
         }
 
         # Test and verify
@@ -93,7 +93,7 @@ RSpec.describe Admin::UsersController, type: :controller do
           username: Faker::Lorem.word,
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
-          has_access: false,
+          has_access: false
         }
 
         # Test

@@ -21,8 +21,8 @@ class Service < Adobe::Campaign::Service
   def self.post_subscription(service_subs_url, person_pkey, origin = nil)
     payload = {
       "subscriber" => {
-        "PKey" => person_pkey,
-      },
+        "PKey" => person_pkey
+      }
     }
     payload["origin"] = origin if origin.present?
     post_request(service_subs_url, payload)
