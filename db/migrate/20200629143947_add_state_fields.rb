@@ -3,11 +3,11 @@ class AddStateFields < ActiveRecord::Migration[5.2]
 
   def up
     state = Field.find_or_create_by(name: "State",
-                                    input: "select",
-                                    label: "State",
-                                    global_registry_attribute: "address.state",
-                                    adobe_campaign_attribute: "location.stateCode",
-                                    placeholder: nil)
+      input: "select",
+      label: "State",
+      global_registry_attribute: "address.state",
+      adobe_campaign_attribute: "location.stateCode",
+      placeholder: nil)
 
     state.option_values.clear
     state.field_options.clear
