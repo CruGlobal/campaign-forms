@@ -7,8 +7,14 @@ GIT
       omniauth-oauth2 (>= 1.4.0, < 2.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://gems.contribsys.com/
+  specs:
+    sidekiq-pro (5.2.0)
+      connection_pool (>= 2.2.3)
+      sidekiq (>= 6.1.0)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -249,7 +255,7 @@ GEM
     multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.12.3)
+    nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth2 (1.4.4)
@@ -416,9 +422,6 @@ GEM
       redis (>= 4.2.0)
     sidekiq-failures (1.0.0)
       sidekiq (>= 4.0.0)
-    sidekiq-pro (5.2.0)
-      connection_pool (>= 2.2.3)
-      sidekiq (>= 6.1.0)
     sidekiq-unique-jobs (7.0.2)
       brpoplpush-redis_script (> 0.0.0, <= 2.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.5)
