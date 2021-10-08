@@ -1,3 +1,4 @@
+dist: focal
 sudo: false
 language: ruby
 cache:
@@ -9,16 +10,30 @@ services:
   - postgresql
   - redis-server
 addons:
-  postgresql: "10"
+  postgresql: 13
+env:
+  global:
+    # These variables are intentionally blank in order establish the connection to the Postgresql 12 server:
+    - DB_ENV_POSTGRESQL_USER_TEST=
+    - DB_ENV_POSTGRESQL_USER=
+    - DB_ENV_POSTGRESQL_PASS_TEST=
+    - DB_ENV_POSTGRESQL_PASS=
+    - DB_PORT_5432_TCP_ADDR_TEST=
+    - DB_PORT_5432_TCP_ADDR=
+    - DB_PORT_5432_TCP_PORT_TEST=5433
 before_install:
   - gem install bundler -v 2.2.28
   - yarn --ignore-engines
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
-  - bundle exec rake db:setup
+  - bundle exec rails db:setup
 script:
   - bundle exec rspec --color
   - bundle exec bundle audit check --update --ignore CVE-2015-9284
   - bundle exec brakeman -A -q --ensure-latest --no-pager
   - bundle exec standardrb
-  - yarn run improved-yarn-audit --ignore-dev-deps
+  # - yarn run improved-yarn-audit --ignore-dev-deps
+branches:
+  only:
+    - master
+    - staging
