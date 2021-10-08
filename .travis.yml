@@ -1,3 +1,4 @@
+dist: focal
 sudo: false
 language: ruby
 cache:
@@ -9,16 +10,30 @@ services:
   - postgresql
   - redis-server
 addons:
-  postgresql: "10"
+  postgresql: "12"
+  apt:
+    packages:
+      # https://docs.travis-ci.com/user/database-setup/#using-a-different-postgresql-version
+      - postgresql-12
+      - postgresql-client-12
+env:
+  global:
+    - DB_ENV_POSTGRESQL_USER_TEST=travis
+    - DB_ENV_POSTGRESQL_PASS_TEST=secret
+    - DB_PORT_5432_TCP_PORT_TEST=5433
+    - DB_ENV_POSTGRESQL_DB_TEST=campaign-forms_test
 before_install:
   - gem install bundler -v 2.2.28
   - yarn --ignore-engines
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
+  - psql -c "create database $DB_ENV_POSTGRESQL_DB_TEST" -p $DB_PORT_5432_TCP_PORT_TEST
+  # With localhost, the pguser must have a password
+  - psql -c "alter role $DB_ENV_POSTGRESQL_USER_TEST password '$DB_ENV_POSTGRESQL_PASS_TEST'" -p $DB_PORT_5432_TCP_PORT_TEST
   - bundle exec rake db:setup
 script:
   - bundle exec rspec --color
   - bundle exec bundle audit check --update --ignore CVE-2015-9284
   - bundle exec brakeman -A -q --ensure-latest --no-pager
   - bundle exec standardrb
-  - yarn run improved-yarn-audit --ignore-dev-deps
+  # - yarn run improved-yarn-audit --ignore-dev-deps
