@@ -18,18 +18,19 @@ addons:
       - postgresql-client-12
 env:
   global:
-    - DB_ENV_POSTGRESQL_USER_TEST=travis
-    - DB_ENV_POSTGRESQL_PASS_TEST=secret
+    # These variables are intentionally blank in order establish the connection to the Postgresql 12 server:
+    - DB_ENV_POSTGRESQL_USER_TEST=
+    - DB_ENV_POSTGRESQL_USER=
+    - DB_ENV_POSTGRESQL_PASS_TEST=
+    - DB_ENV_POSTGRESQL_PASS=
+    - DB_PORT_5432_TCP_ADDR_TEST=
+    - DB_PORT_5432_TCP_ADDR=
     - DB_PORT_5432_TCP_PORT_TEST=5433
-    - DB_ENV_POSTGRESQL_DB_TEST=campaign-forms_test
 before_install:
   - gem install bundler -v 2.2.28
   - yarn --ignore-engines
   - bundle config gems.contribsys.com $SIDEKIQ_CREDS
 before_script:
-  - psql -c "create database $DB_ENV_POSTGRESQL_DB_TEST" -p $DB_PORT_5432_TCP_PORT_TEST
-  # With localhost, the pguser must have a password
-  - psql -c "alter role $DB_ENV_POSTGRESQL_USER_TEST password '$DB_ENV_POSTGRESQL_PASS_TEST'" -p $DB_PORT_5432_TCP_PORT_TEST
   - bundle exec rake db:setup
 script:
   - bundle exec rspec --color
