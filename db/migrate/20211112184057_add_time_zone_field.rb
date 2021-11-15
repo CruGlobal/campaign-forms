@@ -132,7 +132,6 @@ class AddTimeZoneField < ActiveRecord::Migration[6.1]
     ["(GMT+12:00) Fidji - Pacific_Fiji - Pacific/Fiji", "Pacific_Fiji"],
     ["(GMT+12:00) Greenwich Mean Time plus 12 hours - Gmt_p12 - Etc/GMT-12", "Gmt_p12"],
     ["(GMT+13:00) Greenwich Mean Time plus 13 hours - Gmt_p13 - Etc/GMT-13", "Gmt_p13"],
-    ["(GMT+13:00) Nuku'alofa - Pacific_Tongatapu - Pacific/Tongatapu", "Pacific_Tongatapu"],
-    ["INVALID VALUE - __Invalid_value__ - __Invalid_value__", "__Invalid_value__"]
+    ["(GMT+13:00) Nuku'alofa - Pacific_Tongatapu - Pacific/Tongatapu", "Pacific_Tongatapu"]
   ]
 end
