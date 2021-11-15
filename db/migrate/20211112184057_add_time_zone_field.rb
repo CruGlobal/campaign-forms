@@ -19,7 +19,7 @@ class AddTimeZoneField < ActiveRecord::Migration[6.1]
   end
 
   TIME_ZONES = [
-    ["Default - none", "none"],
+    ["Select a time zone", "none"],
     ["(GMT-11:00) Samoa - Pacific/Samoa", "Pacific_Samoa"],
     ["(GMT-11:00) Greenwich Mean Time minus 11 hours - Etc/GMT+11", "Gmt_m11"],
     ["(GMT-10:00) Hawai - Pacific/Honolulu", "Pacific_Honolulu"],
