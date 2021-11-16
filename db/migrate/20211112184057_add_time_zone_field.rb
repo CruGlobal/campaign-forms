@@ -67,7 +67,7 @@ class AddTimeZoneField < ActiveRecord::Migration[6.1]
     ["(GMT+01:00) Amsterdam, Berlin, Berne, Rome, Stockholm, Vienna - Europe/Berlin", "Europe_Berlin"],
     ["(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague - Europe/Belgrade", "Europe_Belgrade"],
     ["(GMT+01:00) Brussels, Copenhagen, Madrid, Paris - Europe/Paris", "Europe_Paris"],
-    ["(GMT+01:00) Central Africa - Africa_Luanda - Africa/Luanda", "West"],
+    ["(GMT+01:00) Central Africa - Africa/Luanda", "Africa_Luanda"],
     ["(GMT+01:00) Greenwich Mean Time plus 1 hour - Etc/GMT-1", "Gmt_p1"],
     ["(GMT+01:00) Sarajevo, Skoplje, Sofia, Warsaw, Zagreb - Europe/Sarajevo", "Europe_Sarajevo"],
     ["(GMT+02:00) Amman - Asia/Amman", "Asia_Amman"],
