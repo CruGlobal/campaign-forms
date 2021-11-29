@@ -53,9 +53,6 @@ jobs:
       - name: RSpec tests
         run: bundle exec rspec --color
 
-      - name: Yarn audit
-        run: yarn run improved-yarn-audit --ignore-dev-deps
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -77,3 +74,9 @@ jobs:
 
       - name: StandardRB
         run: bundle exec standardrb --format simple
+
+      - name: Install yarn dependencies
+        run: yarn --ignore-engines
+
+      - name: Yarn audit
+        run: yarn run improved-yarn-audit --ignore-dev-deps
