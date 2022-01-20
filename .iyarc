@@ -3,11 +3,11 @@
 # glob-parent
 GHSA-ww39-953v-wcq6
 
-# set-value
-GHSA-4jqc-8m5r-9rpr
-
 # nth-check
 GHSA-rp65-9cf3-cjxr
 
 # ansi-regex
 GHSA-93q8-gq69-wqmw
+
+# postcss
+GHSA-566m-qj78-rww5
