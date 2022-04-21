@@ -77,9 +77,15 @@ RSpec.describe FormsController, type: :controller do
       @form = create(:form, body: @body, title: @title)
       @field_email = create(:email_field, global_registry_attribute: "email_address.email")
       @form_field = create(:form_field, form: @form, field: @field_email)
+      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        .to_return(status: 200, body: {email: {status: "valid"}}.to_json, headers: {})
     end
 
     it 'returns "Bad Request"' do
+      # Stub
+      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        .to_return(status: 200, body: {email: {status: "invalid"}}.to_json, headers: {})
+
       # Test
       post :create, params: {id: @form.id, email_address: "not an email"}
 

@@ -51,6 +51,10 @@ RSpec.describe Profile, type: :model do
 
   describe "validate_format" do
     it "validates successfully for proper email" do
+      # Stub
+      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        .to_return(status: 200, body: {email: {status: "valid"}}.to_json, headers: {})
+
       # Prepare
       email = Faker::Internet.email
       form = build(:form)
@@ -68,6 +72,10 @@ RSpec.describe Profile, type: :model do
     end
 
     it "invalidates for bad formatted email" do
+      # Stub
+      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        .to_return(status: 200, body: {email: {status: "invalid"}}.to_json, headers: {})
+
       # Prepare
       email = "this is not an email"
       form = build(:form)
