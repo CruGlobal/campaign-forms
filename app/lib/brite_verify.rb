@@ -3,7 +3,7 @@ require "net/http"
 module BriteVerify
   API_HOST = "bpi.briteverify.com"
 
-  def self.verify_email(email_address)
+  def self.valid_email?(email_address)
     Net::HTTP.start(API_HOST, 443, use_ssl: true) do |http|
       uri = URI("https://#{API_HOST}/api/v1/fullverify")
       req = Net::HTTP::Post.new(uri)

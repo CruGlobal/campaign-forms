@@ -36,7 +36,7 @@ class Profile
 
   def validate_format
     if email_address # rubocop:disable Style/GuardClause
-      unless BriteVerify.verify_email(email_address)
+      unless BriteVerify.valid_email?(email_address)
         errors[email_address_name] = "Please enter a valid email address."
       end
     end
