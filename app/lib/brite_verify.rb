@@ -7,7 +7,7 @@ module BriteVerify
     Net::HTTP.start(API_HOST, 443, use_ssl: true) do |http|
       uri = URI("https://#{API_HOST}/api/v1/fullverify")
       req = Net::HTTP::Post.new(uri)
-      req["Authorization"] = "ApiKey: #{ENV["BRITE_VERIFY_API_KEY"]}"
+      req["Authorization"] = "ApiKey: #{ENV.fetch("BRITE_VERIFY_API_KEY")}"
       req.content_type = "application/json"
       req.body = {email: email_address}.to_json
       res = http.request(req)

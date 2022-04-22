@@ -37,5 +37,20 @@ RSpec.describe BriteVerify do
         expect(subject).to be true
       end
     end
+
+    context "no API key" do
+      subject { described_class.valid_email?("invalidtest@validity.com") }
+
+      around do |example|
+        env_value_before = ENV["BRITE_VERIFY_API_KEY"]
+        ENV["BRITE_VERIFY_API_KEY"] = nil
+        example.run
+        ENV["BRITE_VERIFY_API_KEY"] = env_value_before
+      end
+
+      it "throws a KeyError" do
+        expect { subject }.to raise_error(KeyError)
+      end
+    end
   end
 end
