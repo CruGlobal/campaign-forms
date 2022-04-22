@@ -7,14 +7,14 @@ RSpec.describe BriteVerify do
 
       it "returns true when service says 'valid'" do
         stub_request(:post, BriteVerify::FULLVERIFY)
-          .to_return(status: 200, body: {email: {status: "valid"}}.to_json, headers: {})
+          .to_return(status: 200, body: {email: {status: "valid"}}.to_json)
 
         expect(subject).to be true
       end
 
       it "returns true when service returns error" do
         stub_request(:post, BriteVerify::FULLVERIFY)
-          .to_return(status: 401, body: "", headers: {})
+          .to_return(status: 401, body: "")
 
         expect(subject).to be true
       end
@@ -25,14 +25,14 @@ RSpec.describe BriteVerify do
 
       it "returns false when service says 'invalid'" do
         stub_request(:post, BriteVerify::FULLVERIFY)
-          .to_return(status: 200, body: {email: {status: "invalid"}}.to_json, headers: {})
+          .to_return(status: 200, body: {email: {status: "invalid"}}.to_json)
 
         expect(subject).to be false
       end
 
       it "returns true when service returns bad JSON" do
         stub_request(:post, BriteVerify::FULLVERIFY)
-          .to_return(status: 200, body: "bad_json", headers: {})
+          .to_return(status: 200, body: "bad_json")
 
         expect(subject).to be true
       end
