@@ -52,7 +52,7 @@ RSpec.describe Profile, type: :model do
   describe "validate_format" do
     it "validates successfully for proper email" do
       # Stub
-      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+      stub_request(:post, BriteVerify::FULLVERIFY)
         .to_return(status: 200, body: {email: {status: "valid"}}.to_json, headers: {})
 
       # Prepare
@@ -73,7 +73,7 @@ RSpec.describe Profile, type: :model do
 
     it "invalidates for bad formatted email" do
       # Stub
-      stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+      stub_request(:post, BriteVerify::FULLVERIFY)
         .to_return(status: 200, body: {email: {status: "invalid"}}.to_json, headers: {})
 
       # Prepare

@@ -6,14 +6,14 @@ RSpec.describe BriteVerify do
       subject { described_class.valid_email?("sales@validity.com") }
 
       it "returns true when service says 'valid'" do
-        stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        stub_request(:post, BriteVerify::FULLVERIFY)
           .to_return(status: 200, body: {email: {status: "valid"}}.to_json, headers: {})
 
         expect(subject).to be true
       end
 
       it "returns true when service returns error" do
-        stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        stub_request(:post, BriteVerify::FULLVERIFY)
           .to_return(status: 401, body: "", headers: {})
 
         expect(subject).to be true
@@ -24,14 +24,14 @@ RSpec.describe BriteVerify do
       subject { described_class.valid_email?("invalidtest@validity.com") }
 
       it "returns false when service says 'invalid'" do
-        stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        stub_request(:post, BriteVerify::FULLVERIFY)
           .to_return(status: 200, body: {email: {status: "invalid"}}.to_json, headers: {})
 
         expect(subject).to be false
       end
 
       it "returns true when service returns bad JSON" do
-        stub_request(:post, "https://#{BriteVerify::API_HOST}/api/v1/fullverify")
+        stub_request(:post, BriteVerify::FULLVERIFY)
           .to_return(status: 200, body: "bad_json", headers: {})
 
         expect(subject).to be true
