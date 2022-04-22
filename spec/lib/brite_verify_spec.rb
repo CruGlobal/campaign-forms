@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe BriteVerify do
   describe ".valid_email?" do
-
     context "valid email address" do
       subject { described_class.valid_email?("sales@validity.com") }
 
