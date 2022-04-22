@@ -13,6 +13,8 @@ module BriteVerify
       res = http.request(req)
       return true if res.code != "200" # Verify by default if BriteVerify query doesn't work
       JSON.parse(res.body).dig("email", "status") != "invalid" # Only an "invalid" response will fail
+    rescue JSON::ParserError
+      return true
     end
   end
 end
