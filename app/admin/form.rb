@@ -7,6 +7,7 @@ ActiveAdmin.register Form do
     form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :_destroy,
       campaign_options_attributes: %i[id campaign_code label position _destroy]],
     campaign_codes: []
+  includes :created_by
 
   config.filters = false
 
@@ -16,7 +17,7 @@ ActiveAdmin.register Form do
     list_column "Adobe Campaign(s)", :campaign_codes do |f|
       Service.active_admin_collection.invert.values_at(*f.campaign_codes)
     end
-    column :created_by
+    column :created_by, sortable: "users.name"
     column "Uses reCAPTCHA", :use_recaptcha
     actions
   end
