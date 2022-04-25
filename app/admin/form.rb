@@ -9,11 +9,11 @@ ActiveAdmin.register Form do
     campaign_codes: []
 
   includes :created_by
-  order_by(:created_by) do |order_clause|
-    if order_clause.order == 'desc'
-      "users.first_name DESC, users.last_name DESC"
+  order_by(:"users.first_name") do |order_clause|
+    if order_clause.order == "desc"
+      "users.first_name DESC, users.last_name DESC, forms.name DESC"
     else
-      "users.first_name ASC, users.last_name ASC"
+      "users.first_name ASC, users.last_name ASC, forms.name ASC"
     end
   end
 
@@ -25,7 +25,7 @@ ActiveAdmin.register Form do
     list_column "Adobe Campaign(s)", :campaign_codes do |f|
       Service.active_admin_collection.invert.values_at(*f.campaign_codes)
     end
-    column :created_by, sortable: "users.last_name"
+    column :created_by, sortable: "users.first_name"
     column "Uses reCAPTCHA", :use_recaptcha
     actions
   end
