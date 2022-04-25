@@ -36,8 +36,7 @@ class Profile
 
   def validate_format
     if email_address # rubocop:disable Style/GuardClause
-      # Use same RegExp as Global Registry to catch invalid emails before sending there.
-      unless email_address.match?(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
+      unless BriteVerify.valid_email?(email_address)
         errors[email_address_name] = "Please enter a valid email address."
       end
     end
