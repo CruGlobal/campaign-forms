@@ -30,6 +30,20 @@ RSpec.describe BriteVerify do
         expect(subject).to be false
       end
 
+      it "returns true when service says 'invalid' but secondary reason is 'mailbox_full_invalid'" do
+        stub_request(:post, BriteVerify::FULLVERIFY)
+          .to_return(status: 200, body: {email: {status: "invalid", error_code: "mailbox_full_invalid"}}.to_json)
+
+        expect(subject).to be true
+      end
+
+      it "returns true when service says 'invalid' but role_address is true" do
+        stub_request(:post, BriteVerify::FULLVERIFY)
+          .to_return(status: 200, body: {email: {status: "invalid", role_address: true}}.to_json)
+
+        expect(subject).to be true
+      end
+
       it "returns true when service returns bad JSON" do
         stub_request(:post, BriteVerify::FULLVERIFY)
           .to_return(status: 200, body: "bad_json")

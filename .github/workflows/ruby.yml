@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [master]
   push:
-    branches: [staging]
+    branches: [master,staging]
 
 jobs:
   test:
@@ -48,7 +48,7 @@ jobs:
           bundle exec rails db:schema:load
 
       - name: Install yarn dependencies
-        run: yarn --ignore-engines
+        run: yarn install --frozen-lockfile
 
       - name: RSpec tests
         run: bundle exec rspec --color
@@ -76,7 +76,7 @@ jobs:
         run: bundle exec standardrb --format simple
 
       - name: Install yarn dependencies
-        run: yarn --ignore-engines
+        run: yarn install --frozen-lockfile
 
       - name: Yarn audit
         run: yarn run improved-yarn-audit --ignore-dev-deps
