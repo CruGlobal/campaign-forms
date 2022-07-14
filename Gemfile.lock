@@ -9,9 +9,8 @@ GIT
 GEM
   remote: https://gems.contribsys.com/
   specs:
-    sidekiq-pro (5.2.0)
-      connection_pool (>= 2.2.3)
-      sidekiq (>= 6.1.0)
+    sidekiq-pro (5.5.1)
+      sidekiq (>= 6.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -336,7 +335,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.5.1)
+    redis (4.7.1)
     redis-actionpack (5.2.0)
       actionpack (>= 5, < 7)
       redis-rack (>= 2.1.0, < 3)
@@ -416,7 +415,7 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
-    sidekiq (6.4.0)
+    sidekiq (6.5.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
