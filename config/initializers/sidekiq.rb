@@ -23,7 +23,7 @@ Sidekiq.configure_server do |config|
   config.failures_default_mode = :exhausted
 end
 
-Sidekiq.default_worker_options = {
+Sidekiq.default_job_options = {
   backtrace: true,
   lock: :until_executed
 }
