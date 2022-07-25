@@ -12,3 +12,6 @@ GHSA-93q8-gq69-wqmw
 
 # postcss
 GHSA-566m-qj78-rww5
+
+# terser
+GHSA-4wf5-vphf-c2xc
