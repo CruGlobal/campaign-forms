@@ -5,7 +5,7 @@ class AdobeCampaignWorker
 
   MASTER_PERSON_ID = "cusGlobalID"
 
-  sidekiq_options unique: :until_and_while_executing
+  sidekiq_options lock: :until_and_while_executing
 
   attr_accessor :form, :params, :master_person_id, :campaign_codes
 
