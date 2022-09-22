@@ -5,9 +5,9 @@ require "sidekiq-unique-jobs"
 
 redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [Symbol], [], true)["sidekiq"]
 
-Redis.current = Redis.new(redis_conf)
+redis = Redis.new(redis_conf)
 
-redis_settings = {url: Redis.current.id}
+redis_settings = {url: redis.id}
 
 SidekiqUniqueJobs.configure do |config|
   # don't use SidekiqUniqueJobs in test env because it will cause head-scratching
