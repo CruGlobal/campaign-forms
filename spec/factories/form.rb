@@ -18,7 +18,7 @@ FactoryBot.define do
 
     factory :full_form do
       style { "basic" }
-      title { Faker::Lorem.words(4).join(" ") }
+      title { Faker::Lorem.words(number: 4).join(" ") }
       body { Faker::Lorem.paragraph }
       action { "Subscribe" }
       redirect_url { Faker::Internet.url }
