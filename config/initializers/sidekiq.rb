@@ -2,12 +2,11 @@
 
 require "redis"
 require "sidekiq-unique-jobs"
+require "datadog/statsd"
 
 redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [Symbol], [], true)["sidekiq"]
 
-redis = Redis.new(redis_conf)
-
-redis_settings = {url: redis.id}
+redis_settings = {url: Redis.new(redis_conf).id}
 
 SidekiqUniqueJobs.configure do |config|
   # don't use SidekiqUniqueJobs in test env because it will cause head-scratching
@@ -49,3 +48,7 @@ Sidekiq.default_job_options = {
   backtrace: true,
   lock: :until_executed
 }
+
+if ENV["AWS_EXECUTION_ENV"].present?
+  Sidekiq::Pro.dogstatsd = -> { Datadog::Statsd.new socket_path: "/var/run/datadog/dsd.socket" }
+end

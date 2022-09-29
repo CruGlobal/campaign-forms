@@ -11,7 +11,6 @@ PG_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress
 docker buildx build $DOCKER_ARGS \
     --build-arg PROJECT_NAME=$PROJECT_NAME \
     --build-arg SIDEKIQ_CREDS=$SIDEKIQ_CREDS \
-    --build-arg DD_API_KEY=$DD_API_KEY \
     --build-arg SESSION_REDIS_HOST=$REDIS_IP \
     --build-arg STORAGE_REDIS_HOST=$REDIS_IP \
     --build-arg DB_ENV_POSTGRESQL_USER=postgres \
