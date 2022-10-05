@@ -28,6 +28,7 @@ RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
 COPY . .
 
 ARG PROJECT_NAME
+ARG SITE_URL
 ARG ROLLBAR_ACCESS_TOKEN=asdf
 ARG SESSION_REDIS_DB_INDEX=1
 ARG SESSION_REDIS_HOST=redis
@@ -40,7 +41,6 @@ ARG SECRET_KEY_BASE=asdf
 ARG DB_ENV_POSTGRESQL_USER=username
 ARG DB_ENV_POSTGRESQL_PASS=password
 ARG DB_PORT_5432_TCP_ADDR=postgres
-ARG SITE_URL=hostname
 
 # Compile assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile
