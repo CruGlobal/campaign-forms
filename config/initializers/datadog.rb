@@ -1,12 +1,14 @@
 require "ddtrace"
 require "datadog/statsd"
+require "net/http"
 
 if ENV["AWS_EXECUTION_ENV"].present?
   Datadog.configure do |c|
     # Global settings
     c.tracing.transport_options = proc { |t|
-      # Provide local path to trace agent Unix socket
-      t.adapter :unix, "/var/run/datadog/apm.socket"
+      # Hostname, port, and additional options. :timeout is in seconds.
+      # Use ECS metadata to lookup host IP, which is where APM is running.
+      t.adapter :net_http, Net::HTTP.get(URI("http://169.254.169.254/latest/meta-data/local-ipv4")), 8126, timeout: 30
     }
     c.runtime_metrics.statsd = Datadog::Statsd.new socket_path: "var/run/datadog/dsd.socket"
     c.runtime_metrics.enabled = true
