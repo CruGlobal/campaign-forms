@@ -45,6 +45,12 @@ ARG DB_PORT_5432_TCP_ADDR=postgres
 # Compile assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile
 
+# Run rails as non-root
+RUN addgroup -g 1000 ruby \
+    && adduser -u 1000 -G ruby -s /bin/sh -D ruby \
+    && chown -R ruby:ruby /usr/src/app
+USER ruby
+
 # Define volumes used by ECS to share public html and extra nginx config with nginx container
 VOLUME /usr/src/app/public
 VOLUME /usr/src/app/nginx-conf
