@@ -2,16 +2,6 @@
 
 # glob-parent
 GHSA-ww39-953v-wcq6
-GHSA-cj88-88mr-972w
 
 # nth-check
 GHSA-rp65-9cf3-cjxr
-
-# ansi-regex
-GHSA-93q8-gq69-wqmw
-
-# postcss
-GHSA-566m-qj78-rww5
-
-# terser
-GHSA-4wf5-vphf-c2xc
