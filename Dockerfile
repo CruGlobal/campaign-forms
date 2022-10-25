@@ -48,6 +48,8 @@ RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile
 # Run rails as non-root
 RUN addgroup -g 1000 ruby \
     && adduser -u 1000 -G ruby -s /bin/sh -D ruby \
+    && mkdir -p /home/ruby \
+    && chown -R ruby:ruby /home/ruby \
     && chown -R ruby:ruby /usr/src/app
 USER ruby
 
