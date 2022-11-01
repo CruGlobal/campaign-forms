@@ -35,5 +35,8 @@ module CampaignForms
     redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [Symbol], [], true)["cache"]
     redis_conf[:url] = "redis://" + redis_conf[:host] + "/" + redis_conf[:db].to_s
     config.cache_store = :redis_cache_store, redis_conf
+
+    # Send all logs to stdout, which docker reads and sends to datadog.
+    config.logger = Log::Logger.new($stdout)
   end
 end

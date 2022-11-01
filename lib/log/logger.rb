@@ -12,11 +12,7 @@ module Log
     end
 
     def create_formatter
-      if @readable
-        Log::Logger::FormatterReadable.new($stdout)
-      else
-        Log::Logger::Formatter.new(ENV["PROJECT_NAME"])
-      end
+      Log::Logger::Formatter.new(ENV["PROJECT_NAME"])
     end
   end
 end
