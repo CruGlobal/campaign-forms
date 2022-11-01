@@ -9,8 +9,29 @@ RUN addgroup -g 1000 webapp \
     && mkdir -p /home/webapp/app
 WORKDIR /home/webapp/app
 
-# Environment required to build the application
+# Upgrade alpine packages (useful for security fixes)
+RUN apk upgrade --no-cache
+
+# Install rails/app dependencies
+RUN apk --no-cache add libc6-compat git postgresql-libs tzdata nodejs yarn
+
+# Copy dependency definitions and lock files
+COPY Gemfile Gemfile.lock ./
+
+# Install bundler version which created the lock file and configure it
 ARG SIDEKIQ_CREDS
+RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock) \
+    && bundle config --global gems.contribsys.com $SIDEKIQ_CREDS
+
+# Install build-dependencies, then install gems, subsequently removing build-dependencies
+RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
+    && bundle install --jobs 20 --retry 2 \
+    && apk del build-deps
+
+# Copy the application
+COPY . .
+
+# Environment required to build the application
 ARG PROJECT_NAME
 ARG SITE_URL
 ARG RAILS_ENV=production
@@ -26,28 +47,6 @@ ARG SECRET_KEY_BASE=asdf
 ARG DB_ENV_POSTGRESQL_USER=username
 ARG DB_ENV_POSTGRESQL_PASS=password
 ARG DB_PORT_5432_TCP_ADDR=postgres
-ENV RAILS_LOG_TO_STDOUT=1
-
-# Upgrade alpine packages (useful for security fixes)
-RUN apk upgrade --no-cache
-
-# Install rails/app dependencies
-RUN apk --no-cache add libc6-compat git postgresql-libs tzdata nodejs yarn
-
-# Copy dependency definitions and lock files
-COPY Gemfile Gemfile.lock ./
-
-# Install bundler version which created the lock file and configure it
-RUN gem install bundler -v $(awk '/^BUNDLED WITH/ { getline; print $1; exit }' Gemfile.lock) \
-    && bundle config --global gems.contribsys.com $SIDEKIQ_CREDS
-
-# Install build-dependencies, then install gems, subsequently removing build-dependencies
-RUN apk --no-cache add --virtual build-deps build-base postgresql-dev \
-    && bundle install --jobs 20 --retry 2 \
-    && apk del build-deps
-
-# Copy the application
-COPY . .
 
 # Compile assets
 RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile \
