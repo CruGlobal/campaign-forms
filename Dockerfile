@@ -26,6 +26,7 @@ ARG SECRET_KEY_BASE=asdf
 ARG DB_ENV_POSTGRESQL_USER=username
 ARG DB_ENV_POSTGRESQL_PASS=password
 ARG DB_PORT_5432_TCP_ADDR=postgres
+ENV RAILS_LOG_TO_STDOUT=1
 
 # Upgrade alpine packages (useful for security fixes)
 RUN apk upgrade --no-cache
