@@ -12,7 +12,11 @@ module Log
     end
 
     def create_formatter
-      Log::Logger::Formatter.new(ENV["PROJECT_NAME"])
+      if ENV["AWS_EXECUTION_ENV"].present?
+        Log::Logger::Formatter.new(ENV["PROJECT_NAME"])
+      else
+        Log::Logger::FormatterReadable.new($stdout)
+      end
     end
   end
 end
