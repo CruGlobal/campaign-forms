@@ -70,9 +70,9 @@ gem "awesome_print"
 gem "brakeman"
 gem "bundle-audit"
 gem "countries"
-gem "ddtrace", "~> 0.24"
+gem "ddtrace", "~> 1.4"
 gem "devise"
-gem "dogstatsd-ruby"
+gem "dogstatsd-ruby", "~> 5.3"
 gem "font-awesome-rails"
 gem "global_registry", "~> 1.5"
 gem "lograge"
@@ -81,6 +81,7 @@ gem "nokogiri", ">= 1.8.5"
 gem "omniauth-oktaoauth", github: "CruGlobal/omniauth-oktaoauth"
 gem "omniauth-rails_csrf_protection"
 gem "ougai", "~> 1.7"
+gem "rack-cors"
 gem "redis-actionpack"
 gem "rollbar"
 gem "sidekiq-failures"
@@ -98,8 +99,4 @@ group :development, :test do
   gem "simplecov"
   gem "webmock"
   gem "pry-byebug"
-end
-
-group :development do
-  gem "rack-cors"
 end
