@@ -90,13 +90,11 @@ gem "standardrb"
 gem "strip_attributes", "~> 1.11.0"
 
 group :development, :test do
-  gem "coveralls", require: false
   gem "database_cleaner-active_record"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
-  gem "simplecov"
   gem "webmock"
   gem "pry-byebug"
 end
