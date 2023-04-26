@@ -37,6 +37,6 @@ module CampaignForms
     config.cache_store = :redis_cache_store, redis_conf
 
     # Send all logs to stdout, which docker reads and sends to datadog.
-    config.logger = Log::Logger.new($stdout)
+    config.logger = Log::Logger.new($stdout) unless Rails.env.test? # we don't need a logger in test env
   end
 end
