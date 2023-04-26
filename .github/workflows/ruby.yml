@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Check out files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -47,8 +47,13 @@ jobs:
           bundle exec rails db:create
           bundle exec rails db:schema:load
 
-      - name: Install yarn dependencies
-        run: yarn install --frozen-lockfile
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.20.0
+
+      - name: Install yarn dependencies and precompile assets
+        run: bundle exec rails assets:precompile
 
       - name: RSpec tests
         run: bundle exec rspec --color
@@ -57,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
