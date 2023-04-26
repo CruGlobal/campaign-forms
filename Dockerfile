@@ -15,7 +15,7 @@ WORKDIR /home/webapp/app
 RUN apk upgrade --no-cache
 
 # Install rails/app dependencies
-RUN apk --no-cache add libc6-compat git postgresql-libs tzdata nodejs=16.20.0 yarn
+RUN apk --no-cache add libc6-compat git postgresql-libs tzdata nodejs=16.20.0-r0 yarn
 
 # Copy dependency definitions and lock files
 COPY Gemfile Gemfile.lock ./
