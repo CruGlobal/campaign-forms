@@ -5,7 +5,7 @@ end
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.5"
+ruby "3.0.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.1.3"
@@ -90,13 +90,11 @@ gem "standardrb"
 gem "strip_attributes", "~> 1.11.0"
 
 group :development, :test do
-  gem "coveralls", require: false
   gem "database_cleaner-active_record"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
-  gem "simplecov"
   gem "webmock"
   gem "pry-byebug"
 end
