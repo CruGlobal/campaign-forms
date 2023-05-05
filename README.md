@@ -1,3 +1,3 @@
 # Campaign Forms
 
-[![Coverage Status](https://coveralls.io/repos/github/CruGlobal/campaign-forms/badge.svg)](https://coveralls.io/github/CruGlobal/campaign-forms)
+[![codecov](https://codecov.io/gh/CruGlobal/campaign-forms/branch/master/graph/badge.svg?token=gLPCfE3cRJ)](https://codecov.io/gh/CruGlobal/campaign-forms)

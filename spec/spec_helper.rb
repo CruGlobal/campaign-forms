@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
-# Simplecov must be loaded before any other code is required
-#
-# See https://github.com/colszowka/simplecov
-require "simplecov"
-require "coveralls"
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
-  [
-    SimpleCov::Formatter::HTMLFormatter,
-    Coveralls::SimpleCov::Formatter
-  ]
-)
-SimpleCov.start "rails"
+if ENV["CI"] == "true"
+  require "simplecov-cobertura"
+  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+  SimpleCov.start "rails"
+end
 
 require "webmock/rspec"
 
