@@ -55,6 +55,7 @@ group :test do
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"
+  gem "simplecov-cobertura" # Codecov, CI only
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -98,3 +99,6 @@ group :development, :test do
   gem "webmock"
   gem "pry-byebug"
 end
+
+# Temporary security fix until new Ruby release
+gem "uri", "~> 0.10.3"
