@@ -99,3 +99,6 @@ group :development, :test do
   gem "webmock"
   gem "pry-byebug"
 end
+
+# Temporary security fix until new Ruby release
+gem "uri", "~> 0.10.3"
