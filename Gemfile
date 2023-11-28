@@ -111,6 +111,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
+  gem "simplecov-cobertura", require: false
   gem "webmock"
   gem "pry-byebug"
 end
