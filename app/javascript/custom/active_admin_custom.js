@@ -5,7 +5,6 @@
  */
 //= require active_admin/base
 //= require activeadmin_addons/all
-//= require active_admin_flat_skin
 
 $(document).on('change', '.form_form_fields_select', function() {
   var options = $(this).parents('ol:first').find('.has_many_container.campaign_options');
