@@ -33,4 +33,5 @@
   <a href="https://policies.google.com/terms">Terms of Service</a> apply.
 </small>
 <style>.grecaptcha-badge { visibility: hidden; } </style>
+<%= javascript_pack_tag 'campaign' %>
 <% if form.use_recaptcha %><script type="application/javascript" src='https://www.google.com/recaptcha/api.js<%= "?render=#{form.recaptcha_key}" if form.recaptcha_v3 %>'></script><% end %>

@@ -294,23 +294,4 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
-
-  # clear previous asset for javascript to make the asset pipeline
-  # happy
-  config.clear_javascripts!
 end
-
-# https://medium.com/@henrikbjorn/til-using-activeadmin-with-importmap-rails-289cde6f76b8
-module ActiveAdmin
-  module Views
-    module Head
-      def build_active_admin_head
-        within super do
-          text_node javascript_importmap_tags("application")
-        end
-      end
-    end
-  end
-end
-
-ActiveAdmin::Views::Pages::Base.send :prepend, ActiveAdmin::Views::Head
