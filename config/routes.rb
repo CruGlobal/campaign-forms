@@ -21,5 +21,6 @@ Rails.application.routes.draw do
 
   get "monitors/lb"
   get "/login/new", to: "login#new"
-  get "/packs/campaign.js", to: redirect("/assets/campaign-form.js")
+  get "/assets/campaign-form.js", to: redirect("/campaign-form.js")
+  get "/packs/campaign.js", to: redirect("/campaign-form.js")
 end
