@@ -6,3 +6,4 @@ import 'jquery-validation'
 import '@activeadmin/activeadmin'
 
 import './custom/active_admin_custom'
+import './custom/campaign-form'
