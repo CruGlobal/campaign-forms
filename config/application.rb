@@ -5,7 +5,7 @@ require_relative "boot"
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
-require "active_job/railtie"
+# require 'active_job/railtie'
 require "active_record/railtie"
 require "action_controller/railtie"
 # require "action_mailer/railtie"
@@ -22,7 +22,7 @@ Bundler.require(*Rails.groups)
 module CampaignForms
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 6.1
 
     # Configuration for the application, engines, and railties goes here.
     #
