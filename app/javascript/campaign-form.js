@@ -1,7 +1,3 @@
-//= require jquery
-//= require jquery-form
-//= require jquery-validation/dist/jquery.validate
-
 // Only initialize campaign-forms JS if it hasn't loaded previously.
 if (typeof window.campaignForms === 'undefined') {
 

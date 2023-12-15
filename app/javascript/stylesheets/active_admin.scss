@@ -7,31 +7,11 @@
 // For example, to change the sidebar width:
 // $sidebar-width: 242px;
 
-$am-theme-primary: #342e48;
 // Active Admin's got SASS!
-@import 'activeadmin_addons/all';
-@import "active_admin/mixins";
-@import "active_admin/base";
-@import "active_admin_flat_skin";
-@import "font-awesome";
+@import "~@activeadmin/activeadmin/src/scss/mixins";
+@import "~@activeadmin/activeadmin/src/scss/base";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
-
-.has_many_container.campaign_options {
-  display: none;
-}
-
-form fieldset > ol > li fieldset:not(.has_many_fields) ol li {
-  padding: 4px;
-}
-
-form fieldset > ol > li fieldset:not(.has_many_fields) ol {
-  padding: 0 0 0 5%;
-}
-
-form fieldset > ol > li fieldset.has_many_fields ol {
-  width: 90%;
-}
