@@ -47,14 +47,6 @@ jobs:
           bundle exec rails db:create
           bundle exec rails db:schema:load
 
-      - name: Set up node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.20.0
-
-      - name: Install yarn dependencies and precompile assets
-        run: bundle exec rails assets:precompile
-
       - name: RSpec tests
         run: bundle exec rspec --color
 
@@ -86,8 +78,5 @@ jobs:
       - name: StandardRB
         run: bundle exec standardrb --format simple
 
-      - name: Install yarn dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Yarn audit
-        run: yarn run improved-yarn-audit --ignore-dev-deps
+      - name: JavaScript Audit
+        run: bin/importmap audit
