@@ -191,7 +191,7 @@ script3.onload = function () {
   }
 };
 script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js'
+script2.src = 'https://malsup.github.io/jquery.form.js'
 script3.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'
 
 document.head.appendChild(script);
