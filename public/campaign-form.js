@@ -1,5 +1,3 @@
-import "jquery"
-
 // Only initialize campaign-forms JS if it hasn't loaded previously.
 if (typeof window.campaignForms === 'undefined') {
 
