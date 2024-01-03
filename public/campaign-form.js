@@ -166,27 +166,27 @@ script.onload = function () {
           }
         })
       }
+
+      // Bootstrap campaign-forms
+      window.campaignForms.jQuery(function () {
+        console.log('bootstrap')
+        window.campaignForms.registerForms()
+      })
+
+      $(document).ready(function() {
+        console.log('ready')
+        $("[id^='cf_Country_']").change(function(){
+          if ($(this).val()!='US'){
+            $("[for^='cf_US_State_']").hide()
+            $("[id^='cf_US_State_']").hide()
+          } else {
+            $("[for^='cf_US_State_']").show()
+            $("[id^='cf_US_State_']").show()
+          }
+        })
+      })
     })(jQuery)
   }
-
-  // Bootstrap campaign-forms
-  window.campaignForms.jQuery(function () {
-    console.log('bootstrap')
-    window.campaignForms.registerForms()
-  })
-
-  jQuery(document).ready(function() {
-    console.log('ready')
-    jQuery("[id^='cf_Country_']").change(function(){
-      if (jQuery(this).val()!='US'){
-        jQuery("[for^='cf_US_State_']").hide()
-        jQuery("[id^='cf_US_State_']").hide()
-      } else {
-        jQuery("[for^='cf_US_State_']").show()
-        jQuery("[id^='cf_US_State_']").show()
-      }
-    })
-  })
 };
 script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js';
 
