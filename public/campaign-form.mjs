@@ -8,15 +8,18 @@ if (typeof window.campaignForms === 'undefined') {
     var campaignForms = window.campaignForms = window.campaignForms || {}
     var campaignForm = window.campaignForm = window.campaignForm || {}
     var idCounter = 0
+    console.log('line 11')
 
     campaignForms.jQuery = $.noConflict(true)
 
     function uniqueFormId () {
+      console.log('uniqueFormId')
       var id = ++idCounter
       return 'campaignForm' + id
     }
 
     function submitForm (form, recaptchaToken) {
+      console.log('submitForm')
       var formId = form.attr('id')
 
       if (!campaignForms[formId].formSubmitted) {
@@ -81,6 +84,7 @@ if (typeof window.campaignForms === 'undefined') {
     }
 
     function validate (form) {
+      console.log('validate')
       return form.validate({
         errorElement: 'span',
         errorClass: 'help-block',
@@ -138,6 +142,7 @@ if (typeof window.campaignForms === 'undefined') {
 
     // Register all existing forms (not previously registered)
     window.campaignForms.registerForms = function () {
+      console.log('registerForms')
       $('.campaign-form form:not([id])').each(function () {
         var form = $(this)
 
@@ -166,10 +171,12 @@ if (typeof window.campaignForms === 'undefined') {
 
 // Bootstrap campaign-forms
 window.campaignForms.jQuery(function () {
+  console.log('bootstrap')
   window.campaignForms.registerForms()
 })
 
 $(document).ready(function() {
+  console.log('ready')
     $("[id^='cf_Country_']").change(function(){
         if ($(this).val()!='US'){
             $("[for^='cf_US_State_']").hide()
