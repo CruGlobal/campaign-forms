@@ -1,5 +1,7 @@
 var script = document.createElement('script');
-script.onload = function () {
+var script2 = document.createElement('script');
+var script3 = document.createElement('script');
+script3.onload = function () {
   // Only initialize campaign-forms JS if it hasn't loaded previously.
   if (typeof window.campaignForms === 'undefined') {
 
@@ -188,6 +190,10 @@ script.onload = function () {
     })(jQuery)
   }
 };
-script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js';
+script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
+script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js'
+script3.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'
 
 document.head.appendChild(script);
+document.head.appendChild(script2);
+document.head.appendChild(script3);
