@@ -63,8 +63,8 @@ ActiveAdmin.register Form do
     f.inputs do
       f.input :name, required: true, hint: "Name used internally for form"
       f.input :campaign_codes, label: "Adobe Campaign", as: :select, include_blank: false,
-                               collection: Service.active_admin_collection, multiple: true,
-                               input_html: {class: :select2}
+        collection: Service.active_admin_collection, multiple: true,
+        input_html: {class: :select2}
       f.input :style, as: :select, collection: %w[basic inline], include_blank: false
       f.input :title, input_html: {maxlength: 2048, rows: 2}, hint: "Allows HTML. Optional"
       f.input :body, label: "Body Text", input_html: {maxlength: 4096, rows: 3}, hint: "Allows HTML. Optional"
@@ -74,12 +74,12 @@ ActiveAdmin.register Form do
       f.input :origin, hint: "Subscription origin. You must create another form if you want different origins on the " \
                              "same campaign."
       f.input :success, label: "Success Message",
-                        input_html: {maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS},
-                        hint: "Allows HTML. Optional"
-      f.input :use_recaptcha, as: :boolean, label: "Use reCAPTCHA?", input_html: {'data-toggle': "#recaptcha_keys"},
-                              hint: 'If using recaptcha v2, requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
-                                    ' target="_blank">Invisible ' \
-                                    "reCAPTCHA</a>".html_safe # rubocop:disable Rails/OutputSafety
+        input_html: {maxlength: 4096, rows: 3, value: f.object.success || Form::DEFAULT_SUCCESS},
+        hint: "Allows HTML. Optional"
+      f.input :use_recaptcha, as: :boolean, label: "Use reCAPTCHA?", input_html: {"data-toggle": "#recaptcha_keys"},
+        hint: 'If using recaptcha v2, requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
+              ' target="_blank">Invisible ' \
+              "reCAPTCHA</a>".html_safe # rubocop:disable Rails/OutputSafety
       f.input :recaptcha_v3, label: "Use new v3 reCAPTCHA"
       f.input :recaptcha_v3_threshold, hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Submissions less than this value will be rejected."
       f.inputs name: "reCAPTCHA Keys", id: "recaptcha_keys", style: f.object.use_recaptcha ? "" : "display: none;" do
@@ -93,17 +93,17 @@ ActiveAdmin.register Form do
       fields_f.inputs do
         fields_f.input :field,
           include_blank: false, input_html: {class: "form_form_fields_select"},
-          collection: Field.all.map { |field| [field.name, field.id, 'data-field-type': field.input] }
+          collection: Field.all.map { |field| [field.name, field.id, "data-field-type": field.input] }
         fields_f.input :label, hint: "Override field label. Leave blank to use default field label."
         fields_f.input :placeholder, hint: "Override field placeholder."
         fields_f.input :help, hint: "Optional help message."
         fields_f.input :required, as: :boolean, label: "Is field required?"
         fields_f.has_many :campaign_options, allow_destroy: true, sortable: :position,
-                                             heading: "Campaigns" do |campaigns_f|
+          heading: "Campaigns" do |campaigns_f|
           campaigns_f.inputs do
             campaigns_f.input :campaign_code, label: "Campaign", as: :select, include_blank: false,
-                                              collection: Service.active_admin_collection,
-                                              input_html: {class: :select2}
+              collection: Service.active_admin_collection,
+              input_html: {class: :select2}
             campaigns_f.input :label, hint: "Override Campaign name. Leave blank to use default name."
           end
         end

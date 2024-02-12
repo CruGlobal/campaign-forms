@@ -29,7 +29,7 @@ ActiveAdmin.register Field, as: "Form Fields" do
     f.inputs do
       f.input :name, required: true
       f.input :input, as: :select, label: "Input Type", required: true, collection: Field::INPUT_TYPES,
-                      include_blank: false
+        include_blank: false
       f.input :label
       f.input :placeholder, hint: "Value displayed when field is empty. Not used with select or radio."
       f.input :global_registry_attribute, hint: "Name of attribute on Person entity_type. Use '.' for nested " \
@@ -38,7 +38,7 @@ ActiveAdmin.register Field, as: "Form Fields" do
     end
 
     f.has_many :field_options, heading: "Options (select, radio)", allow_destroy: true,
-                               sortable: :position do |options_f|
+      sortable: :position do |options_f|
       options_f.inputs do
         options_f.input :option_value, as: :select, label: "Option Value Label | Name", collection: option_value_collection
       end

@@ -36,7 +36,7 @@ RSpec.describe MasterPersonId, type: :model do
       body = {
         entities: {
           person: {
-            'master_person:relationship': [
+            "master_person:relationship": [
               {master_person: {id: id}}
             ]
           }
@@ -46,8 +46,8 @@ RSpec.describe MasterPersonId, type: :model do
         .with(query: {
           entity_type: "person",
           fields: "master_person:relationship",
-          'filters[email_address][email]': email_address,
-          'filters[owned_by]': "all",
+          "filters[email_address][email]": email_address,
+          "filters[owned_by]": "all",
           per_page: 1
         })
         .to_return(body: body.to_json)
@@ -74,8 +74,8 @@ RSpec.describe MasterPersonId, type: :model do
         .with(query: {
           entity_type: "person",
           fields: "master_person:relationship",
-          'filters[email_address][email]': @email_address,
-          'filters[owned_by]': "all",
+          "filters[email_address][email]": @email_address,
+          "filters[owned_by]": "all",
           per_page: 1
         })
       form = build(:form)
@@ -87,7 +87,7 @@ RSpec.describe MasterPersonId, type: :model do
     it "calls global registry" do
       # Prepare
       person = {person: {
-        'master_person:relationship': [
+        "master_person:relationship": [
           {master_person: {id: @id}}
         ]
       }}
