@@ -63,7 +63,7 @@ class FormsController < ApplicationController
         codes = @form.campaign_codes || []
         names = @form.form_fields.joins(:field).where(fields: {input: "campaign"})&.map { |field| field.name }
         names.each do |name|
-          codes += (@profile.params[name] || [])
+          codes += @profile.params[name] || []
         end
         codes
       end

@@ -4,7 +4,7 @@ require "redis"
 require "sidekiq-unique-jobs"
 require "datadog/statsd"
 
-redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, [Symbol], [], true)["sidekiq"]
+redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, permitted_classes: [Symbol], aliases: true)["sidekiq"]
 
 redis_settings = {url: Redis.new(redis_conf).id}
 

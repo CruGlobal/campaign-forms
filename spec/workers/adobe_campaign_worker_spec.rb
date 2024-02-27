@@ -41,7 +41,7 @@ RSpec.describe AdobeCampaignWorker do
       expect(campaign_worker.params).to eq(params)
       expect(campaign_worker.campaign_codes).to eq([campaign_code])
       expect(campaign_worker.master_person_id).to eq(master_person_id)
-      expect(campaign_worker.instance_variable_get("@adobe_profile")).to eq(adobe_profile)
+      expect(campaign_worker.instance_variable_get(:@adobe_profile)).to eq(adobe_profile)
     end
 
     it "supports multiple campaign_codes" do
@@ -75,7 +75,7 @@ RSpec.describe AdobeCampaignWorker do
       expect(campaign_worker.params).to eq(params)
       expect(campaign_worker.campaign_codes).to eq(campaign_codes)
       expect(campaign_worker.master_person_id).to eq(master_person_id)
-      expect(campaign_worker.instance_variable_get("@adobe_profile")).to eq(adobe_profile)
+      expect(campaign_worker.instance_variable_get(:@adobe_profile)).to eq(adobe_profile)
     end
 
     it "should do nothing if the form does not exist" do
