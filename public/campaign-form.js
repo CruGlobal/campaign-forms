@@ -46,12 +46,12 @@ script3.onload = function () {
                     page: {pageInfo: {emailList: 'ACS | ' + data.campaign_codes.join(' | ')}}
                   })
                 window._satellite.track('aa-email-signup')
-
-                window.dataLayer = window.dataLayer || []
-                window.dataLayer.push({
-                  'event': 'ga-email-signup'
-                })
               }
+
+              window.dataLayer = window.dataLayer || []
+              window.dataLayer.push({
+                'event': 'ga-email-signup'
+              })
 
               // Call optional success callback if defined
               if (typeof campaignForm.successCallback === 'function') {
