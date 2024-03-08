@@ -1,7 +1,4 @@
-var script = document.createElement('script');
-var script2 = document.createElement('script');
-var script3 = document.createElement('script');
-script3.onload = function () {
+const postScriptLoad = function () {
   // Only initialize campaign-forms JS if it hasn't loaded previously.
   if (typeof window.campaignForms === 'undefined') {
 
@@ -183,10 +180,33 @@ script3.onload = function () {
     })(jQuery)
   }
 };
-script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js'
-script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js'
-script3.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'
 
-document.head.appendChild(script);
-document.head.appendChild(script2);
-document.head.appendChild(script3);
+const createScriptTag = (info) => {
+  return new Promise(function(resolve, reject) {
+    let scriptElement = document.createElement('script');
+    scriptElement.src = info;
+    scriptElement.async = false;
+    scriptElement.onload = () => {
+      resolve(info);
+    };
+    scriptElement.onerror = () => {
+      reject(info);
+    };
+    document.body.appendChild(scriptElement);
+  });
+};
+
+const scripts = ['https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js',
+                 'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js',
+                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'];
+
+let promiseData = [];
+scripts.forEach((info) => {
+  promiseData.push(createScriptTag(info));
+});
+
+Promise.all(promiseData).then(() => {
+  postScriptLoad();
+}).catch((data) => {
+  console.warn(data + ' failed to load!');
+});
