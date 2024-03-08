@@ -177,7 +177,26 @@ const postScriptLoad = function () {
           }
         })
       })
+
+      toggleSubmitButtons(false);
     })(jQuery)
+  }
+};
+
+const toggleSubmitButtons = (disabled) => {
+  const forms = document.querySelectorAll('.campaign-form');
+
+  if (forms.length) {
+      forms.forEach((form) => {
+          const button = form.querySelector('button[type="submit"]');
+          button.disabled = disabled;
+          if (disabled) {
+            button.classList.add('disabled');
+          } else {
+            button.classList.remove('disabled');
+          }
+
+      })
   }
 };
 
@@ -195,6 +214,8 @@ const createScriptTag = (info) => {
     document.body.appendChild(scriptElement);
   });
 };
+
+toggleSubmitButtons(true);
 
 const scripts = ['https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js',
                  'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js',
