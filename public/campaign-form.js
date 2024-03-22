@@ -222,12 +222,14 @@ const scripts = ['https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.
                  'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'];
 
 let promiseData = [];
-scripts.forEach((info) => {
-  promiseData.push(createScriptTag(info));
-});
+window.onload = () => {
+  scripts.forEach((info) => {
+    promiseData.push(createScriptTag(info));
+  });
 
-Promise.all(promiseData).then(() => {
-  postScriptLoad();
-}).catch((data) => {
-  console.warn(data + ' failed to load!');
-});
+  Promise.all(promiseData).then(() => {
+    postScriptLoad();
+  }).catch((data) => {
+    console.warn(data + ' failed to load!');
+  });
+}
