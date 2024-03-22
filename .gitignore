@@ -31,3 +31,6 @@
 /.idea
 /.env.*
 /coverage
+
+# Ignore mac auto-generated files
+.DS_Store
