@@ -5,4 +5,4 @@ import 'jquery-form'
 import 'jquery-validation'
 import '@activeadmin/activeadmin'
 
-import './custom/active_admin_custom'
+import 'active_admin_custom'
