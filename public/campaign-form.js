@@ -50,10 +50,11 @@ const postScriptLoad = function () {
                 'event': 'ga-email-signup'
               })
 
-              // Call optional success callback if defined
+              // Call optional success callbacks if defined
               if (typeof campaignForm.successCallback === 'function') {
                 window.campaignForm.successCallback(data.master_person_id)
               }
+              window.campaignForms.formSubmittedCallback?.(form)
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
@@ -72,8 +73,8 @@ const postScriptLoad = function () {
               if (typeof errors.error !== 'undefined')
                 form.parents('.campaign-form').find('.alert-danger').removeClass('hidden')
               // show errors from rails
-              campaignForms[formId].validator.showErrors(errors)
               campaignForms[formId].formSubmitted = false
+              campaignForms[formId].validator.showErrors(errors)
             }
           })
         }
