@@ -72,8 +72,8 @@ const postScriptLoad = function () {
               if (typeof errors.error !== 'undefined')
                 form.parents('.campaign-form').find('.alert-danger').removeClass('hidden')
               // show errors from rails
-              campaignForms[formId].validator.showErrors(errors)
               campaignForms[formId].formSubmitted = false
+              campaignForms[formId].validator.showErrors(errors)
             }
           })
         }
