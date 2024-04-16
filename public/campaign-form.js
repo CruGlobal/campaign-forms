@@ -54,7 +54,7 @@ const postScriptLoad = function () {
               if (typeof campaignForm.successCallback === 'function') {
                 window.campaignForm.successCallback(data.master_person_id)
               }
-              window.campaignForms.formSubmittedCallback?.(form)
+              window.campaignForms.submittedCallback?.(form)
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
