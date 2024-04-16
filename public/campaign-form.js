@@ -50,10 +50,11 @@ const postScriptLoad = function () {
                 'event': 'ga-email-signup'
               })
 
-              // Call optional success callback if defined
+              // Call optional success callbacks if defined
               if (typeof campaignForm.successCallback === 'function') {
                 window.campaignForm.successCallback(data.master_person_id)
               }
+              window.campaignForms.submittedCallback?.(form)
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
