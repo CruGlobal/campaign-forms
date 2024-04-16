@@ -54,7 +54,7 @@ const postScriptLoad = function () {
               if (typeof campaignForm.successCallback === 'function') {
                 window.campaignForm.successCallback(data.master_person_id)
               }
-              window.campaignForms.submittedCallback?.(form)
+              campaignForms[formId].submittedCallback?.(form)
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
@@ -147,7 +147,8 @@ const postScriptLoad = function () {
             form.attr('id', formId)
             campaignForms[formId] = {
               validator: validate(form),
-              formSubmitted: false
+              formSubmitted: false,
+              submittedCallback: undefined
             }
 
             campaignForms[formId].v3 = form[0].hasAttribute("data-recaptcha-sitekey");
