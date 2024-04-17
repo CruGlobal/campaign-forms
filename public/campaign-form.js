@@ -221,8 +221,8 @@ const scripts = ['https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.
                  'https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js',
                  'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js'];
 
-let promiseData = [];
-window.onload = () => {
+const loadJqueryScripts = () => {
+  let promiseData = [];
   scripts.forEach((info) => {
     promiseData.push(createScriptTag(info));
   });
@@ -232,4 +232,12 @@ window.onload = () => {
   }).catch((data) => {
     console.warn(data + ' failed to load!');
   });
+}
+
+if (document.readyState === "loading") {
+  // Loading hasn't finished yet
+  document.addEventListener("DOMContentLoaded", loadJqueryScripts);
+} else {
+  // `DOMContentLoaded` has already fired
+  loadJqueryScripts();
 }
