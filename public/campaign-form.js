@@ -57,7 +57,7 @@ const postScriptLoad = function () {
               campaignForms[formId].submittedCallback?.(form)
               form[0].dispatchEvent(new CustomEvent('cf:form-submitted', {
                 detail: {
-                  formData: form.formData()
+                  fields: form.formToArray()
                 }
               }))
 
