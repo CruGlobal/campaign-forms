@@ -187,7 +187,7 @@ const postScriptLoad = function () {
 
       document.dispatchEvent(new CustomEvent('cf:loaded', {
         detail: {
-          formData: campaignForms
+          campaignForms
         }
       }))
 
