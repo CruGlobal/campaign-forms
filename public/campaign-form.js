@@ -55,6 +55,11 @@ const postScriptLoad = function () {
                 window.campaignForm.successCallback(data.master_person_id)
               }
               campaignForms[formId].submittedCallback?.(form)
+              form[0].dispatchEvent(new CustomEvent('cf:form-submitted', {
+                detail: {
+                  formData: form.formData()
+                }
+              }))
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
@@ -179,6 +184,12 @@ const postScriptLoad = function () {
           }
         })
       })
+
+      document.dispatchEvent(new CustomEvent('cf:loaded', {
+        detail: {
+          formData: campaignForms
+        }
+      }))
 
       toggleSubmitButtons(false);
     })(jQuery)
