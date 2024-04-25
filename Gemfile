@@ -5,7 +5,7 @@ end
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.4"
+ruby "3.1.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.7"
@@ -113,8 +113,4 @@ group :development, :test do
   gem "rspec-rails"
   gem "simplecov-cobertura", require: false
   gem "webmock"
-  gem "pry-byebug"
 end
-
-# Temporary security fix until new Ruby release
-gem "uri", "~> 0.10.3"
