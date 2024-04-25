@@ -54,6 +54,9 @@ const postScriptLoad = function () {
               if (typeof campaignForm.successCallback === 'function') {
                 window.campaignForm.successCallback(data.master_person_id)
               }
+              form[0].dispatchEvent(new CustomEvent('cf:form-submitted', {
+                detail: { fields: form.formToArray() }
+              }))
 
               // redirect if setup
               if (typeof data.redirect_url !== 'undefined') {
@@ -72,8 +75,8 @@ const postScriptLoad = function () {
               if (typeof errors.error !== 'undefined')
                 form.parents('.campaign-form').find('.alert-danger').removeClass('hidden')
               // show errors from rails
-              campaignForms[formId].validator.showErrors(errors)
               campaignForms[formId].formSubmitted = false
+              campaignForms[formId].validator.showErrors(errors)
             }
           })
         }
@@ -177,6 +180,10 @@ const postScriptLoad = function () {
           }
         })
       })
+
+      document.dispatchEvent(new CustomEvent('cf:loaded', {
+        detail: { campaignForms }
+      }))
 
       toggleSubmitButtons(false);
     })(jQuery)
