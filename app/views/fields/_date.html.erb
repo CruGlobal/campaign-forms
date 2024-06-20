@@ -1,0 +1,4 @@
+<div class="form-group">
+  <label for="<%= "cf_#{field.name}_#{field.id}" %>"><%= field.label_value %></label>
+  <input id="<%= "cf_#{field.name}_#{field.id}" %>" class="form-control" type="number" name="<%= field.name %>" placeholder="<%= field.placeholder_value %>" <%== 'required' if field.required %> min="<% case field.name when 'birthdate_day' %>1<% when 'birthdate_month' %>1<% when 'birthdate_year' %><%== Date.current.year - 100 %><% end %>" max="<% case field.name when 'birthdate_day' %>31<% when 'birthdate_month' %>12<% when 'birthdate_year' %><%== Date.current.year %><% end %>" >
+</div>
