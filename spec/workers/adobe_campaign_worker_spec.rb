@@ -5,8 +5,9 @@ require "rails_helper"
 RSpec.describe AdobeCampaignWorker do
   before(:each) do
     @access_token = SecureRandom.alphanumeric(30)
-    @stub = stub_request(:post, "https://ims-na1.adobelogin.com/ims/exchange/jwt")
-      .with(body: {client_id: "asdf", client_secret: "asdf", jwt_token: "asdf"})
+    @stub = stub_request(:post, "https://ims-na1.adobelogin.com/ims/token/v3")
+      .with(body: {"client_id" => "asdf", "client_secret" => "asdf", "grant_type" => "client_credentials",
+                   "scope" => "campaign_sdk, openid, deliverability_service_general, campaign_config_server_general, AdobeID, additional_info.projectedProductContext"})
       .to_return(status: 200, body: {access_token: @access_token}.to_json)
   end
 

@@ -9,8 +9,9 @@ RSpec.describe Service, type: :model do
     end
     it "fetches services with two requests" do
       # Prepare
-      stub_request(:post, "https://ims-na1.adobelogin.com/ims/exchange/jwt")
-        .with(body: {client_id: "asdf", client_secret: "asdf", jwt_token: "asdf"})
+      stub_request(:post, "https://ims-na1.adobelogin.com/ims/token/v3")
+        .with(body: {"client_id" => "asdf", "client_secret" => "asdf", "grant_type" => "client_credentials",
+                     "scope" => "campaign_sdk, openid, deliverability_service_general, campaign_config_server_general, AdobeID, additional_info.projectedProductContext"})
         .to_return(status: 200, body: {access_token: @access_token}.to_json)
 
       services1 = [1, 2, 3]
