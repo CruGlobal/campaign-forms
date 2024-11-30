@@ -80,5 +80,14 @@ RSpec.describe FormField, type: :model do
       # Test and verify
       expect(tested.partial).to eq("input")
     end
+
+    it 'should return word "date" when name contains birthdate_' do
+      # Prepare
+      field = create(:field, input: "number", name: "birthdate_day")
+      tested = build(:form_field, field: field)
+
+      # Test and verify
+      expect(tested.partial).to eq("date")
+    end
   end
 end
