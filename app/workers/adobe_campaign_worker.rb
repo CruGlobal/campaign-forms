@@ -56,7 +56,36 @@ class AdobeCampaignWorker
   def subscribe_to_adobe_campaign(campaign_code)
     profile = find_or_create_adobe_profile
     service_subs_url = adobe_campaign_service(campaign_code)["subscriptions"]["href"]
-    Service.post_subscription(service_subs_url, profile["PKey"], form.origin)
+    adobe_result = Service.post_subscription(service_subs_url, profile["PKey"], form.origin)
+    
+    # Also send the subscription to Salesforce
+    send_to_salesforce(campaign_code)
+    
+    adobe_result
+  end
+  
+  def send_to_salesforce(campaign_code)
+    return unless email_address
+    
+    additional_data = {
+      "first_name" => extract_field_value("first_name"),
+      "last_name" => extract_field_value("last_name"),
+      "master_person_id" => master_person_id
+    }
+    
+    # Filter out nil values
+    additional_data.compact!
+    
+    SalesforceService.send_campaign_subscription(email_address, campaign_code, additional_data)
+  rescue => e
+    # Log error but don't fail the job
+    Rails.logger.error("Failed to send to Salesforce: #{e.message}")
+    nil
+  end
+  
+  def extract_field_value(attribute_name)
+    field = form.fields.find_by(global_registry_attribute: attribute_name)
+    field ? params[field.name] : nil
   end
 
   def adobe_campaign_service(campaign_code)

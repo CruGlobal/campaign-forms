@@ -22,7 +22,7 @@ ActiveAdmin.register Form do
   index do
     selectable_column
     column :name
-    list_column "Adobe Campaign(s)", :campaign_codes do |f|
+    list_column "Campaign Name(s)", :campaign_codes do |f|
       Service.active_admin_collection.invert.values_at(*f.campaign_codes)
     end
     column :created_by, sortable: "users.first_name"
@@ -62,9 +62,9 @@ ActiveAdmin.register Form do
   form do |f|
     f.inputs do
       f.input :name, required: true, hint: "Name used internally for form"
-      f.input :campaign_codes, label: "Adobe Campaign", as: :select, include_blank: false,
-        collection: Service.active_admin_collection, multiple: true,
-        input_html: {class: :select2}
+      f.input :campaign_codes, label: "Campaign Name", as: :select, include_blank: false,
+        collection: Service.active_admin_collection, multiple: true, 
+        input_html: {class: :select2, tags: true, data: { placeholder: "Select existing or enter new campaign name" }}
       f.input :style, as: :select, collection: %w[basic inline], include_blank: false
       f.input :title, input_html: {maxlength: 2048, rows: 2}, hint: "Allows HTML. Optional"
       f.input :body, label: "Body Text", input_html: {maxlength: 4096, rows: 3}, hint: "Allows HTML. Optional"
@@ -103,7 +103,7 @@ ActiveAdmin.register Form do
           campaigns_f.inputs do
             campaigns_f.input :campaign_code, label: "Campaign", as: :select, include_blank: false,
               collection: Service.active_admin_collection,
-              input_html: {class: :select2}
+              input_html: {class: :select2, tags: true, data: { placeholder: "Select existing or enter new campaign name" }}
             campaigns_f.input :label, hint: "Override Campaign name. Leave blank to use default name."
           end
         end

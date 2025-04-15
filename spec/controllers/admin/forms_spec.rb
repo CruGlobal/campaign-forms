@@ -116,7 +116,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_field("Name", with: form.name)
-      expect(response.body).to have_select("Adobe Campaign",
+      expect(response.body).to have_select("Campaign Name",
         selected: %w[label1 label3],
         options: %w[label1 label2 label3])
       expect(response.body).to have_field("Style", with: form.style)

@@ -18,7 +18,7 @@ ActiveAdmin.register Field, as: "Form Fields" do
     column :label
     column :placeholder
     column "Global Registry", :global_registry_attribute
-    column "Adobe Campaign", :adobe_campaign_attribute
+    column "Campaign Name", :adobe_campaign_attribute
     column "Options" do |field|
       field.option_values.pluck(:name).join(", ") if %w[select radio].include?(field.input)
     end
@@ -34,7 +34,7 @@ ActiveAdmin.register Field, as: "Form Fields" do
       f.input :placeholder, hint: "Value displayed when field is empty. Not used with select or radio."
       f.input :global_registry_attribute, hint: "Name of attribute on Person entity_type. Use '.' for nested " \
                                                 " fields. Ex: email_address.email"
-      f.input :adobe_campaign_attribute, hint: "Name of field on Adobe Campaign profile."
+      f.input :adobe_campaign_attribute, label: "Campaign Name", hint: "Name of field on Campaign profile."
     end
 
     f.has_many :field_options, heading: "Options (select, radio)", allow_destroy: true,
