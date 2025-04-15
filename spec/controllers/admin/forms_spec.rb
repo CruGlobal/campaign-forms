@@ -37,7 +37,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_content(form.name)
-      expect(response.body).to have_content("Adobe Campaign(s)")
+      expect(response.body).to have_content("Campaign Service(s)")
       expect(response.body).to have_content("label1")
       expect(response.body).not_to have_content("label2")
       expect(response.body).to have_content("label3")
@@ -54,7 +54,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_field("Name")
-      expect(response.body).to have_field("Adobe Campaign")
+      expect(response.body).to have_field("Campaign Service")
       expect(response.body).to have_field("Style")
       expect(response.body).to have_field("Title")
       expect(response.body).to have_field("Body Text")

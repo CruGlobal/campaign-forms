@@ -54,7 +54,7 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
       expect(response.body).to have_field("Label")
       expect(response.body).to have_field("Placeholder")
       expect(response.body).to have_field("Global registry attribute")
-      expect(response.body).to have_field("Adobe campaign attribute")
+      expect(response.body).to have_field("Campaign Name")
     end
   end
 
@@ -102,7 +102,7 @@ RSpec.describe Admin::FormFieldsController, type: :controller do
       expect(response.body).to have_field("Label", with: field.label)
       expect(response.body).to have_field("Placeholder", with: field.placeholder)
       expect(response.body).to have_field("Global registry attribute", with: field.global_registry_attribute)
-      expect(response.body).to have_field("Adobe campaign attribute", with: field.adobe_campaign_attribute)
+      expect(response.body).to have_field("Campaign Name", with: field.adobe_campaign_attribute)
     end
   end
 
