@@ -3,6 +3,7 @@
 require "redis"
 require "sidekiq-unique-jobs"
 require "datadog/statsd"
+require "sidekiq/cloudwatchmetrics"
 
 redis_conf = YAML.safe_load(ERB.new(File.read(Rails.root.join("config", "redis.yml"))).result, permitted_classes: [Symbol], aliases: true)["sidekiq"]
 
@@ -39,6 +40,9 @@ Sidekiq.configure_server do |config|
 
   config.server_middleware do |chain|
     chain.add SidekiqUniqueJobs::Middleware::Server
+
+    require "sidekiq/middleware/server/statsd"
+    chain.add Sidekiq::Middleware::Server::Statsd
   end
 
   SidekiqUniqueJobs::Server.configure(config)
@@ -51,4 +55,6 @@ Sidekiq.default_job_options = {
 
 if ENV["AWS_EXECUTION_ENV"].present?
   Sidekiq::Pro.dogstatsd = -> { Datadog::Statsd.new socket_path: "/var/run/datadog/dsd.socket" }
+
+  Sidekiq::CloudWatchMetrics.enable!
 end
