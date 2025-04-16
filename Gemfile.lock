@@ -292,7 +292,7 @@ GEM
     minitest (5.25.1)
     msgpack (1.5.6)
     multi_xml (0.6.0)
-    net-imap (0.5.1)
+    net-imap (0.5.6)
       date
       net-protocol
     net-pop (0.1.2)
@@ -303,7 +303,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.16.7)
+    nokogiri (1.18.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.9)
@@ -338,7 +338,7 @@ GEM
     puma (5.6.9)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.10)
+    rack (2.2.13)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-protection (3.1.0)
@@ -363,9 +363,9 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.6.0)
+    rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
-      nokogiri (~> 1.14)
+      nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     railties (7.0.8.6)
       actionpack (= 7.0.8.6)
       activesupport (= 7.0.8.6)
@@ -570,7 +570,7 @@ DEPENDENCIES
   jbuilder
   lograge
   loofah (>= 2.2.3)
-  nokogiri (>= 1.8.5)
+  nokogiri (>= 1.18.4)
   omniauth-oktaoauth!
   omniauth-rails_csrf_protection
   ougai (~> 1.7)
