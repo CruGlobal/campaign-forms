@@ -111,13 +111,27 @@ GEM
       ruby2_keywords (>= 0.0.2)
     ast (2.4.2)
     awesome_print (1.9.2)
+    aws-eventstream (1.3.2)
+    aws-partitions (1.1087.0)
+    aws-sdk-cloudwatch (1.112.0)
+      aws-sdk-core (~> 3, >= 3.216.0)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-core (3.222.1)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.992.0)
+      aws-sigv4 (~> 1.9)
+      base64
+      jmespath (~> 1, >= 1.6.1)
+      logger
+    aws-sigv4 (1.11.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
-    brakeman (6.2.2)
+    brakeman (7.0.2)
       racc
     brpoplpush-redis_script (0.1.3)
       concurrent-ruby (~> 1.0, >= 1.0.5)
@@ -227,6 +241,7 @@ GEM
       reline (>= 0.3.6)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     jquery-rails (4.6.0)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -277,7 +292,7 @@ GEM
     minitest (5.25.1)
     msgpack (1.5.6)
     multi_xml (0.6.0)
-    net-imap (0.5.1)
+    net-imap (0.5.6)
       date
       net-protocol
     net-pop (0.1.2)
@@ -288,7 +303,7 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.16.7)
+    nokogiri (1.18.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.9)
@@ -323,7 +338,7 @@ GEM
     puma (5.6.9)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.10)
+    rack (2.2.13)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-protection (3.1.0)
@@ -348,9 +363,9 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.6.0)
+    rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
-      nokogiri (~> 1.14)
+      nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     railties (7.0.8.6)
       actionpack (= 7.0.8.6)
       activesupport (= 7.0.8.6)
@@ -445,6 +460,9 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
+    sidekiq-cloudwatchmetrics (2.8.0)
+      aws-sdk-cloudwatch (~> 1.6)
+      sidekiq (>= 5.0, < 9.0)
     sidekiq-failures (1.0.4)
       sidekiq (>= 4.0.0)
     sidekiq-unique-jobs (7.1.33)
@@ -552,7 +570,7 @@ DEPENDENCIES
   jbuilder
   lograge
   loofah (>= 2.2.3)
-  nokogiri (>= 1.8.5)
+  nokogiri (>= 1.18.4)
   omniauth-oktaoauth!
   omniauth-rails_csrf_protection
   ougai (~> 1.7)
@@ -567,6 +585,7 @@ DEPENDENCIES
   sassc-rails
   selenium-webdriver
   sidekiq (~> 6.5.10)
+  sidekiq-cloudwatchmetrics
   sidekiq-failures
   sidekiq-pro!
   sidekiq-unique-jobs
