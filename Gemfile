@@ -47,7 +47,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "bootsnap", require: false
 
 # Use Sass to process CSS
-gem "sassc-rails"
+# gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -89,6 +89,8 @@ gem "datadog"
 gem "devise"
 gem "dogstatsd-ruby", "~> 5.3"
 gem "font-awesome-rails"
+# https://github.com/sass-contrib/sass-embedded-host-ruby/issues/210
+gem "google-protobuf", force_ruby_platform: true if RUBY_PLATFORM.include?("linux-musl")
 gem "global_registry", "~> 1.5"
 gem "lograge"
 gem "loofah", ">= 2.2.3"
@@ -100,6 +102,7 @@ gem "rack-cors"
 gem "redis", "< 5.0"
 gem "redis-actionpack"
 gem "rollbar"
+gem "sassc-embedded"
 gem "sidekiq", "~> 6.5.10"
 gem "sidekiq-cloudwatchmetrics"
 gem "sidekiq-failures"

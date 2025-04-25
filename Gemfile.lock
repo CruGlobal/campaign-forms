@@ -219,6 +219,12 @@ GEM
       retryable-rb (~> 1.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.30.2)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.30.2-x86_64-linux)
+      bigdecimal
+      rake (>= 13)
     has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -454,8 +460,15 @@ GEM
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     safe_yaml (1.0.4)
+    sass-embedded (1.87.0)
+      google-protobuf (~> 4.30)
+      rake (>= 13)
+    sass-embedded (1.87.0-x86_64-linux-musl)
+      google-protobuf (~> 4.30)
     sassc (2.4.0)
       ffi (~> 1.9)
+    sassc-embedded (1.80.4)
+      sass-embedded (~> 1.80)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
       sassc (>= 2.0)
@@ -597,7 +610,7 @@ DEPENDENCIES
   redis-actionpack
   rollbar
   rspec-rails
-  sassc-rails
+  sassc-embedded
   selenium-webdriver
   sidekiq (~> 6.5.10)
   sidekiq-cloudwatchmetrics
@@ -677,6 +690,8 @@ CHECKSUMS
   formtastic_i18n (0.7.0) sha256=ecef51c9e9030c00f19e69d2483b77f4515c9587d74268b76cf4b6e7988c8e78
   global_registry (1.5.1) sha256=5e672c29964535409bd46477369ca99a21be7d6c4f820122a52b815d9d58e783
   globalid (1.2.1) sha256=70bf76711871f843dbba72beb8613229a49429d1866828476f9c9d6ccc327ce9
+  google-protobuf (4.30.2) sha256=0f35168dbeeccf13d928acf6c128cfec17b9a826ae4505246a02c115f4ae16ed
+  google-protobuf (4.30.2-x86_64-linux) sha256=c96993d98732ea185d98279f6c76e130eb9595437dda39610b3398c9e348518e
   has_scope (0.8.2) sha256=48cd53d684aecd55d3ede060b3c1da37bbbcab58e273d99936e271fe6d125a54
   hashdiff (0.3.7) sha256=e94a08689f724a571556b78d5ca35214033d3961972d58c4611245c4b3a0457a
   hashie (5.0.0) sha256=9d6c4e51f2a36d4616cbc8a322d619a162d8f42815a792596039fc95595603da
@@ -777,7 +792,10 @@ CHECKSUMS
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   rubyzip (2.3.2) sha256=3f57e3935dc2255c414484fbf8d673b4909d8a6a57007ed754dde39342d2373f
   safe_yaml (1.0.4) sha256=248193992ef1730a0c9ec579999ef2256a2b3a32a9bd9d708a1e12544a489ec2
+  sass-embedded (1.87.0) sha256=30139d29ce5ad5dd9215b84daf953010c3b76f9aaabfb8713ee397d944bed266
+  sass-embedded (1.87.0-x86_64-linux-musl) sha256=d466b356ca7de1d0969d6a1783e48b1d4d7e540b66e07d5fc48dedd757ae7f96
   sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
+  sassc-embedded (1.80.4) sha256=1555fc147ff4f51d847afffd24d641793b0dc1c7ecee8921e6fd667bf2fa2769
   sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
   selenium-webdriver (4.11.0) sha256=4c7991756ec3109b3d6a4b062df3858eaa00382299d1ccbadf37503004ac4073
   sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
