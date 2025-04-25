@@ -5,7 +5,7 @@ end
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.5"
+ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.7"
@@ -83,8 +83,9 @@ gem "adobe-campaign", "~> 0.2"
 gem "awesome_print"
 gem "brakeman"
 gem "bundle-audit"
+gem "concurrent-ruby", "1.3.4" # remove when upgrading to Rails 7.1
 gem "countries"
-gem "ddtrace", "~> 1.4"
+gem "datadog"
 gem "devise"
 gem "dogstatsd-ruby", "~> 5.3"
 gem "font-awesome-rails"
