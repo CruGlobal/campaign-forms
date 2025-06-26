@@ -18,6 +18,7 @@ class FormsController < ApplicationController
       render_unauthorized && return
     end
     AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
+    SalesforceWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
     render_create_form
   end
 

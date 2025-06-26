@@ -15,7 +15,6 @@ class AdobeCampaignWorker
     self.campaign_codes = Array.wrap(campaign_codes)
     self.master_person_id = master_person_id
     return if self.campaign_codes.empty?
-
     find_or_create_adobe_profile
     self.campaign_codes.each { |campaign_code| find_or_create_adobe_subscription(campaign_code) }
   rescue ActiveRecord::RecordNotFound
@@ -32,7 +31,7 @@ class AdobeCampaignWorker
   def find_or_create_adobe_profile
     # First try to find the profile, unless we should always create one
     @adobe_profile ||= find_on_adobe_campaign unless form.create_profile?
-    @find_or_create_adobe_profile ||= post_to_adobe_campaign
+    @adobe_profile ||= post_to_adobe_campaign
   end
 
   def find_on_adobe_campaign
@@ -57,36 +56,7 @@ class AdobeCampaignWorker
   def subscribe_to_adobe_campaign(campaign_code)
     profile = find_or_create_adobe_profile
     service_subs_url = adobe_campaign_service(campaign_code)["subscriptions"]["href"]
-    adobe_result = Service.post_subscription(service_subs_url, profile["PKey"], form.origin)
-
-    # Also send the subscription to Salesforce
-    send_to_salesforce(campaign_code)
-
-    adobe_result
-  end
-
-  def send_to_salesforce(campaign_code)
-    return unless email_address
-
-    additional_data = {
-      "first_name" => extract_field_value("first_name"),
-      "last_name" => extract_field_value("last_name"),
-      "master_person_id" => master_person_id
-    }
-
-    # Filter out nil values
-    additional_data.compact!
-
-    SalesforceService.send_campaign_subscription(email_address, campaign_code, additional_data)
-  rescue => e
-    # Log error but don't fail the job
-    Rails.logger.error("Failed to send to Salesforce: #{e.message}")
-    nil
-  end
-
-  def extract_field_value(attribute_name)
-    field = form.fields.find_by(global_registry_attribute: attribute_name)
-    field ? params[field.name] : nil
+    Service.post_subscription(service_subs_url, profile["PKey"], form.origin)
   end
 
   def adobe_campaign_service(campaign_code)
@@ -95,7 +65,6 @@ class AdobeCampaignWorker
 
   def email_address_name
     return @email_address_name if @email_field_set
-
     @email_field_set = true
     @email_address_name = form.fields.find_by(input: "email", adobe_campaign_attribute: "email")&.name
   end
@@ -114,7 +83,6 @@ class AdobeCampaignWorker
       field = form.fields.find_by(name: key)
 
       next if field.adobe_campaign_attribute.blank? || prefer_not_to_say(key, value)
-
       profile.deep_merge!(hasherize(field.adobe_campaign_attribute.split("."), value_for_key(value, key)))
     end
     profile[MASTER_PERSON_ID] = master_person_id if master_person_id.present?
@@ -123,7 +91,6 @@ class AdobeCampaignWorker
 
   def value_for_key(value, key)
     return value.downcase if key == email_address_name
-
     value
   end
 

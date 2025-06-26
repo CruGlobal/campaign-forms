@@ -5,7 +5,7 @@ ActiveAdmin.register Form do
   permit_params :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
     :use_recaptcha, :recaptcha_key, :recaptcha_secret, :recaptcha_v3, :recaptcha_v3_threshold, :origin,
     form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :_destroy,
-      {campaign_options_attributes: %i[id campaign_code label position _destroy]}],
+      campaign_options_attributes: %i[id campaign_code label position _destroy]],
     campaign_codes: []
 
   includes :created_by
@@ -22,7 +22,7 @@ ActiveAdmin.register Form do
   index do
     selectable_column
     column :name
-    list_column "Campaign Name(s)", :campaign_codes do |f|
+    list_column "Campaign(s)", :campaign_codes do |f|
       Service.active_admin_collection.invert.values_at(*f.campaign_codes)
     end
     column :created_by, sortable: "users.first_name"
@@ -37,7 +37,7 @@ ActiveAdmin.register Form do
       end
       panel "Embed code" do
         textarea id: "adobe-campaign-form", style: "width: 100%; min-height: 600px;" do
-          render "form", form:, preview: false
+          render "form", form: form, preview: false
         end
       end
     else
@@ -51,7 +51,7 @@ ActiveAdmin.register Form do
         column do
           panel "Embed code" do
             textarea id: "adobe-campaign-form", style: "width: 100%; min-height: 600px;" do
-              render "form", form:, preview: false
+              render "form", form: form, preview: false
             end
           end
         end
@@ -62,9 +62,12 @@ ActiveAdmin.register Form do
   form do |f|
     f.inputs do
       f.input :name, required: true, hint: "Name used internally for form"
-      f.input :campaign_codes, label: "Campaign Name", as: :select, include_blank: false,
-        collection: Service.active_admin_collection, multiple: true,
-        input_html: {class: :select2, tags: true, data: {placeholder: "Select existing or enter new campaign name"}}
+      f.input :campaign_codes, label: "Campaign(s)", as: :text,
+        hint: "One campaign per line.",
+        input_html: {
+          rows: 6,
+          value: f.object.campaign_codes&.join("\n")
+        }
       f.input :style, as: :select, collection: %w[basic inline], include_blank: false
       f.input :title, input_html: {maxlength: 2048, rows: 2}, hint: "Allows HTML. Optional"
       f.input :body, label: "Body Text", input_html: {maxlength: 4096, rows: 3}, hint: "Allows HTML. Optional"
@@ -79,10 +82,9 @@ ActiveAdmin.register Form do
       f.input :use_recaptcha, as: :boolean, label: "Use reCAPTCHA?", input_html: {"data-toggle": "#recaptcha_keys"},
         hint: 'If using recaptcha v2, requires configuring an <a href="https://www.google.com/recaptcha/admin#list" ' \
               ' target="_blank">Invisible ' \
-              "reCAPTCHA</a>".html_safe
+              "reCAPTCHA</a>".html_safe # rubocop:disable Rails/OutputSafety
       f.input :recaptcha_v3, label: "Use new v3 reCAPTCHA"
-      f.input :recaptcha_v3_threshold,
-        hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Submissions less than this value will be rejected."
+      f.input :recaptcha_v3_threshold, hint: "1.0 is very likely a good interaction, 0.0 is very likely a bot. Submissions less than this value will be rejected."
       f.inputs name: "reCAPTCHA Keys", id: "recaptcha_keys", style: f.object.use_recaptcha ? "" : "display: none;" do
         f.input :recaptcha_key, label: "reCAPTCHA Site Key"
         f.input :recaptcha_secret, label: "reCAPTCHA Secret Key"
@@ -94,7 +96,7 @@ ActiveAdmin.register Form do
       fields_f.inputs do
         fields_f.input :field,
           include_blank: false, input_html: {class: "form_form_fields_select"},
-          collection: Field.all.map { |field| [field.name, field.id, {"data-field-type": field.input}] }
+          collection: Field.all.map { |field| [field.name, field.id, "data-field-type": field.input] }
         fields_f.input :label, hint: "Override field label. Leave blank to use default field label."
         fields_f.input :placeholder, hint: "Override field placeholder."
         fields_f.input :help, hint: "Optional help message."
@@ -104,7 +106,7 @@ ActiveAdmin.register Form do
           campaigns_f.inputs do
             campaigns_f.input :campaign_code, label: "Campaign", as: :select, include_blank: false,
               collection: Service.active_admin_collection,
-              input_html: {class: :select2, tags: true, data: {placeholder: "Select existing or enter new campaign name"}}
+              input_html: {class: :select2}
             campaigns_f.input :label, hint: "Override Campaign name. Leave blank to use default name."
           end
         end

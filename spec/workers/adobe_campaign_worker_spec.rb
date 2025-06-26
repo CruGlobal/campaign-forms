@@ -153,130 +153,12 @@ RSpec.describe AdobeCampaignWorker do
     end
   end
 
-  describe "subscribe_to_adobe_campaign" do
-    it "should call Adobe Campaign and Salesforce" do
-      # Prepare
-      form = create(:form)
-      campaign_worker = AdobeCampaignWorker.new
-      campaign_worker.form = form
-
-      campaign_code = "test_campaign"
-      subscription_url = Faker::Internet.url
-      pkey = SecureRandom.alphanumeric(10)
-
-      # Mock Adobe Campaign profile
-      profile = {
-        "PKey" => pkey,
-        "subscriptions" => {"href" => subscription_url}
-      }
-      expect(campaign_worker).to receive(:find_or_create_adobe_profile).twice.and_return(profile)
-
-      # Mock Adobe Campaign service
-      service = {
-        "subscriptions" => {"href" => subscription_url}
-      }
-      expect(campaign_worker).to receive(:adobe_campaign_service).with(campaign_code).and_return(service)
-
-      # Mock Service.post_subscription
-      adobe_response = {"status" => "success"}
-      expect(Service).to receive(:post_subscription).with(subscription_url, pkey,
-        form.origin).and_return(adobe_response)
-
-      # Mock Salesforce call
-      expect(campaign_worker).to receive(:send_to_salesforce).with(campaign_code)
-
-      # Test
-      result = campaign_worker.subscribe_to_adobe_campaign(campaign_code)
-
-      # Verify
-      expect(result).to eq(adobe_response)
-    end
-  end
-
-  describe "send_to_salesforce" do
-    it "should call SalesforceService.send_campaign_subscription" do
-      # Prepare
-      form = create(:form)
-      email_field = create(:field, input: "email", name: "email", adobe_campaign_attribute: "email")
-      create(:form_field, form:, field: email_field)
-
-      campaign_code = "test_campaign"
-      email = "test@example.com"
-
-      campaign_worker = AdobeCampaignWorker.new
-      campaign_worker.form = form
-      campaign_worker.params = {"email" => email}
-
-      expect(SalesforceService).to receive(:send_campaign_subscription).with(email, campaign_code, {})
-
-      # Test
-      campaign_worker.send_to_salesforce(campaign_code)
-    end
-
-    it "should include available profile data" do
-      # Prepare
-      form = create(:form)
-      email_field = create(:field, input: "email", name: "email", adobe_campaign_attribute: "email")
-      first_name_field = create(:field, name: "first_name", global_registry_attribute: "first_name")
-      last_name_field = create(:field, name: "last_name", global_registry_attribute: "last_name")
-
-      create(:form_field, form:, field: email_field)
-      create(:form_field, form:, field: first_name_field)
-      create(:form_field, form:, field: last_name_field)
-
-      campaign_code = "test_campaign"
-      email = "test@example.com"
-      first_name = "John"
-      last_name = "Doe"
-      master_person_id = "12345"
-
-      campaign_worker = AdobeCampaignWorker.new
-      campaign_worker.form = form
-      campaign_worker.params = {"email" => email, "first_name" => first_name, "last_name" => last_name}
-      campaign_worker.master_person_id = master_person_id
-
-      expected_data = {
-        "first_name" => first_name,
-        "last_name" => last_name,
-        "master_person_id" => master_person_id
-      }
-
-      expect(SalesforceService).to receive(:send_campaign_subscription).with(email, campaign_code, expected_data)
-
-      # Test
-      campaign_worker.send_to_salesforce(campaign_code)
-    end
-
-    it "should handle errors gracefully" do
-      # Prepare
-      form = create(:form)
-      email_field = create(:field, input: "email", name: "email", adobe_campaign_attribute: "email")
-      create(:form_field, form:, field: email_field)
-
-      campaign_code = "test_campaign"
-      email = "test@example.com"
-
-      campaign_worker = AdobeCampaignWorker.new
-      campaign_worker.form = form
-      campaign_worker.params = {"email" => email}
-
-      expect(SalesforceService).to receive(:send_campaign_subscription).and_raise(StandardError.new("Test error"))
-      expect(Rails.logger).to receive(:error).with("Failed to send to Salesforce: Test error")
-
-      # Test
-      result = campaign_worker.send_to_salesforce(campaign_code)
-
-      # Verify
-      expect(result).to be_nil
-    end
-  end
-
   describe "profile_hash" do
     it "skips for non adobe_campaign_attribute" do
       # Prepare
       form = create(:form)
       field = create(:email_field)
-      create(:form_field, form:, field:)
+      create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.perform(form.id, {}, nil, nil)
 
@@ -291,7 +173,7 @@ RSpec.describe AdobeCampaignWorker do
       # Prepare
       form = create(:form)
       field = create(:state_field, adobe_campaign_attribute: "State")
-      create(:form_field, form:, field:)
+      create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       params = {
         field.name => "AA"
@@ -310,7 +192,7 @@ RSpec.describe AdobeCampaignWorker do
       # Prepare
       form = create(:form)
       field = create(:email_field, adobe_campaign_attribute: "email_address.email")
-      create(:form_field, form:, field:)
+      create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       new_value = SecureRandom.alphanumeric(30)
       params = {
@@ -347,7 +229,7 @@ RSpec.describe AdobeCampaignWorker do
       # Prepare
       form = create(:form)
       field = create(:email_field, adobe_campaign_attribute: "email")
-      create(:form_field, form:, field:)
+      create(:form_field, form: form, field: field)
       campaign_worker = AdobeCampaignWorker.new
       campaign_worker.perform(form.id, {}, nil, nil)
       value = SecureRandom.alphanumeric(30)
