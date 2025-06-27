@@ -4,10 +4,6 @@ require "rails_helper"
 
 RSpec.describe SalesforceWorker do
   before do
-    ENV["SALESFORCE_AUTH_URI"] = "https://uid.auth.marketingcloudapis.com"
-    ENV["SALESFORCE_REST_URI"] = "https://uid.rest.marketingcloudapis.com"
-    ENV["SFMC_DE_EXTERNAL_KEY"] = "sfmc_de_external_key"
-
     @access_token = SecureRandom.alphanumeric(30)
 
     stub_request(:post, "#{ENV["SALESFORCE_AUTH_URI"]}/v2/token")
