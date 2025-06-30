@@ -4,9 +4,9 @@ ActiveAdmin.register Form do
   menu priority: 10
   permit_params :name, :style, :title, :body, :redirect_url, :action, :success, :created_by_id,
     :use_recaptcha, :recaptcha_key, :recaptcha_secret, :recaptcha_v3, :recaptcha_v3_threshold, :origin,
+    :campaign_codes,
     form_fields_attributes: [:id, :field_id, :label, :help, :required, :placeholder, :position, :_destroy,
-      campaign_options_attributes: %i[id campaign_code label position _destroy]],
-    campaign_codes: []
+      campaign_options_attributes: %i[id campaign_code label position _destroy]]
 
   includes :created_by
   order_by(:"users.first_name") do |order_clause|
@@ -104,10 +104,8 @@ ActiveAdmin.register Form do
         fields_f.has_many :campaign_options, allow_destroy: true, sortable: :position,
           heading: "Campaigns" do |campaigns_f|
           campaigns_f.inputs do
-            campaigns_f.input :campaign_code, label: "Campaign", as: :select, include_blank: false,
-              collection: Service.active_admin_collection,
-              input_html: {class: :select2}
-            campaigns_f.input :label, hint: "Override Campaign name. Leave blank to use default name."
+            campaigns_f.input :campaign_code, label: "Campaign", include_blank: false
+            campaigns_f.input :label, required: true
           end
         end
       end
