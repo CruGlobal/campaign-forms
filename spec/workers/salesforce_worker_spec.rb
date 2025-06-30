@@ -33,7 +33,7 @@ RSpec.describe SalesforceWorker do
       params = {"email_address" => email, "first_name" => first_name, "last_name" => last_name}
 
       # add expects here
-      stub_request(:post, "https://uid.rest.marketingcloudapis.com/hub/v1/dataevents/key:sfmc_de_external_key/rowset")
+      stub_request(:post, "#{ENV["SALESFORCE_REST_URI"]}/hub/v1/dataevents/key:sfmc_de_external_key/rowset")
         .with(
           body: "[{\"keys\":{\"subscriberkey\":\"test@example.com\",\"campaigns\":\"test_campaign\"},\"values\":{\"subscriberkey\":\"test@example.com\",\"campaigns\":\"test_campaign\",\"email_address\":\"test@example.com\",\"first_name\":\"John\",\"master_person_id\":\"12345\"}}]"
         )
