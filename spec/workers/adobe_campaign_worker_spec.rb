@@ -106,9 +106,9 @@ RSpec.describe AdobeCampaignWorker do
       campaign_worker = AdobeCampaignWorker.new
 
       # Test and verify
-      expect {
+      expect do
         campaign_worker.perform(form.id, params, campaign_code, master_person_id)
-      }.to raise_exception(IgnorableError)
+      end.to raise_exception(IgnorableError)
     end
   end
 

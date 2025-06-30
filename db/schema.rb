@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2021_11_12_184057) do
+ActiveRecord::Schema[6.1].define(version: 2025_06_23_184519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -47,6 +47,7 @@ ActiveRecord::Schema[6.1].define(version: 2021_11_12_184057) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "placeholder"
+    t.string "salesforce_attribute"
   end
 
   create_table "form_fields", force: :cascade do |t|

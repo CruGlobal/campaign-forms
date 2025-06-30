@@ -37,7 +37,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_content(form.name)
-      expect(response.body).to have_content("Adobe Campaign(s)")
+      expect(response.body).to have_content("Campaign(s)")
       expect(response.body).to have_content("label1")
       expect(response.body).not_to have_content("label2")
       expect(response.body).to have_content("label3")
@@ -54,7 +54,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_field("Name")
-      expect(response.body).to have_field("Adobe Campaign")
+      expect(response.body).to have_field("Campaign(s)")
       expect(response.body).to have_field("Style")
       expect(response.body).to have_field("Title")
       expect(response.body).to have_field("Body Text")
@@ -116,9 +116,7 @@ RSpec.describe Admin::FormsController, type: :controller do
       # Verify
       expect(response.status).to eq(200)
       expect(response.body).to have_field("Name", with: form.name)
-      expect(response.body).to have_select("Adobe Campaign",
-        selected: %w[label1 label3],
-        options: %w[label1 label2 label3])
+      expect(response.body).to have_field("Campaign(s)")
       expect(response.body).to have_field("Style", with: form.style)
       expect(response.body).to have_field("Title", with: form.title)
       expect(response.body).to have_field("Body Text", with: form.body)

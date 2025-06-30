@@ -17,6 +17,10 @@ class Form < ApplicationRecord
   accepts_nested_attributes_for :form_fields, allow_destroy: true
 
   def campaign_codes=(value)
+    if value.is_a?(String)
+      value = value.lines.collect { |s| Array.wrap(s.strip) }
+    end
+
     # ensure array without empty? values
     super(Array.wrap(value).reject(&:empty?))
   end
