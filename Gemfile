@@ -1,11 +1,10 @@
 source "https://rubygems.org"
 source "https://gems.contribsys.com/" do
   gem "sidekiq-pro"
+gem 'bundler-audit', require: false, group: :development
 end
-
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.5'
 
 # Bundle edge Rails instead: gem 'rails', '~> 8.0.0'
 gem 'rails', '~> 8.0.0'
