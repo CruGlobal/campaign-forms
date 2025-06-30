@@ -29,54 +29,6 @@ class SalesforceService
 
     url = "#{REST_BASE_URI}/hub/v1/dataevents/key:#{ENV.fetch("SFMC_DE_EXTERNAL_KEY")}/rowset"
 
-    #     payload = [
-    #       {
-    #         keys: {
-    #           subscriberkey: email,
-    #           campaigns: campaign_name
-    #         },
-    #         values: {
-    #           subscriberkey: email,
-    #           campaigns: campaign_name,
-    #           email_address: email,
-    #
-    #           "Alternate_Address": "123 Secondary St, Apartment 4B, Orlando, FL 32801",
-    #           "Birth_Date": "1985-03-15",
-    #           "Cell_Phone": "+1-407-555-0123",
-    #           "City": "Orlando",
-    #           "Coach": "Sarah Johnson",
-    #           "Country": "United States",
-    #           "Country - Latin America": "",
-    #           "FamilyLife Campaign Code": "FL2025Q2",
-    #           "First_Name": "John",
-    #           "Graduation_Date": "2007-05-20",
-    #           "Language": "English",
-    #           "Last_Name": "Smith",
-    #           "Notes": "Interested in leadership programs and community outreach opportunities",
-    #           "Salutation": "Mr.",
-    #           "Self_Placement": "Graduate Student",
-    #           "State_text": "FL",
-    #           "TimeZone": "America/New_York",
-    #           "US_State": "Florida",
-    #           "Whatsapp": "+1-407-555-0123",
-    #           "Zip_Code": 32801,
-    #           "birthdate_day": 15,
-    #           "birthdate_month": 3,
-    #           "birthdate_year": 1985,
-    #           #"campaigns": "homepage_test_2025",
-    #           #"email_address": "john.smith@example.com",
-    #           "gender": "Male",
-    #           #"subscriberkey": "john.smith@example.com",
-    #           "campus": "UCF",
-    #           "zip": "32801"
-    #
-    #         }.merge(data)
-    #       }
-    #     ].to_json
-    #     puts payload
-    #
-    #     puts(payload.first[:values].keys.join("\n"))
-
     payload = [
       {
         keys: {
@@ -96,12 +48,14 @@ class SalesforceService
       "Content-Type" => "application/json"
     }
 
-    Rails.logger.info("SalesforceService#send_campaign_subscription url: #{url.inspect}\n\n")
+    Rails.logger.info("SalesforceService#send_campaign_subscription payload: #{payload.to_json}\n\nheaders: #{headers.inspect}\n\nurl: #{url.inspect}\n\n")
     puts("payload: #{payload.to_json}\n\n")
     puts("headers: #{headers.inspect}\n\n")
 
     # response = RestClient.post(url, payload.to_json, headers)
     response = RestClient.post(url, payload.to_json, headers)
+    Rails.logger.info("SalesforceService#send_campaign_subscription response: Code: #{response.code}\nHeaders: #{response.headers.inspect}\n\nBody: #{response.body}")
+
     response.code == 200
   rescue RestClient::Exception => e
     Rails.logger.error("Failed to send campaign data to Salesforce: #{e.message}")

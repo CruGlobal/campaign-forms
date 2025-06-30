@@ -46,11 +46,6 @@ class SalesforceWorker
     @email_address ||= params[email_address_name]&.downcase
   end
 
-  def extract_field_value(attribute_name)
-    field = form.fields.find_by(global_registry_attribute: attribute_name)
-    field ? params[field.name] : nil
-  end
-
   def prefer_not_to_say(key, value)
     %w[Country State].include?(key) && value == "AA"
   end
