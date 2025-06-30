@@ -16,6 +16,19 @@ RSpec.describe Form, type: :model do
       # Validate
       expect(result).to eq([["a"], ["b"]])
     end
+
+    it "should handle a string with one campaign per line" do
+      # Prepare
+      value = "a\nb"
+      tested = build(:form)
+      tested.campaign_codes = value
+
+      # Test
+      result = tested.campaign_codes
+
+      # Validate
+      expect(result).to eq([["a"], ["b"]])
+    end
   end
 
   describe "required_params" do

@@ -7,6 +7,7 @@ end
 ActiveAdmin.register Field, as: "Form Fields" do
   menu priority: 20
   permit_params :name, :input, :label, :placeholder, :global_registry_attribute, :adobe_campaign_attribute,
+    :salesforce_attributes,
     field_options_attributes: %i[id option_value_id position _destroy]
 
   config.filters = false
@@ -18,7 +19,9 @@ ActiveAdmin.register Field, as: "Form Fields" do
     column :label
     column :placeholder
     column "Global Registry", :global_registry_attribute
-    column "Adobe Campaign", :adobe_campaign_attribute
+    column "Adobe Campaign Field", :adobe_campaign_attribute
+    column "Salesforce Field", :salesforce_attribute
+    column "Salesforce Field", :salesforce_attribute
     column "Options" do |field|
       field.option_values.pluck(:name).join(", ") if %w[select radio].include?(field.input)
     end
@@ -34,7 +37,9 @@ ActiveAdmin.register Field, as: "Form Fields" do
       f.input :placeholder, hint: "Value displayed when field is empty. Not used with select or radio."
       f.input :global_registry_attribute, hint: "Name of attribute on Person entity_type. Use '.' for nested " \
                                                 " fields. Ex: email_address.email"
-      f.input :adobe_campaign_attribute, hint: "Name of field on Adobe Campaign profile."
+      f.input :salesforce_attribute, label: "Adobe Campaign Field", hint: "Name of field on Campaign profile."
+      f.input :salesforce_campaign_attribute, label: "Salesforce Campaign Field", hint: "Name of field on salesforce api."
+      f.input :salesforce_attribute, label: "Salesforce Campaign Field", hint: "Name of field on Salesforce profile."
     end
 
     f.has_many :field_options, heading: "Options (select, radio)", allow_destroy: true,
