@@ -17,8 +17,10 @@ class FormsController < ApplicationController
       logger.info "reCAPTCHA error related to form #{@form.id} (#{@form.name}) from #{request.url}"
       render_unauthorized && return
     end
-    AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
-    SalesforceWorker.perform_async(@form.id, profile.params, campaign_codes, master_person_id)
+    campaign_codes.each do |campaign_code|
+      AdobeCampaignWorker.perform_async(@form.id, profile.params, campaign_code, master_person_id)
+      SalesforceWorker.perform_async(@form.id, profile.params, campaign_code, master_person_id)
+    end
     render_create_form
   end
 
