@@ -27,7 +27,7 @@ class SalesforceService
     access_token = get_access_token
     return false unless access_token
 
-    url = "#{REST_BASE_URI}/hub/v1/dataevents/key:#{ENV.fetch("SFMC_DE_EXTERNAL_KEY")}/rowset"
+    url = "#{REST_BASE_URI}/hub/v1/dataevents/key:#{ENV.fetch("SALESFORCE_SFMC_DE_EXTERNAL_KEY")}/rowset"
 
     payload = [
       {
